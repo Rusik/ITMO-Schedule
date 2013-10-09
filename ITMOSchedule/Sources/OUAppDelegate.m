@@ -7,12 +7,15 @@
 //
 
 #import "OUAppDelegate.h"
+#import "OUMainViewController.h"
 
 @implementation OUAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 	self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 	self.window.backgroundColor = [UIColor whiteColor];
+    OUMainViewController *mainViewController = [OUMainViewController new];
+    self.window.rootViewController = mainViewController;
 	[self.window makeKeyAndVisible];
 	return YES;
 }

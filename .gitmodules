@@ -1,12 +1,7 @@
-[submodule "AFNetworking"]
-	path = AFNetworking
-	url = https://github.com/AFNetworking/AFNetworking.git
-[submodule "XML-to-NSDictionary"]
-	path = XML-to-NSDictionary
-	url = https://github.com/bcaccinolo/XML-to-NSDictionary.git
 [submodule "ITMOSchedule/Vendor/AFNetworking"]
 	path = ITMOSchedule/Vendor/AFNetworking
 	url = https://github.com/AFNetworking/AFNetworking
-[submodule "ITMOSchedule/Vendor/XmlToNSDictionaryParser"]
-	path = ITMOSchedule/Vendor/XmlToNSDictionaryParser
-	url = https://github.com/bcaccinolo/XML-to-NSDictionary.git
+
+[submodule "ITMOSchedule/Vendor/RaptureXML"]
+	path = ITMOSchedule/Vendor/RaptureXML
+	url = https://github.com/ZaBlanc/RaptureXML.git
