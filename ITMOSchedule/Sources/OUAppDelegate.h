@@ -7,9 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "OUDelVC.h"
 
 @interface OUAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
+@property (nonatomic, strong) OUDelVC *delVC;
 
 @end

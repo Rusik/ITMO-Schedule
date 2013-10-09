@@ -23,7 +23,17 @@
 		841F218F180569520054C523 /* AFURLConnectionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 841F2135180569510054C523 /* AFURLConnectionOperation.m */; };
 		841F2190180569520054C523 /* AFXMLRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 841F2137180569510054C523 /* AFXMLRequestOperation.m */; };
 		841F2191180569520054C523 /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 841F2139180569510054C523 /* UIImageView+AFNetworking.m */; };
-		841F21BE180569520054C523 /* XMLReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 841F2186180569520054C523 /* XMLReader.m */; };
+		841F21BE180569520054C523 /* XMLReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 841F2186180569520054C523 /* XMLReader.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		841F21CD180573490054C523 /* OURequestCoordinator.m in Sources */ = {isa = PBXBuildFile; fileRef = 841F21CC180573490054C523 /* OURequestCoordinator.m */; };
+		841F21D11805737A0054C523 /* OUParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 841F21D01805737A0054C523 /* OUParser.m */; };
+		841F21D5180575320054C523 /* OUDelVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 841F21D3180575320054C523 /* OUDelVC.m */; };
+		841F21D6180575320054C523 /* OUDelVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 841F21D4180575320054C523 /* OUDelVC.xib */; };
+		841F21D918057A4A0054C523 /* OUGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 841F21D818057A4A0054C523 /* OUGroup.m */; };
+		841F21DC18057A6F0054C523 /* OUTeacher.m in Sources */ = {isa = PBXBuildFile; fileRef = 841F21DB18057A6F0054C523 /* OUTeacher.m */; };
+		841F21DF18057A8B0054C523 /* OUAudience.m in Sources */ = {isa = PBXBuildFile; fileRef = 841F21DE18057A8B0054C523 /* OUAudience.m */; };
+		841F21E218057C0A0054C523 /* OUGroupsList.m in Sources */ = {isa = PBXBuildFile; fileRef = 841F21E118057C0A0054C523 /* OUGroupsList.m */; };
+		841F21E518057C170054C523 /* OUAudienceList.m in Sources */ = {isa = PBXBuildFile; fileRef = 841F21E418057C170054C523 /* OUAudienceList.m */; };
+		841F21E818057C240054C523 /* OUTeachersList.m in Sources */ = {isa = PBXBuildFile; fileRef = 841F21E718057C240054C523 /* OUTeachersList.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -59,6 +69,25 @@
 		841F2139180569510054C523 /* UIImageView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImageView+AFNetworking.m"; path = "AFNetworking/UIImageView+AFNetworking.m"; sourceTree = "<group>"; };
 		841F2185180569520054C523 /* XMLReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLReader.h; sourceTree = "<group>"; };
 		841F2186180569520054C523 /* XMLReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLReader.m; sourceTree = "<group>"; };
+		841F21CB180573490054C523 /* OURequestCoordinator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OURequestCoordinator.h; sourceTree = "<group>"; };
+		841F21CC180573490054C523 /* OURequestCoordinator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OURequestCoordinator.m; sourceTree = "<group>"; };
+		841F21CF1805737A0054C523 /* OUParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OUParser.h; sourceTree = "<group>"; };
+		841F21D01805737A0054C523 /* OUParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OUParser.m; sourceTree = "<group>"; };
+		841F21D2180575320054C523 /* OUDelVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OUDelVC.h; sourceTree = "<group>"; };
+		841F21D3180575320054C523 /* OUDelVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OUDelVC.m; sourceTree = "<group>"; };
+		841F21D4180575320054C523 /* OUDelVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OUDelVC.xib; sourceTree = "<group>"; };
+		841F21D718057A4A0054C523 /* OUGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OUGroup.h; sourceTree = "<group>"; };
+		841F21D818057A4A0054C523 /* OUGroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OUGroup.m; sourceTree = "<group>"; };
+		841F21DA18057A6F0054C523 /* OUTeacher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OUTeacher.h; sourceTree = "<group>"; };
+		841F21DB18057A6F0054C523 /* OUTeacher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OUTeacher.m; sourceTree = "<group>"; };
+		841F21DD18057A8B0054C523 /* OUAudience.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OUAudience.h; sourceTree = "<group>"; };
+		841F21DE18057A8B0054C523 /* OUAudience.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OUAudience.m; sourceTree = "<group>"; };
+		841F21E018057C0A0054C523 /* OUGroupsList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OUGroupsList.h; sourceTree = "<group>"; };
+		841F21E118057C0A0054C523 /* OUGroupsList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OUGroupsList.m; sourceTree = "<group>"; };
+		841F21E318057C170054C523 /* OUAudienceList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OUAudienceList.h; sourceTree = "<group>"; };
+		841F21E418057C170054C523 /* OUAudienceList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OUAudienceList.m; sourceTree = "<group>"; };
+		841F21E618057C240054C523 /* OUTeachersList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OUTeachersList.h; sourceTree = "<group>"; };
+		841F21E718057C240054C523 /* OUTeachersList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OUTeachersList.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -141,6 +170,18 @@
 		841F2038180563E00054C523 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				841F21D718057A4A0054C523 /* OUGroup.h */,
+				841F21D818057A4A0054C523 /* OUGroup.m */,
+				841F21E018057C0A0054C523 /* OUGroupsList.h */,
+				841F21E118057C0A0054C523 /* OUGroupsList.m */,
+				841F21DA18057A6F0054C523 /* OUTeacher.h */,
+				841F21DB18057A6F0054C523 /* OUTeacher.m */,
+				841F21E618057C240054C523 /* OUTeachersList.h */,
+				841F21E718057C240054C523 /* OUTeachersList.m */,
+				841F21DD18057A8B0054C523 /* OUAudience.h */,
+				841F21DE18057A8B0054C523 /* OUAudience.m */,
+				841F21E318057C170054C523 /* OUAudienceList.h */,
+				841F21E418057C170054C523 /* OUAudienceList.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -148,6 +189,9 @@
 		841F203D1805641E0054C523 /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				841F21CE180573610054C523 /* Parser */,
+				841F21CB180573490054C523 /* OURequestCoordinator.h */,
+				841F21CC180573490054C523 /* OURequestCoordinator.m */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -155,6 +199,9 @@
 		841F203E1805641E0054C523 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				841F21D2180575320054C523 /* OUDelVC.h */,
+				841F21D3180575320054C523 /* OUDelVC.m */,
+				841F21D4180575320054C523 /* OUDelVC.xib */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -201,6 +248,15 @@
 			);
 			name = XmlToNSDictionaryParser;
 			path = ITMOSchedule/Vendor/XmlToNSDictionaryParser;
+			sourceTree = "<group>";
+		};
+		841F21CE180573610054C523 /* Parser */ = {
+			isa = PBXGroup;
+			children = (
+				841F21CF1805737A0054C523 /* OUParser.h */,
+				841F21D01805737A0054C523 /* OUParser.m */,
+			);
+			path = Parser;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -260,6 +316,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				841F21D6180575320054C523 /* OUDelVC.xib in Resources */,
 				7F9F67DD18055D9700A9E9D1 /* InfoPlist.strings in Resources */,
 				7F9F67E518055D9700A9E9D1 /* Images.xcassets in Resources */,
 			);
@@ -274,16 +331,25 @@
 			files = (
 				841F218A180569520054C523 /* AFHTTPRequestOperation.m in Sources */,
 				841F218B180569520054C523 /* AFImageRequestOperation.m in Sources */,
+				841F21D11805737A0054C523 /* OUParser.m in Sources */,
+				841F21D5180575320054C523 /* OUDelVC.m in Sources */,
 				841F218E180569520054C523 /* AFPropertyListRequestOperation.m in Sources */,
+				841F21D918057A4A0054C523 /* OUGroup.m in Sources */,
 				841F218C180569520054C523 /* AFJSONRequestOperation.m in Sources */,
 				841F218F180569520054C523 /* AFURLConnectionOperation.m in Sources */,
 				841F21BE180569520054C523 /* XMLReader.m in Sources */,
+				841F21E518057C170054C523 /* OUAudienceList.m in Sources */,
 				841F203B180563E00054C523 /* main.m in Sources */,
 				841F2190180569520054C523 /* AFXMLRequestOperation.m in Sources */,
+				841F21CD180573490054C523 /* OURequestCoordinator.m in Sources */,
+				841F21E818057C240054C523 /* OUTeachersList.m in Sources */,
+				841F21E218057C0A0054C523 /* OUGroupsList.m in Sources */,
+				841F21DC18057A6F0054C523 /* OUTeacher.m in Sources */,
 				841F203C180563E00054C523 /* OUAppDelegate.m in Sources */,
 				841F218D180569520054C523 /* AFNetworkActivityIndicatorManager.m in Sources */,
 				841F2191180569520054C523 /* UIImageView+AFNetworking.m in Sources */,
 				841F2189180569520054C523 /* AFHTTPClient.m in Sources */,
+				841F21DF18057A8B0054C523 /* OUAudience.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
