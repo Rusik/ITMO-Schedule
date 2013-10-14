@@ -11,10 +11,13 @@
 @implementation OULesson
 
 + (OULessonWeekType)weekTypeFromString:(NSString *)string {
-    if ([string rangeOfString:@"чет" options:NSCaseInsensitiveSearch].location != NSNotFound) {
-        return OULessonWeekTypeEven;
-    } else if ([string rangeOfString:@"неч" options:NSCaseInsensitiveSearch].location != NSNotFound) {
+
+    if (!string) return OULessonWeekTypeAny;
+
+    if ([string rangeOfString:@"неч" options:NSCaseInsensitiveSearch].location != NSNotFound) {
         return OULessonWeekTypeOdd;
+    } else if ([string rangeOfString:@"чет" options:NSCaseInsensitiveSearch].location != NSNotFound) {
+        return OULessonWeekTypeEven;
     } else {
         return OULessonWeekTypeAny;
     }
@@ -76,5 +79,24 @@
     }
 }
 
++ (OULessonWeekDay)weekDayFromString:(NSString *)string {
+    NSArray *days = @[@"пон", @"вт", @"ср", @"чет", @"пят", @"суб", @"воск"];
+    for (NSString *day in days) {
+        if ([string rangeOfString:day options:NSCaseInsensitiveSearch].location != NSNotFound) {
+            return [days indexOfObject:day];
+        }
+    }
+    NSLog(@"ERROR %s", __PRETTY_FUNCTION__);
+    return -1;
+}
+
++ (NSString *)stringFromWeekDay:(OULessonWeekDay)weekDay {
+    NSArray *days = [self weekDays];
+    return [days objectAtIndex:weekDay];
+}
+
++ (NSArray *)weekDays {
+    return @[@"Понедельник", @"Вторник", @"Среда", @"Четверг", @"Пятница", @"Суббота", @"Воскресенье"];
+}
 
 @end

@@ -21,12 +21,16 @@
     IBOutlet UITableView *_tableView2;
     IBOutlet UIScrollView *_scrollView;
 
-    NSArray *_lessons;
+    NSArray *_weekDays1;
+    NSArray *_weekDays2;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self registerTableViewsForCells];
+}
 
+- (void)registerTableViewsForCells {
     [_tableView1 registerNib:[OUGroupCell nibForCell] forCellReuseIdentifier:[OUGroupCell cellIdentifier]];
     [_tableView1 registerNib:[OUTeacherCell nibForCell] forCellReuseIdentifier:[OUTeacherCell cellIdentifier]];
     [_tableView1 registerNib:[OUAuditoryCell nibForCell] forCellReuseIdentifier:[OUAuditoryCell cellIdentifier]];
@@ -41,14 +45,40 @@
 }
 
 - (void)reloadData {
-    _lessons = [[OUScheduleCoordinator sharedInstance] lessons];
+
+    _weekDays1 = [[OUScheduleCoordinator sharedInstance] weekDaysForWeekType:OULessonWeekTypeOdd];
+    _weekDays2 = [[OUScheduleCoordinator sharedInstance] weekDaysForWeekType:OULessonWeekTypeEven];
+
     [_tableView1 reloadData];
+    [_tableView2 reloadData];
 }
 
 #pragma mark - UITableViewDataSource & UITableViewDelegate
 
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return _lessons.count;
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    if (tableView == _tableView1) {
+        return _weekDays1[section];
+    } else {
+        return _weekDays2[section];
+    }
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    if (tableView == _tableView1) {
+        return _weekDays1.count;
+    } else {
+        return _weekDays2.count;
+    }
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    if (tableView == _tableView1) {
+        NSString *weekDay = _weekDays1[section];
+        return [[OUScheduleCoordinator sharedInstance] lessonsForDayString:weekDay weekType:OULessonWeekTypeOdd].count;
+    } else {
+        NSString *weekDay = _weekDays2[section];
+        return [[OUScheduleCoordinator sharedInstance] lessonsForDayString:weekDay weekType:OULessonWeekTypeEven].count;
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -68,7 +98,15 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 
     id type = [[OUScheduleCoordinator sharedInstance] lessonsType];
-    id lesson = _lessons[indexPath.row];
+    NSArray *lessons;
+    if (tableView == _tableView1) {
+        NSString *weekDay = _weekDays1[indexPath.section];
+        lessons = [[OUScheduleCoordinator sharedInstance] lessonsForDayString:weekDay weekType:OULessonWeekTypeOdd];
+    } else {
+        NSString *weekDay = _weekDays2[indexPath.section];
+        lessons = [[OUScheduleCoordinator sharedInstance] lessonsForDayString:weekDay weekType:OULessonWeekTypeEven];
+    }
+    id lesson = lessons[indexPath.row];
 
     UITableViewCell *cell;
     if ([type isKindOfClass:[OUGroup class]]) {

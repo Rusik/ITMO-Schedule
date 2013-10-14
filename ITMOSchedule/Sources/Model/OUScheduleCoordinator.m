@@ -36,12 +36,7 @@
             [results addObject:group];
         }
     }
-    int max = 0;
     for (OUTeacher *teacher in teachers) {
-//        if (teacher.teacherName.length > max) {
-//            max = teacher.teacherName.length;
-//            NSLog(@"%d %@", max, teacher.teacherName);
-//        }
         if ([teacher.teacherName rangeOfString:string options:NSCaseInsensitiveSearch].location != NSNotFound) {
             [results addObject:teacher];
         }
@@ -75,6 +70,58 @@
 
 - (NSArray *)lessons {
     return _lessons;
+}
+
+- (OULessonWeekType)currentWeekType {
+    if (_currentWeekNumber % 2) {
+        return OULessonWeekTypeOdd;
+    } else {
+        return OULessonWeekTypeEven;
+    }
+}
+
+#pragma mark - Lessons data
+
+- (NSArray *)weekDaysForWeekType:(OULessonWeekType)weekType {
+    NSArray *lessons = [self lessonsForWeekType:weekType];
+    NSMutableSet *set = [NSMutableSet set];
+    for (OULesson *l in lessons) {
+        [set addObject:[OULesson stringFromWeekDay:l.weekDay]];
+    }
+    NSMutableArray *days = [NSMutableArray array];
+    for (NSString *day in [OULesson weekDays]) {
+        if ([set containsObject:day]) {
+            if (![days containsObject:day]) {
+                [days addObject:day];
+            }
+        }
+    }
+    return days;
+}
+
+- (NSArray *)lessonsForDay:(OULessonWeekDay)weekDay weekType:(OULessonWeekType)weekType {
+    NSArray *weekLessons = [self lessonsForWeekType:weekType];
+    NSMutableArray *lessons = [NSMutableArray array];
+    for (OULesson *l in weekLessons) {
+        if (l.weekDay == weekDay) {
+            [lessons addObject:l];
+        }
+    }
+    return lessons;
+}
+
+- (NSArray *)lessonsForDayString:(NSString *)weekDayString weekType:(OULessonWeekType)weekType {
+    return [self lessonsForDay:[OULesson weekDayFromString:weekDayString] weekType:weekType];
+}
+
+- (NSArray *)lessonsForWeekType:(OULessonWeekType)weekType {
+    NSMutableArray *lessons = [NSMutableArray array];
+    for (OULesson *lesson in _lessons) {
+        if (lesson.weekType == weekType || lesson.weekType == OULessonWeekTypeAny) {
+            [lessons addObject:lesson];
+        }
+    }
+    return lessons;
 }
 
 

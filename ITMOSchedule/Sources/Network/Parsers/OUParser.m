@@ -58,9 +58,9 @@
             OULesson *lesson = [OULesson new];
 
             if (group) lesson.groups = @[group];
-            lesson.weekDay = weekDay;
-            [self parseLessonInfoForElement:weekDayElement intoLesson:lesson];
-            lesson.teacher = [self parseTeacherForElement:weekDayElement];
+            lesson.weekDay = [OULesson weekDayFromString:weekDay];
+            [self parseLessonInfoForElement:lessonElement intoLesson:lesson];
+            lesson.teacher = [self parseTeacherForElement:lessonElement];
 
             [lessons addObject:lesson];
         }];
@@ -82,9 +82,9 @@
             OULesson *lesson = [OULesson new];
 
             lesson.groups = [self groupsFromString:[lessonElement child:@"GROUP_NUMBER"].text];
-            lesson.weekDay = weekDay;
+            lesson.weekDay = [OULesson weekDayFromString:weekDay];
             [self parseLessonInfoForElement:lessonElement intoLesson:lesson];
-            lesson.teacher = [self parseTeacherForElement:weekDayElement];
+            lesson.teacher = [self parseTeacherForElement:lessonElement];
 
             [lessons addObject:lesson];
         }];
@@ -106,7 +106,7 @@
             OULesson *lesson = [OULesson new];
 
             lesson.groups = [self groupsFromString:[lessonElement child:@"GROUP_NUMBER"].text];
-            lesson.weekDay = weekDay;
+            lesson.weekDay = [OULesson weekDayFromString:weekDay];
             [self parseLessonInfoForElement:lessonElement intoLesson:lesson];
             lesson.teacher = teacher;
 
@@ -133,12 +133,14 @@
 }
 
 + (void)parseLessonInfoForElement:(RXMLElement *)element intoLesson:(OULesson *)lesson {
-    lesson.timeInterval = [[element child:@"TIME_INTERVAL"] text];
+    NSString *timeInterval = [[element child:@"TIME_INTERVAL"] text];
     OULessonTime startTime;
     OULessonTime finishTime;
-    if ([self startTime:&startTime finishTime:&finishTime fromString:lesson.timeInterval]) {
+    if ([self startTime:&startTime finishTime:&finishTime fromString:timeInterval]) {
         lesson.startTime = startTime;
         lesson.finishTime = finishTime;
+    } else {
+        lesson.timeInterval = timeInterval;
     }
     lesson.weekType = [OULesson weekTypeFromString:[[element child:@"WEEK"] text]];
     lesson.address = [[[element child:@"PLACE"] text] stringByDeletingNewLineCharacters];

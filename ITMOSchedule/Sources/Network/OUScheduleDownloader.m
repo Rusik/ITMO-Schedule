@@ -58,7 +58,7 @@ typedef void(^ParsingBlock)(NSData *data);
 - (void)downloadWeekNumber:(CompleteBlock)block {
     NSString *pageUrlString = [NSString stringWithFormat:@"http://isu.ifmo.ru/pls/apex/PK_ADM_GETXML.GET_WEEK_NUMBER"];
     [self performRequestWithStringUrl:pageUrlString parsingBlock:^(NSData *data) {
-        [[OUScheduleCoordinator sharedInstance] setWeekNumber:[OUParser parseWeekNumber:data]];
+        [[OUScheduleCoordinator sharedInstance] setCurrentWeekNumber:[OUParser parseWeekNumber:data]];
     } complete:block];
 }
 

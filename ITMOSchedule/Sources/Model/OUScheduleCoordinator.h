@@ -27,6 +27,12 @@
 - (id)lessonsType; // return OUGroup, OUTeacher or OUAuditory
 - (NSArray *)lessons;
 
-@property (nonatomic) int weekNumber;
+- (NSArray *)weekDaysForWeekType:(OULessonWeekType)weekType;
+- (NSArray *)lessonsForDay:(OULessonWeekDay)weekDay weekType:(OULessonWeekType)weekType;
+- (NSArray *)lessonsForDayString:(NSString *)weekDayString weekType:(OULessonWeekType)weekType;
+
+@property (nonatomic) int currentWeekNumber;
+
+- (OULessonWeekType)currentWeekType;
 
 @end
