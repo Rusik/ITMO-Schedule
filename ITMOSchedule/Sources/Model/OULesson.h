@@ -35,11 +35,11 @@ typedef int OULessonTime;
 
 @property (nonatomic, copy) NSString *address;
 
-@property (nonatomic, copy) NSString *title;
+@property (nonatomic, copy) NSString *lessonName;
 
 @property (nonatomic, strong) OUTeacher *teacher;
 
-@property (nonatomic) OULessonType type;
+@property (nonatomic) OULessonType lessonType;
 @property (nonatomic) NSString *typeString;
 
 @property (nonatomic, copy) NSString *weekDay;

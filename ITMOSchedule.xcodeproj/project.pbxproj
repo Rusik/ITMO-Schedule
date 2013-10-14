@@ -22,6 +22,21 @@
 		7F9F67E518055D9700A9E9D1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7F9F67E418055D9700A9E9D1 /* Images.xcassets */; };
 		7FA9F5FE180B10580067A3FF /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FA9F5FD180B10580067A3FF /* SystemConfiguration.framework */; };
 		7FA9F600180B105E0067A3FF /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FA9F5FF180B105E0067A3FF /* MobileCoreServices.framework */; };
+		7FA9F603180B23580067A3FF /* OUSearchCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FA9F602180B23580067A3FF /* OUSearchCell.m */; };
+		7FA9F605180B236B0067A3FF /* OUSearchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FA9F604180B236B0067A3FF /* OUSearchCell.xib */; };
+		7FA9F60C180B23CF0067A3FF /* NSObject+NIB.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FA9F608180B23CF0067A3FF /* NSObject+NIB.m */; };
+		7FA9F60D180B23CF0067A3FF /* UITableViewCell+Helpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FA9F60A180B23CF0067A3FF /* UITableViewCell+Helpers.m */; };
+		7FA9F653180B31DA0067A3FF /* UIView+Helpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FA9F652180B31DA0067A3FF /* UIView+Helpers.m */; };
+		7FA9F657180B3A3D0067A3FF /* OUScheduleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FA9F655180B3A3D0067A3FF /* OUScheduleViewController.m */; };
+		7FA9F658180B3A3D0067A3FF /* OUScheduleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FA9F656180B3A3D0067A3FF /* OUScheduleViewController.xib */; };
+		7FA9F65B180BDBF40067A3FF /* OUGroupCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FA9F65A180BDBF40067A3FF /* OUGroupCell.m */; };
+		7FA9F65D180BDBFD0067A3FF /* OUGroupCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FA9F65C180BDBFD0067A3FF /* OUGroupCell.xib */; };
+		7FA9F660180BE3840067A3FF /* OUTeacherCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FA9F65F180BE3840067A3FF /* OUTeacherCell.m */; };
+		7FA9F662180BE3900067A3FF /* OUTeacherCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FA9F661180BE3900067A3FF /* OUTeacherCell.xib */; };
+		7FA9F665180BE39E0067A3FF /* OUAuditoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FA9F664180BE39E0067A3FF /* OUAuditoryCell.m */; };
+		7FA9F667180BE3BA0067A3FF /* OUAuditoryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FA9F666180BE3BA0067A3FF /* OUAuditoryCell.xib */; };
+		7FC509DB180C1BAF00FCE715 /* OULessonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FC509DA180C1BAF00FCE715 /* OULessonCell.m */; };
+		7FC509DE180C265100FCE715 /* NSString+Helpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FC509DD180C265100FCE715 /* NSString+Helpers.m */; };
 		7FE3D92C1805F79300D3D3C3 /* OULesson.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FE3D92B1805F79300D3D3C3 /* OULesson.m */; };
 		841F203B180563E00054C523 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 841F2037180563E00054C523 /* main.m */; };
 		841F203C180563E00054C523 /* OUAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 841F203A180563E00054C523 /* OUAppDelegate.m */; };
@@ -64,6 +79,32 @@
 		7F9F67E418055D9700A9E9D1 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		7FA9F5FD180B10580067A3FF /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		7FA9F5FF180B105E0067A3FF /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		7FA9F601180B23580067A3FF /* OUSearchCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OUSearchCell.h; sourceTree = "<group>"; };
+		7FA9F602180B23580067A3FF /* OUSearchCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OUSearchCell.m; sourceTree = "<group>"; };
+		7FA9F604180B236B0067A3FF /* OUSearchCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OUSearchCell.xib; sourceTree = "<group>"; };
+		7FA9F606180B23CF0067A3FF /* NSObject+NIB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+NIB.h"; sourceTree = "<group>"; };
+		7FA9F607180B23CF0067A3FF /* UITableViewCell+Helpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableViewCell+Helpers.h"; sourceTree = "<group>"; };
+		7FA9F608180B23CF0067A3FF /* NSObject+NIB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+NIB.m"; sourceTree = "<group>"; };
+		7FA9F60A180B23CF0067A3FF /* UITableViewCell+Helpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableViewCell+Helpers.m"; sourceTree = "<group>"; };
+		7FA9F60F180B24A10067A3FF /* Global.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Global.h; sourceTree = "<group>"; };
+		7FA9F651180B31DA0067A3FF /* UIView+Helpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Helpers.h"; sourceTree = "<group>"; };
+		7FA9F652180B31DA0067A3FF /* UIView+Helpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Helpers.m"; sourceTree = "<group>"; };
+		7FA9F654180B3A3D0067A3FF /* OUScheduleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OUScheduleViewController.h; sourceTree = "<group>"; };
+		7FA9F655180B3A3D0067A3FF /* OUScheduleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OUScheduleViewController.m; sourceTree = "<group>"; };
+		7FA9F656180B3A3D0067A3FF /* OUScheduleViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OUScheduleViewController.xib; sourceTree = "<group>"; };
+		7FA9F659180BDBF40067A3FF /* OUGroupCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OUGroupCell.h; sourceTree = "<group>"; };
+		7FA9F65A180BDBF40067A3FF /* OUGroupCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OUGroupCell.m; sourceTree = "<group>"; };
+		7FA9F65C180BDBFD0067A3FF /* OUGroupCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OUGroupCell.xib; sourceTree = "<group>"; };
+		7FA9F65E180BE3840067A3FF /* OUTeacherCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OUTeacherCell.h; sourceTree = "<group>"; };
+		7FA9F65F180BE3840067A3FF /* OUTeacherCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OUTeacherCell.m; sourceTree = "<group>"; };
+		7FA9F661180BE3900067A3FF /* OUTeacherCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OUTeacherCell.xib; sourceTree = "<group>"; };
+		7FA9F663180BE39E0067A3FF /* OUAuditoryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OUAuditoryCell.h; sourceTree = "<group>"; };
+		7FA9F664180BE39E0067A3FF /* OUAuditoryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OUAuditoryCell.m; sourceTree = "<group>"; };
+		7FA9F666180BE3BA0067A3FF /* OUAuditoryCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OUAuditoryCell.xib; sourceTree = "<group>"; };
+		7FC509D9180C1BAF00FCE715 /* OULessonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OULessonCell.h; sourceTree = "<group>"; };
+		7FC509DA180C1BAF00FCE715 /* OULessonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OULessonCell.m; sourceTree = "<group>"; };
+		7FC509DC180C265100FCE715 /* NSString+Helpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Helpers.h"; sourceTree = "<group>"; };
+		7FC509DD180C265100FCE715 /* NSString+Helpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Helpers.m"; sourceTree = "<group>"; };
 		7FE3D92A1805F79300D3D3C3 /* OULesson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OULesson.h; sourceTree = "<group>"; };
 		7FE3D92B1805F79300D3D3C3 /* OULesson.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OULesson.m; sourceTree = "<group>"; };
 		841F2037180563E00054C523 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Sources/main.m; sourceTree = "<group>"; };
@@ -129,8 +170,17 @@
 		7F2B46301805D2FF00B48239 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				7FA9F60F180B24A10067A3FF /* Global.h */,
 				7F2B46311805D33D00B48239 /* NSArray+Helpers.h */,
 				7F2B46321805D33D00B48239 /* NSArray+Helpers.m */,
+				7FA9F606180B23CF0067A3FF /* NSObject+NIB.h */,
+				7FA9F608180B23CF0067A3FF /* NSObject+NIB.m */,
+				7FA9F607180B23CF0067A3FF /* UITableViewCell+Helpers.h */,
+				7FA9F60A180B23CF0067A3FF /* UITableViewCell+Helpers.m */,
+				7FA9F651180B31DA0067A3FF /* UIView+Helpers.h */,
+				7FA9F652180B31DA0067A3FF /* UIView+Helpers.m */,
+				7FC509DC180C265100FCE715 /* NSString+Helpers.h */,
+				7FC509DD180C265100FCE715 /* NSString+Helpers.m */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -245,6 +295,9 @@
 				7F4EA6CA1805C7FF00C1958D /* OUMainViewController.h */,
 				7F4EA6CB1805C7FF00C1958D /* OUMainViewController.m */,
 				7F4EA6CC1805C7FF00C1958D /* OUMainViewController.xib */,
+				7FA9F654180B3A3D0067A3FF /* OUScheduleViewController.h */,
+				7FA9F655180B3A3D0067A3FF /* OUScheduleViewController.m */,
+				7FA9F656180B3A3D0067A3FF /* OUScheduleViewController.xib */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -252,6 +305,20 @@
 		841F203F1805641E0054C523 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				7FA9F601180B23580067A3FF /* OUSearchCell.h */,
+				7FA9F602180B23580067A3FF /* OUSearchCell.m */,
+				7FA9F604180B236B0067A3FF /* OUSearchCell.xib */,
+				7FC509D9180C1BAF00FCE715 /* OULessonCell.h */,
+				7FC509DA180C1BAF00FCE715 /* OULessonCell.m */,
+				7FA9F659180BDBF40067A3FF /* OUGroupCell.h */,
+				7FA9F65A180BDBF40067A3FF /* OUGroupCell.m */,
+				7FA9F65C180BDBFD0067A3FF /* OUGroupCell.xib */,
+				7FA9F65E180BE3840067A3FF /* OUTeacherCell.h */,
+				7FA9F65F180BE3840067A3FF /* OUTeacherCell.m */,
+				7FA9F661180BE3900067A3FF /* OUTeacherCell.xib */,
+				7FA9F663180BE39E0067A3FF /* OUAuditoryCell.h */,
+				7FA9F664180BE39E0067A3FF /* OUAuditoryCell.m */,
+				7FA9F666180BE3BA0067A3FF /* OUAuditoryCell.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -340,9 +407,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7FA9F667180BE3BA0067A3FF /* OUAuditoryCell.xib in Resources */,
 				7F4EA6CE1805C7FF00C1958D /* OUMainViewController.xib in Resources */,
 				7F9F67DD18055D9700A9E9D1 /* InfoPlist.strings in Resources */,
 				7F9F67E518055D9700A9E9D1 /* Images.xcassets in Resources */,
+				7FA9F662180BE3900067A3FF /* OUTeacherCell.xib in Resources */,
+				7FA9F65D180BDBFD0067A3FF /* OUGroupCell.xib in Resources */,
+				7FA9F658180B3A3D0067A3FF /* OUScheduleViewController.xib in Resources */,
+				7FA9F605180B236B0067A3FF /* OUSearchCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -356,6 +428,8 @@
 				841F218A180569520054C523 /* AFHTTPRequestOperation.m in Sources */,
 				841F218B180569520054C523 /* AFImageRequestOperation.m in Sources */,
 				7FE3D92C1805F79300D3D3C3 /* OULesson.m in Sources */,
+				7FA9F653180B31DA0067A3FF /* UIView+Helpers.m in Sources */,
+				7FA9F60D180B23CF0067A3FF /* UITableViewCell+Helpers.m in Sources */,
 				7F2B46331805D33D00B48239 /* NSArray+Helpers.m in Sources */,
 				841F218E180569520054C523 /* AFPropertyListRequestOperation.m in Sources */,
 				841F21D918057A4A0054C523 /* OUGroup.m in Sources */,
@@ -365,14 +439,22 @@
 				841F203B180563E00054C523 /* main.m in Sources */,
 				7F4EA6D21805C83200C1958D /* OUParser.m in Sources */,
 				841F2190180569520054C523 /* AFXMLRequestOperation.m in Sources */,
+				7FA9F660180BE3840067A3FF /* OUTeacherCell.m in Sources */,
+				7FC509DB180C1BAF00FCE715 /* OULessonCell.m in Sources */,
 				841F21CD180573490054C523 /* OUScheduleDownloader.m in Sources */,
+				7FA9F657180B3A3D0067A3FF /* OUScheduleViewController.m in Sources */,
+				7FA9F603180B23580067A3FF /* OUSearchCell.m in Sources */,
+				7FA9F65B180BDBF40067A3FF /* OUGroupCell.m in Sources */,
 				7F4EA6CD1805C7FF00C1958D /* OUMainViewController.m in Sources */,
 				841F21DC18057A6F0054C523 /* OUTeacher.m in Sources */,
 				841F203C180563E00054C523 /* OUAppDelegate.m in Sources */,
 				841F218D180569520054C523 /* AFNetworkActivityIndicatorManager.m in Sources */,
 				7F2B462B1805CE7600B48239 /* RXMLElement.m in Sources */,
 				841F2191180569520054C523 /* UIImageView+AFNetworking.m in Sources */,
+				7FC509DE180C265100FCE715 /* NSString+Helpers.m in Sources */,
 				841F2189180569520054C523 /* AFHTTPClient.m in Sources */,
+				7FA9F665180BE39E0067A3FF /* OUAuditoryCell.m in Sources */,
+				7FA9F60C180B23CF0067A3FF /* NSObject+NIB.m in Sources */,
 				841F21DF18057A8B0054C523 /* OUAuditory.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -424,7 +506,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 			};
@@ -457,7 +539,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};

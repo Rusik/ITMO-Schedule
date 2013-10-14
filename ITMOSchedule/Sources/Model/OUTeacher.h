@@ -15,6 +15,7 @@
 + (OUTeacher *)teacherWithId:(NSString *)teacherId;
 
 @property (nonatomic, copy) NSString *teacherName;
+@property (nonatomic, copy) NSString *teaherPosition; //должность
 @property (nonatomic, copy) NSString *teacherId;
 
 @end

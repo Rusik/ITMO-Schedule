@@ -21,15 +21,17 @@
 #import "OUTeacher.h"
 #import "OUAuditory.h"
 
+typedef void(^CompleteBlock)(void);
+
 @interface OUScheduleDownloader : NSObject
 
 + (OUScheduleDownloader *)sharedInstance;
 
-- (void)downloadMainInfo;
-- (void)downloadLessonsForGroup:(OUGroup *)group;
-- (void)downloadLessonsForAuditory:(OUAuditory *)auditory;
-- (void)downloadLessonsForTeacher:(OUTeacher *)teacher;
+- (void)downloadMainInfo:(CompleteBlock)block;
+- (void)downloadLessonsForGroup:(OUGroup *)group complete:(CompleteBlock)block;
+- (void)downloadLessonsForAuditory:(OUAuditory *)auditory complete:(CompleteBlock)block;
+- (void)downloadLessonsForTeacher:(OUTeacher *)teacher complete:(CompleteBlock)block;
 
-- (void)downloadWeekNumber;
+- (void)downloadWeekNumber:(CompleteBlock)block;
 
 @end

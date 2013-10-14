@@ -8,12 +8,13 @@
 
 #import "OUParser.h"
 #import "RXMLElement.h"
-#import "OULesson.h"
+#import "OUScheduleCoordinator.h"
 #import "NSArray+Helpers.h"
+#import "NSString+Helpers.h"
 
 @implementation OUParser
 
-+ (void)parseMainInfo:(NSData *)XMLData {
++ (NSDictionary *)parseMainInfo:(NSData *)XMLData {
 
     NSMutableArray *groups = [NSMutableArray array];
     NSMutableArray *teachers = [NSMutableArray array];
@@ -30,7 +31,8 @@
     [rootElement iterate:@"TEACHERS.TEACHER" usingBlock:^(RXMLElement *teacherElement) {
         OUTeacher *teacher = [OUTeacher new];
         teacher.teacherId = [teacherElement child:@"TEACHER_ID"].text;
-        teacher.teacherName = [teacherElement child:@"TEACHER_FIO"].text;
+        teacher.teacherName = [[teacherElement child:@"TEACHER_FIO"].text stringByDeletingDataInBrackets];
+        teacher.teaherPosition = [[teacherElement child:@"TEACHER_FIO"].text stringFromBrackets];
         [teachers addObject:teacher];
     }];
 
@@ -40,12 +42,10 @@
         [auditories addObject:auditory];
     }];
 
-    NSLog(@"%@", [groups logElements]);
-    NSLog(@"%@", [teachers logElements]);
-    NSLog(@"%@", [auditories logElements]);
+    return @{GROUPS_INFO_KEY: groups, TEACHERS_INFO_KEY: teachers, AUDITORIES_INFO_KEY: auditories};
 }
 
-+ (void)parseLessons:(NSData *)XMLData forGroup:(OUGroup *)group {
++ (NSArray *)parseLessons:(NSData *)XMLData forGroup:(OUGroup *)group {
     NSMutableArray *lessons = [NSMutableArray  array];
 
     RXMLElement *rootElement = [RXMLElement elementFromXMLData:XMLData];
@@ -57,41 +57,19 @@
         [weekDayElement iterate:@"DESCRIPTION.SCHEDULE.SCHEDULE_PARAM" usingBlock:^(RXMLElement *lessonElement) {
             OULesson *lesson = [OULesson new];
 
-            if (group) {
-                lesson.groups = @[group];
-            }
-
+            if (group) lesson.groups = @[group];
             lesson.weekDay = weekDay;
-
-            lesson.timeInterval = [[lessonElement child:@"TIME_INTERVAL"] text];
-            OULessonTime startTime;
-            OULessonTime finishTime;
-            if (![self startTime:&startTime finishTime:&finishTime fromString:lesson.timeInterval]) {
-                lesson.startTime = startTime;
-                lesson.finishTime = finishTime;
-            }
-
-            lesson.weekType = [OULesson weekTypeFromString:[[lessonElement child:@"WEEK"] text]];
-
-            lesson.address = [[lessonElement child:@"PLACE"] text];
-
-            lesson.title = [[lessonElement child:@"SUBJECT"] text];
-
-            lesson.type = [OULesson lessonTypeFromString:lesson.title];
-
-            OUTeacher *teacher = [[OUTeacher alloc] init];
-            teacher.teacherName = [[lessonElement child:@"LECTURER"] text];
-            teacher.teacherId = [[lessonElement child:@"LECTUTER_ID"] text];
-            lesson.teacher = teacher;
+            [self parseLessonInfoForElement:weekDayElement intoLesson:lesson];
+            lesson.teacher = [self parseTeacherForElement:weekDayElement];
 
             [lessons addObject:lesson];
         }];
     }];
 
-    NSLog(@"%@", [lessons logElements]);
+    return lessons;
 }
 
-+ (void)parseLessons:(NSData *)XMLData forAuditory:(OUAuditory *)auditory {
++ (NSArray *)parseLessons:(NSData *)XMLData forAuditory:(OUAuditory *)auditory {
     NSMutableArray *lessons = [NSMutableArray  array];
 
     RXMLElement *rootElement = [RXMLElement elementFromXMLData:XMLData];
@@ -105,33 +83,17 @@
 
             lesson.groups = [self groupsFromString:[lessonElement child:@"GROUP_NUMBER"].text];
             lesson.weekDay = weekDay;
+            [self parseLessonInfoForElement:lessonElement intoLesson:lesson];
+            lesson.teacher = [self parseTeacherForElement:weekDayElement];
 
-            lesson.timeInterval = [[lessonElement child:@"TIME_INTERVAL"] text];
-            OULessonTime startTime;
-            OULessonTime finishTime;
-            if (![self startTime:&startTime finishTime:&finishTime fromString:lesson.timeInterval]) {
-                lesson.startTime = startTime;
-                lesson.finishTime = finishTime;
-            }
-
-            lesson.weekType = [OULesson weekTypeFromString:[[lessonElement child:@"WEEK"] text]];
-            lesson.address = [[lessonElement child:@"PLACE"] text];
-            lesson.title = [[lessonElement child:@"SUBJECT"] text];
-            lesson.type = [OULesson lessonTypeFromString:lesson.title];
-
-            OUTeacher *teacher = [[OUTeacher alloc] init];
-            teacher.teacherName = [[lessonElement child:@"LECTURER"] text];
-            teacher.teacherId = [[lessonElement child:@"LECTUTER_ID"] text];
-            lesson.teacher = teacher;
-            
             [lessons addObject:lesson];
         }];
     }];
 
-    NSLog(@"%@", [lessons logElements]);
+    return lessons;
 }
 
-+ (void)parseLessons:(NSData *)XMLData forTeacher:(OUTeacher *)teacher {
++ (NSArray *)parseLessons:(NSData *)XMLData forTeacher:(OUTeacher *)teacher {
     NSMutableArray *lessons = [NSMutableArray  array];
 
     RXMLElement *rootElement = [RXMLElement elementFromXMLData:XMLData];
@@ -145,32 +107,43 @@
 
             lesson.groups = [self groupsFromString:[lessonElement child:@"GROUP_NUMBER"].text];
             lesson.weekDay = weekDay;
-
-            lesson.timeInterval = [[lessonElement child:@"TIME_INTERVAL"] text];
-            OULessonTime startTime;
-            OULessonTime finishTime;
-            if (![self startTime:&startTime finishTime:&finishTime fromString:lesson.timeInterval]) {
-                lesson.startTime = startTime;
-                lesson.finishTime = finishTime;
-            }
-
-            lesson.weekType = [OULesson weekTypeFromString:[[lessonElement child:@"WEEK"] text]];
-            lesson.address = [[lessonElement child:@"PLACE"] text];
-            lesson.title = [[lessonElement child:@"SUBJECT"] text];
-            lesson.type = [OULesson lessonTypeFromString:lesson.title];
-
+            [self parseLessonInfoForElement:lessonElement intoLesson:lesson];
             lesson.teacher = teacher;
 
             [lessons addObject:lesson];
         }];
     }];
-    NSLog(@"%@", [lessons logElements]);
+
+    return lessons;
 }
 
-+ (void)parseWeekNumber:(NSData *)XMLData {
++ (int)parseWeekNumber:(NSData *)XMLData {
     RXMLElement *rootElement = [RXMLElement elementFromXMLData:XMLData];
 
-    NSLog(@"%@", rootElement.text);
+    return rootElement.text.intValue;
+}
+
+#pragma mark - Little parsers
+
++ (OUTeacher *)parseTeacherForElement:(RXMLElement *)element {
+    OUTeacher *teacher = [[OUTeacher alloc] init];
+    teacher.teacherName = [[element child:@"LECTURER"] text];
+    teacher.teacherId = [[element child:@"LECTUTER_ID"] text];
+    return teacher;
+}
+
++ (void)parseLessonInfoForElement:(RXMLElement *)element intoLesson:(OULesson *)lesson {
+    lesson.timeInterval = [[element child:@"TIME_INTERVAL"] text];
+    OULessonTime startTime;
+    OULessonTime finishTime;
+    if ([self startTime:&startTime finishTime:&finishTime fromString:lesson.timeInterval]) {
+        lesson.startTime = startTime;
+        lesson.finishTime = finishTime;
+    }
+    lesson.weekType = [OULesson weekTypeFromString:[[element child:@"WEEK"] text]];
+    lesson.address = [[[element child:@"PLACE"] text] stringByDeletingNewLineCharacters];
+    lesson.lessonName = [[element child:@"SUBJECT"].text stringByDeletingDataInBrackets];
+    lesson.lessonType = [OULesson lessonTypeFromString:[[element child:@"SUBJECT"] text]];
 }
 
 #pragma mark - Helpers
@@ -186,10 +159,12 @@
     NSString *finishTimeString = components[1];
 
     NSArray *startTimeComponents = [startTimeString componentsSeparatedByString:@":"];
-    *startTime = [startTimeComponents[0] intValue] * 100 + [startTimeComponents[1] intValue];
+    OULessonTime s = [startTimeComponents[0] intValue] * 100 + [startTimeComponents[1] intValue];
+    *startTime = s;
 
     NSArray *finishTimeComponents = [finishTimeString componentsSeparatedByString:@":"];
-    *finishTime = [finishTimeComponents[0] intValue] * 100 + [finishTimeComponents[1] intValue];
+    OULessonTime f = [finishTimeComponents[0] intValue] * 100 + [finishTimeComponents[1] intValue];
+    *finishTime = f;
 
     return string;
 }

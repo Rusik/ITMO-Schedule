@@ -7,16 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "OUAuditory.h"
-#import "OUTeacher.h"
-#import "OUGroup.h"
 
 @interface OUParser : NSObject
 
-+ (void)parseMainInfo:(NSData *)XMLData;
-+ (void)parseLessons:(NSData *)XMLData forGroup:(OUGroup *)group;
-+ (void)parseLessons:(NSData *)XMLData forAuditory:(OUAuditory *)auditory;
-+ (void)parseLessons:(NSData *)XMLData forTeacher:(OUTeacher *)teacher;
-+ (void)parseWeekNumber:(NSData *)XMLData;
++ (NSDictionary *)parseMainInfo:(NSData *)XMLData;
++ (NSArray *)parseLessons:(NSData *)XMLData forGroup:(OUGroup *)group;
++ (NSArray *)parseLessons:(NSData *)XMLData forAuditory:(OUAuditory *)auditory;
++ (NSArray *)parseLessons:(NSData *)XMLData forTeacher:(OUTeacher *)teacher;
++ (int)parseWeekNumber:(NSData *)XMLData;
 
 @end

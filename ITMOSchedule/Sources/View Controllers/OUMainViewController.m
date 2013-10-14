@@ -8,31 +8,101 @@
 
 #import "OUMainViewController.h"
 #import "OUScheduleDownloader.h"
+#import "OUScheduleCoordinator.h"
+#import "UITableViewCell+Helpers.h"
+#import "OUSearchCell.h"
+#import "OUScheduleViewController.h"
 
-@interface OUMainViewController ()
+@interface OUMainViewController () <UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate>
 
 @end
 
-@implementation OUMainViewController
+@implementation OUMainViewController {
+    IBOutlet UITextField *_textField;
+    IBOutlet UITableView *_tableView;
+    IBOutlet UILabel *_loadingLabel;
 
-- (IBAction)mainInfo {
-    [[OUScheduleDownloader sharedInstance] downloadMainInfo];
+    NSArray *_tableData;
+    OUScheduleViewController *_scheduleVC;
 }
 
-- (IBAction)group {
-    [[OUScheduleDownloader sharedInstance] downloadLessonsForGroup:[OUGroup groupWithName:@"4528"]];
+- (void)viewDidLoad {
+    [super viewDidLoad];
+
+    [_tableView registerNib:[OUSearchCell nibForCell] forCellReuseIdentifier:[OUSearchCell cellIdentifier]];
+
+    _loadingLabel.text = @"Загрузка...";
+    [[OUScheduleDownloader sharedInstance] downloadMainInfo:^{
+        _loadingLabel.text = @"Загружено";
+        NSLog(@"MAIN DOWNLOAD");
+    }];
+
+    _scheduleVC = [OUScheduleViewController new];
+    [self addChildViewController:_scheduleVC];
+    [self.view insertSubview:_scheduleVC.view belowSubview:_tableView];
+    _scheduleVC.view.$top = 50;
+    _scheduleVC.view.$height -= 50;
+    [_scheduleVC didMoveToParentViewController:self];
 }
 
-- (IBAction)auditory {
-    [[OUScheduleDownloader sharedInstance] downloadLessonsForAuditory:[OUAuditory auditoryWithName:@"302"]];
+#pragma mark - Actions
+
+- (IBAction)cancelDidPress {
+    [_textField resignFirstResponder];
+    _tableView.hidden = YES;
 }
 
-- (IBAction)teacher {
-    [[OUScheduleDownloader sharedInstance] downloadLessonsForTeacher:[OUTeacher teacherWithId:@"3E12A8828CA9D74485FA259722E10215"]];
+#pragma mark - UITextFieldDelegate
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    _tableView.hidden = NO;
 }
 
-- (IBAction)week {
-    [[OUScheduleDownloader sharedInstance] downloadWeekNumber];
+- (IBAction)textDidChange {
+    _tableData = [[OUScheduleCoordinator sharedInstance] mainInfoDataForString:_textField.text];
+    [_tableView reloadData];
+}
+
+#pragma mark - UITableViewDelegate & UITableViewDataSource
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return [OUSearchCell heightForData:_tableData[indexPath.row]];
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return _tableData.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    OUSearchCell *cell = (OUSearchCell *)[tableView dequeueReusableCellWithIdentifier:[OUSearchCell cellIdentifier]];
+    cell.data = _tableData[indexPath.row];
+    return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+
+    NSLog(@"SELECT");
+
+    id data = _tableData[indexPath.row];
+    CompleteBlock block = ^{
+        [_scheduleVC reloadData];
+    };
+    if ([data isKindOfClass:[OUGroup class]]) {
+        [[OUScheduleDownloader sharedInstance] downloadLessonsForGroup:data complete:block];
+    } else if ([data isKindOfClass:[OUTeacher class]]) {
+        [[OUScheduleDownloader sharedInstance] downloadLessonsForTeacher:data complete:block];
+    } else if ([data isKindOfClass:[OUAuditory class]]) {
+        [[OUScheduleDownloader sharedInstance] downloadLessonsForAuditory:data complete:block];
+    }
+    
+    _tableView.hidden = YES;
+    [_textField resignFirstResponder];
+}
+
+#pragma mark - UIScrollViewDelegate
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    [_textField resignFirstResponder];
 }
 
 @end

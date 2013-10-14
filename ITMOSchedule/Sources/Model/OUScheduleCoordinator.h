@@ -8,6 +8,25 @@
 
 #import <Foundation/Foundation.h>
 
+#define GROUPS_INFO_KEY     @"groups"
+#define TEACHERS_INFO_KEY   @"teachers"
+#define AUDITORIES_INFO_KEY @"auditories"
+
 @interface OUScheduleCoordinator : NSObject
+
++ (OUScheduleCoordinator *)sharedInstance;
+
+- (NSArray *)mainInfoDataForString:(NSString *)string;
+
+@property (nonatomic, retain) NSDictionary *mainInfo;
+
+- (void)setLessons:(NSArray *)lessons forGroup:(OUGroup *)group;
+- (void)setLessons:(NSArray *)lessons forTeacher:(OUTeacher *)teacher;
+- (void)setLessons:(NSArray *)lessons forAuditory:(OUAuditory *)auditory;
+
+- (id)lessonsType; // return OUGroup, OUTeacher or OUAuditory
+- (NSArray *)lessons;
+
+@property (nonatomic) int weekNumber;
 
 @end
