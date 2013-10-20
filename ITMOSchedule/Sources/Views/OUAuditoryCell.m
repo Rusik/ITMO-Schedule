@@ -8,10 +8,22 @@
 
 #import "OUAuditoryCell.h"
 
-@implementation OUAuditoryCell
+@implementation OUAuditoryCell {
+    IBOutlet UILabel *_adressLabel;
+}
 
 - (void)setLesson:(OULesson *)lesson {
     [super setLesson:lesson];
+
+    _adressLabel.text = lesson.address;
+}
+
+- (void)updateTopLabel {
+    self.topLabel.text = [self groupsString];
+}
+
+- (void)updateBottomLabel {
+    self.bottomLabel.text = self.lesson.teacher.teacherName;
 }
 
 @end

@@ -41,7 +41,7 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    _scrollView.contentSize = CGSizeMake(self.view.$width * 2, self.view.$height);
+    _scrollView.contentSize = CGSizeMake(_scrollView.$width * 2, self.view.$height);
 }
 
 - (void)reloadData {
@@ -106,23 +106,21 @@
         NSString *weekDay = _weekDays2[indexPath.section];
         lessons = [[OUScheduleCoordinator sharedInstance] lessonsForDayString:weekDay weekType:OULessonWeekTypeEven];
     }
-    id lesson = lessons[indexPath.row];
 
-    UITableViewCell *cell;
+    OULesson *lesson = lessons[indexPath.row];
+    OULessonCell *cell;
+    
     if ([type isKindOfClass:[OUGroup class]]) {
-        OUGroupCell *groupCell = [tableView dequeueReusableCellWithIdentifier:[OUGroupCell cellIdentifier]];
-        groupCell.lesson = lesson;
-        cell = groupCell;
+        cell = [tableView dequeueReusableCellWithIdentifier:[OUGroupCell cellIdentifier]];
     }
     if ([type isKindOfClass:[OUTeacher class]]) {
-        OUTeacherCell *teacherCell = [tableView dequeueReusableCellWithIdentifier:[OUTeacherCell cellIdentifier]];
-        cell = teacherCell;
+        cell = [tableView dequeueReusableCellWithIdentifier:[OUTeacherCell cellIdentifier]];
     }
     if ([type isKindOfClass:[OUAuditory class]]) {
-        OUAuditoryCell *auditoryCell = [tableView dequeueReusableCellWithIdentifier:[OUAuditoryCell cellIdentifier]];
-        return auditoryCell;
+        cell = [tableView dequeueReusableCellWithIdentifier:[OUAuditoryCell cellIdentifier]];
     }
 
+    cell.lesson = lesson;
     return cell;
 }
 

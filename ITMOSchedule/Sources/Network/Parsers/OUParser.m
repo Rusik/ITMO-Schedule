@@ -60,7 +60,7 @@
             if (group) lesson.groups = @[group];
             lesson.weekDay = [OULesson weekDayFromString:weekDay];
             [self parseLessonInfoForElement:lessonElement intoLesson:lesson];
-            lesson.teacher = [self parseTeacherForElement:lessonElement];
+            lesson.teacher = [self parseTeacherForElement:lessonElement nameTag:@"LECTURER" idTag:@"LECTUTER_ID"];
 
             [lessons addObject:lesson];
         }];
@@ -84,7 +84,7 @@
             lesson.groups = [self groupsFromString:[lessonElement child:@"GROUP_NUMBER"].text];
             lesson.weekDay = [OULesson weekDayFromString:weekDay];
             [self parseLessonInfoForElement:lessonElement intoLesson:lesson];
-            lesson.teacher = [self parseTeacherForElement:lessonElement];
+            lesson.teacher = [self parseTeacherForElement:lessonElement nameTag:@"TEACHER_NAME" idTag:@"TEACHER_ID"];
 
             [lessons addObject:lesson];
         }];
@@ -125,10 +125,10 @@
 
 #pragma mark - Little parsers
 
-+ (OUTeacher *)parseTeacherForElement:(RXMLElement *)element {
++ (OUTeacher *)parseTeacherForElement:(RXMLElement *)element nameTag:(NSString *)nametag idTag:(NSString *)idTag {
     OUTeacher *teacher = [[OUTeacher alloc] init];
-    teacher.teacherName = [[element child:@"LECTURER"] text];
-    teacher.teacherId = [[element child:@"LECTUTER_ID"] text];
+    teacher.teacherName = [[element child:nametag] text];
+    teacher.teacherId = [[element child:idTag] text];
     return teacher;
 }
 

@@ -19,4 +19,11 @@
 @property (nonatomic, strong) IBOutlet UILabel *centerLabel;
 @property (nonatomic, strong) IBOutlet UILabel *bottomLabel;
 
+- (void)updateTimeLabel;
+- (void)updateTopLabel;
+- (void)updateCenterLabel;
+- (void)updateBottomLabel;
+
+- (NSString *)groupsString;
+
 @end

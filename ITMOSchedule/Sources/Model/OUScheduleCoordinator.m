@@ -26,6 +26,9 @@
 }
 
 - (NSArray *)mainInfoDataForString:(NSString *)string {
+
+    //TODO: подправить поиск: выдавать в начале если совпадет полностью, или совпалает с начала слова а не в середине
+
     NSArray *groups = _mainInfo[GROUPS_INFO_KEY];
     NSArray *teachers = _mainInfo[TEACHERS_INFO_KEY];
     NSArray *auditories = _mainInfo[AUDITORIES_INFO_KEY];

@@ -10,8 +10,12 @@
 
 @implementation OUTeacherCell
 
-- (void)setLesson:(OULesson *)lesson {
-    [super setLesson:lesson];
+- (void)updateTopLabel {
+    self.topLabel.text = [self groupsString];
+}
+
+- (void)updateBottomLabel {
+    self.bottomLabel.text = self.lesson.address;
 }
 
 @end
