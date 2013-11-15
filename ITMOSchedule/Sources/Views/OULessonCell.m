@@ -7,6 +7,7 @@
 //
 
 #import "OULessonCell.h"
+#import "UILabel+Adjust.h"
 
 @implementation OULessonCell
 
@@ -21,6 +22,14 @@
     [self updateTopLabel];
     [self updateCenterLabel];
     [self updateBottomLabel];
+
+    [self adjustLabelsSize];
+}
+
+- (void)adjustLabelsSize {
+    [self.topLabel adjustSizeWithMaximumWidth:self.topLabelView.$width];
+    [self.centerLabel adjustSizeWithMaximumWidth:self.centerLabelView.$width];
+    [self.bottomLabel adjustSizeWithMaximumWidth:self.bottomLabelView.$width];
 }
 
 - (void)updateTimeLabel {
@@ -48,6 +57,30 @@
     }
     [groupsString replaceCharactersInRange:NSMakeRange(groupsString.length - 2, 2) withString:@""];
     return [groupsString copy];
+}
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+
+    self.topLabel.$y = 0;
+    self.centerLabel.$y = self.topLabel.$bottom;
+    self.bottomLabel.$y = self.centerLabel.$bottom;
+    self.timeLabel.$height = self.topLabel.$height + self.centerLabel.$height + self.bottomLabel.$height;
+}
+
+#pragma mark - Height
+
++ (CGFloat)cellHeightForLesson:(OULesson *)lesson {
+    static OULessonCell *cell = nil;
+    if (!cell) {
+        cell = [self loadFromNib];
+    }
+    cell.lesson = lesson;
+    return [cell height];
+}
+
+- (CGFloat)height {
+    return _topLabel.$height + _centerLabel.$height + _bottomLabel.$height;
 }
 
 @end

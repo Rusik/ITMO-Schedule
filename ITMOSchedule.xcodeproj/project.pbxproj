@@ -35,6 +35,7 @@
 		7FA9F662180BE3900067A3FF /* OUTeacherCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FA9F661180BE3900067A3FF /* OUTeacherCell.xib */; };
 		7FA9F665180BE39E0067A3FF /* OUAuditoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FA9F664180BE39E0067A3FF /* OUAuditoryCell.m */; };
 		7FA9F667180BE3BA0067A3FF /* OUAuditoryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FA9F666180BE3BA0067A3FF /* OUAuditoryCell.xib */; };
+		7FC4B92A1814FEE700926281 /* UILabel+Adjust.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FC4B9291814FEE700926281 /* UILabel+Adjust.m */; };
 		7FC509DB180C1BAF00FCE715 /* OULessonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FC509DA180C1BAF00FCE715 /* OULessonCell.m */; };
 		7FC509DE180C265100FCE715 /* NSString+Helpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FC509DD180C265100FCE715 /* NSString+Helpers.m */; };
 		7FE3D92C1805F79300D3D3C3 /* OULesson.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FE3D92B1805F79300D3D3C3 /* OULesson.m */; };
@@ -101,6 +102,8 @@
 		7FA9F663180BE39E0067A3FF /* OUAuditoryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OUAuditoryCell.h; sourceTree = "<group>"; };
 		7FA9F664180BE39E0067A3FF /* OUAuditoryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OUAuditoryCell.m; sourceTree = "<group>"; };
 		7FA9F666180BE3BA0067A3FF /* OUAuditoryCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OUAuditoryCell.xib; sourceTree = "<group>"; };
+		7FC4B9281814FEE700926281 /* UILabel+Adjust.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+Adjust.h"; sourceTree = "<group>"; };
+		7FC4B9291814FEE700926281 /* UILabel+Adjust.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+Adjust.m"; sourceTree = "<group>"; };
 		7FC509D9180C1BAF00FCE715 /* OULessonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OULessonCell.h; sourceTree = "<group>"; };
 		7FC509DA180C1BAF00FCE715 /* OULessonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OULessonCell.m; sourceTree = "<group>"; };
 		7FC509DC180C265100FCE715 /* NSString+Helpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Helpers.h"; sourceTree = "<group>"; };
@@ -181,6 +184,8 @@
 				7FA9F652180B31DA0067A3FF /* UIView+Helpers.m */,
 				7FC509DC180C265100FCE715 /* NSString+Helpers.h */,
 				7FC509DD180C265100FCE715 /* NSString+Helpers.m */,
+				7FC4B9281814FEE700926281 /* UILabel+Adjust.h */,
+				7FC4B9291814FEE700926281 /* UILabel+Adjust.m */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -440,6 +445,7 @@
 				7F4EA6D21805C83200C1958D /* OUParser.m in Sources */,
 				841F2190180569520054C523 /* AFXMLRequestOperation.m in Sources */,
 				7FA9F660180BE3840067A3FF /* OUTeacherCell.m in Sources */,
+				7FC4B92A1814FEE700926281 /* UILabel+Adjust.m in Sources */,
 				7FC509DB180C1BAF00FCE715 /* OULessonCell.m in Sources */,
 				841F21CD180573490054C523 /* OUScheduleDownloader.m in Sources */,
 				7FA9F657180B3A3D0067A3FF /* OUScheduleViewController.m in Sources */,

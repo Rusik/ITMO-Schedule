@@ -7,10 +7,15 @@
 //
 
 #import "OUGroupCell.h"
+#import "UILabel+Adjust.h"
 
 @implementation OUGroupCell
 
+#pragma mark - Update labels
+
 - (void)updateTopLabel {
+    [super updateTopLabel];
+
     NSString *topSring = @"";
     if (self.lesson.lessonType != OULessonTypeUnknown) {
         topSring = [topSring stringByAppendingFormat:@"%@", [OULesson fullStringForLessonType:self.lesson.lessonType]];
@@ -23,11 +28,11 @@
         }
         topSring  = [topSring stringByAppendingString:self.lesson.teacher.teacherName];
     }
-
     self.topLabel.text = topSring;
 }
 
 - (void)updateBottomLabel {
+    [super updateBottomLabel];
     self.bottomLabel.text = self.lesson.address;
 }
 

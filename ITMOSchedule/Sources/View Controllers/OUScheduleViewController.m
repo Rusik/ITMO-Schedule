@@ -84,12 +84,23 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     id type = [[OUScheduleCoordinator sharedInstance] lessonsType];
 
+    NSArray *lessons;
+    if (tableView == _tableView1) {
+        NSString *weekDay = _weekDays1[indexPath.section];
+        lessons = [[OUScheduleCoordinator sharedInstance] lessonsForDayString:weekDay weekType:OULessonWeekTypeOdd];
+    } else {
+        NSString *weekDay = _weekDays2[indexPath.section];
+        lessons = [[OUScheduleCoordinator sharedInstance] lessonsForDayString:weekDay weekType:OULessonWeekTypeEven];
+    }
+    OULesson *lesson = lessons[indexPath.row];
+
+
     if ([type isKindOfClass:[OUGroup class]]) {
-        return [OUGroupCell cellHeight];
+        return [OUGroupCell cellHeightForLesson:lesson];
     } else if ([type isKindOfClass:[OUTeacher class]]) {
-        return [OUTeacherCell cellHeight];
+        return [OUTeacherCell cellHeightForLesson:lesson];
     } else if ([type isKindOfClass:[OUAuditory class]]) {
-        return [OUAuditoryCell cellHeight];
+        return [OUAuditoryCell cellHeightForLesson:lesson];
     } else {
         return 44.0;
     }

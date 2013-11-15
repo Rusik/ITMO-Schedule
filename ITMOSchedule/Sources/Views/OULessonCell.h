@@ -11,6 +11,7 @@
 @interface OULessonCell : UITableViewCell <UITableViewCellHeight>
 
 + (CGFloat)cellHeight;
++ (CGFloat)cellHeightForLesson:(OULesson *)lesson;
 
 @property (nonatomic, strong) OULesson *lesson;
 
@@ -19,11 +20,20 @@
 @property (nonatomic, strong) IBOutlet UILabel *centerLabel;
 @property (nonatomic, strong) IBOutlet UILabel *bottomLabel;
 
+@property (nonatomic, strong) IBOutlet UIView *topLabelView;
+@property (nonatomic, strong) IBOutlet UIView *centerLabelView;
+@property (nonatomic, strong) IBOutlet UIView *bottomLabelView;
+
+
 - (void)updateTimeLabel;
 - (void)updateTopLabel;
 - (void)updateCenterLabel;
 - (void)updateBottomLabel;
 
+- (void)adjustLabelsSize;
+
 - (NSString *)groupsString;
+
+- (CGFloat)height;
 
 @end
