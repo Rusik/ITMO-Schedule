@@ -15,7 +15,7 @@
 }
 
 - (void)setLesson:(OULesson *)lesson {
-    _addressLabel.text = lesson.address;
+    _addressLabel.text = [lesson.auditory auditoryDescription];
     [super setLesson:lesson];
 }
 

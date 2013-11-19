@@ -15,4 +15,6 @@
 
 + (CGFloat)heightForData:(id)data;
 
+- (CGFloat)height;
+
 @end

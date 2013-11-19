@@ -127,5 +127,18 @@
     return lessons;
 }
 
+#pragma mark - Get main info
+
+- (OUAuditory *)auditoryWithId:(NSString *)auditoryId {
+    NSArray *auditories = [_mainInfo objectForKey:AUDITORIES_INFO_KEY];
+    NSArray *filter = [auditories filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"auditoryId == %@", auditoryId]];
+    return [filter firstObject];
+}
+
+- (OUTeacher *)teacherWithId:(NSString *)teacherId {
+    NSArray *teachers = [_mainInfo objectForKey:TEACHERS_INFO_KEY];
+    NSArray *filter = [teachers filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"teacherId == %@", teacherId]];
+    return [filter firstObject];
+}
 
 @end

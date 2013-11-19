@@ -38,21 +38,18 @@ typedef int OULessonTime;
 
 @interface OULesson : NSObject
 
+@property (nonatomic, copy) NSString *lessonName;
+@property (nonatomic) OULessonType lessonType;
+@property (nonatomic) NSString *lessonTypeString;
+
+@property (nonatomic, strong) OUAuditory *auditory;
+@property (nonatomic, strong) OUTeacher *teacher;
+
 @property (nonatomic, copy) NSString *timeInterval;
 @property (nonatomic) OULessonTime startTime;
 @property (nonatomic) OULessonTime finishTime;
 
 @property (nonatomic) OULessonWeekType weekType;
-
-@property (nonatomic, copy) NSString *address;
-
-@property (nonatomic, copy) NSString *lessonName;
-
-@property (nonatomic, strong) OUTeacher *teacher;
-
-@property (nonatomic) OULessonType lessonType;
-@property (nonatomic) NSString *lessonTypeString;
-
 @property (nonatomic) OULessonWeekDay weekDay;
 
 @property (nonatomic) NSArray *groups; // Либо одна группа, либо список групп (для преподов и аудиторий)

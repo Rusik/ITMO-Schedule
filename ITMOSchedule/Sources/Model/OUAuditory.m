@@ -17,7 +17,11 @@
 }
 
 - (NSString *)description {
-    return [NSString stringWithFormat:@"%@ {auditoryName : %@}", NSStringFromClass([self class]), _auditoryName];
+    return [NSString stringWithFormat:@"%@ {id: %@, address : %@}", NSStringFromClass([self class]), _auditoryId, [self auditoryDescription]];
+}
+
+- (NSString *)auditoryDescription {
+    return [NSString stringWithFormat:@"%@, %@", _auditoryName, _auditoryAddress];
 }
 
 @end

@@ -36,13 +36,19 @@
         [teachers addObject:teacher];
     }];
 
-    [rootElement iterate:@"AUDITORIES.AUDITORY_ID" usingBlock:^(RXMLElement *auditoryElement) {
+    [rootElement iterate:@"AUDITORIES.AUDITORY_INFO" usingBlock:^(RXMLElement *auditoryElement) {
         OUAuditory *auditory = [OUAuditory new];
-        auditory.auditoryName = auditoryElement.text;
+        auditory.auditoryName = [auditoryElement child:@"AUDITORY_NAME"].text;
+        auditory.auditoryId = [auditoryElement child:@"AUDITORY_ID"].text;
+        auditory.auditoryAddress = [auditoryElement child:@"PLACE"].text;
         [auditories addObject:auditory];
     }];
 
-    return @{GROUPS_INFO_KEY: groups, TEACHERS_INFO_KEY: teachers, AUDITORIES_INFO_KEY: auditories};
+    NSDictionary *info = @{GROUPS_INFO_KEY: groups, TEACHERS_INFO_KEY: teachers, AUDITORIES_INFO_KEY: auditories};
+
+    [[OUScheduleCoordinator sharedInstance] setMainInfo:info];
+
+    return info;
 }
 
 + (NSArray *)parseLessons:(NSData *)XMLData forGroup:(OUGroup *)group {
@@ -60,7 +66,7 @@
             if (group) lesson.groups = @[group];
             lesson.weekDay = [OULesson weekDayFromString:weekDay];
             [self parseLessonInfoForElement:lessonElement intoLesson:lesson];
-            lesson.teacher = [self parseTeacherForElement:lessonElement nameTag:@"LECTURER" idTag:@"LECTUTER_ID"];
+            lesson.teacher = [[OUScheduleCoordinator sharedInstance] teacherWithId:[lessonElement child:@"LECTUTER_ID"].text];
 
             [lessons addObject:lesson];
         }];
@@ -84,7 +90,7 @@
             lesson.groups = [self groupsFromString:[lessonElement child:@"GROUP_NUMBER"].text];
             lesson.weekDay = [OULesson weekDayFromString:weekDay];
             [self parseLessonInfoForElement:lessonElement intoLesson:lesson];
-            lesson.teacher = [self parseTeacherForElement:lessonElement nameTag:@"TEACHER_NAME" idTag:@"TEACHER_ID"];
+            lesson.teacher = [[OUScheduleCoordinator sharedInstance] teacherWithId:[lessonElement child:@"TEACHER_ID"].text];
 
             [lessons addObject:lesson];
         }];
@@ -125,13 +131,6 @@
 
 #pragma mark - Little parsers
 
-+ (OUTeacher *)parseTeacherForElement:(RXMLElement *)element nameTag:(NSString *)nametag idTag:(NSString *)idTag {
-    OUTeacher *teacher = [[OUTeacher alloc] init];
-    teacher.teacherName = [[element child:nametag] text];
-    teacher.teacherId = [[element child:idTag] text];
-    return teacher;
-}
-
 + (void)parseLessonInfoForElement:(RXMLElement *)element intoLesson:(OULesson *)lesson {
     NSString *timeInterval = [[element child:@"TIME_INTERVAL"] text];
     OULessonTime startTime;
@@ -143,9 +142,10 @@
         lesson.timeInterval = timeInterval;
     }
     lesson.weekType = [OULesson weekTypeFromString:[[element child:@"WEEK"] text]];
-    lesson.address = [[[element child:@"PLACE"] text] stringByDeletingNewLineCharacters];
     lesson.lessonName = [[element child:@"SUBJECT"].text stringByDeletingDataInBrackets];
-    lesson.lessonType = [OULesson lessonTypeFromString:[[element child:@"SUBJECT"] text]];
+    lesson.lessonType = [OULesson lessonTypeFromString:[element child:@"TYPE"].text];
+    lesson.lessonTypeString = [element child:@"TYPE"].text;
+    lesson.auditory = [[OUScheduleCoordinator sharedInstance] auditoryWithId:[element child:@"PLACE"].text];
 }
 
 #pragma mark - Helpers

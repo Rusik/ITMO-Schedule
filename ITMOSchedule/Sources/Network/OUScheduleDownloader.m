@@ -42,7 +42,7 @@ typedef void(^ParsingBlock)(NSData *data);
 }
 
 - (void)downloadLessonsForAuditory:(OUAuditory *)auditory complete:(CompleteBlock)block {
-    NSString *pageUrlString = [NSString stringWithFormat:@"http://isu.ifmo.ru/pls/apex/PK_ADM_GETXML.GET_SCHEDULE_XML?p_auditory_id=%@", auditory.auditoryName];
+    NSString *pageUrlString = [NSString stringWithFormat:@"http://isu.ifmo.ru/pls/apex/PK_ADM_GETXML.GET_SCHEDULE_XML?p_auditory_id=%@", auditory.auditoryId];
     [self performRequestWithStringUrl:pageUrlString parsingBlock:^(NSData *data) {
         [[OUScheduleCoordinator sharedInstance] setLessons:[OUParser parseLessons:data forAuditory:auditory] forAuditory:auditory];
     } complete:block];

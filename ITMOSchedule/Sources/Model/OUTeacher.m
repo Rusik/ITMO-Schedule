@@ -26,7 +26,7 @@
 }
 
 - (NSString *)description {
-    return [NSString stringWithFormat:@"%@ {teacherName : %@, teacherId : %@}", NSStringFromClass([self class]), _teacherName, _teacherId];
+    return [NSString stringWithFormat:@"%@ {id : %@, name : %@}", NSStringFromClass([self class]), _teacherId, _teacherName];
 }
 
 @end

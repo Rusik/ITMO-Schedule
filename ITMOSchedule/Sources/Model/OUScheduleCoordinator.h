@@ -35,4 +35,7 @@
 
 - (OULessonWeekType)currentWeekType;
 
+- (OUAuditory *)auditoryWithId:(NSString *)auditoryId;
+- (OUTeacher *)teacherWithId:(NSString *)teacherId;
+
 @end

@@ -15,7 +15,7 @@
 }
 
 - (void)updateBottomLabel {
-    self.bottomLabel.text = self.lesson.address;
+    self.bottomLabel.text = [self.lesson.auditory auditoryDescription];
 }
 
 @end

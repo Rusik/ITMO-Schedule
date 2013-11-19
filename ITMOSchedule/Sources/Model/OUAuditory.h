@@ -13,5 +13,9 @@
 + (OUAuditory *)auditoryWithName:(NSString *)auditoryName;
 
 @property (nonatomic, copy) NSString *auditoryName;
+@property (nonatomic, copy) NSString *auditoryAddress;
+@property (nonatomic, copy) NSString *auditoryId;
+
+- (NSString *)auditoryDescription;
 
 @end
