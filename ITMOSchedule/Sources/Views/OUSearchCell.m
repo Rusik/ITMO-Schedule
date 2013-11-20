@@ -10,6 +10,8 @@
 #import "NSObject+NIB.h"
 #import "UILabel+Adjust.h"
 
+#define SPACE 5.0
+
 @implementation OUSearchCell {
     IBOutlet UILabel *_textLabel;
     IBOutlet UILabel *_bottomTextLabel;
@@ -46,6 +48,7 @@
     if ([_data isKindOfClass:[OUGroup class]]) {
         OUGroup *group = (OUGroup *)_data;
         _textLabel.text = [NSString stringWithFormat:@"Группа %@", group.groupName];
+        _bottomTextLabel.text = nil;
     }
     if ([_data isKindOfClass:[OUTeacher class]]) {
         OUTeacher *teacher = (OUTeacher *)_data;
@@ -55,30 +58,30 @@
     if ([_data isKindOfClass:[OUAuditory class]]) {
         OUAuditory *auditory = (OUAuditory *)_data;
         _textLabel.text = [NSString stringWithFormat:@"Аудитория %@", auditory.auditoryName];
+        _bottomTextLabel.text = auditory.auditoryAddress;
     }
 }
+
+#define DEFAULT_HEIGHT 44.0
 
 - (void)updateLabelsSize {
     [_textLabel adjustSizeWithMaximumWidth:_viewForTextWidth.$width];
     [_bottomTextLabel adjustSizeWithMaximumWidth:_viewForTextWidth.$width];
 
-    CGFloat minheight = 44.0;
-
-    if (_textLabel.$height + _bottomTextLabel.$height < minheight) {
-        if (_bottomTextLabel.$height == 0) {
-            _textLabel.$height = minheight;
-        } else {
-            _textLabel.$height = minheight / 2;
-            _bottomTextLabel.$height = minheight / 2;
-        }
+    if (_bottomTextLabel.$height == 0) {
+        _textLabel.$height = DEFAULT_HEIGHT;
     }
 }
 
 - (void)layoutSubviews {
     [super layoutSubviews];
 
-    _textLabel.$y = 0;
-    _bottomTextLabel.$y = _textLabel.$bottom;
+    if (_bottomTextLabel.$height == 0) {
+        _textLabel.$y = 0;
+    } else {
+        _textLabel.$y = SPACE;
+        _bottomTextLabel.$y = _textLabel.$bottom;
+    }
 }
 
 + (CGFloat)heightForData:(id)data {
@@ -92,7 +95,11 @@
 }
 
 - (CGFloat)height {
-    return _textLabel.$height + _bottomTextLabel.$height;
+    if (_bottomTextLabel.$height == 0) {
+        return DEFAULT_HEIGHT;
+    } else {
+        return _textLabel.$height + _bottomTextLabel.$height + SPACE * 2;
+    }
 }
 
 @end

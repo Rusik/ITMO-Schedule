@@ -59,13 +59,15 @@
     return [groupsString copy];
 }
 
+#define SPACE 5.0
+
 - (void)layoutSubviews {
     [super layoutSubviews];
 
-    self.topLabel.$y = 0;
+    self.topLabel.$y = SPACE;
     self.centerLabel.$y = self.topLabel.$bottom;
     self.bottomLabel.$y = self.centerLabel.$bottom;
-    self.timeLabel.$height = self.topLabel.$height + self.centerLabel.$height + self.bottomLabel.$height;
+    self.timeLabel.$height = self.topLabel.$height + self.centerLabel.$height + self.bottomLabel.$height + SPACE * 2;
 }
 
 #pragma mark - Height
@@ -80,7 +82,7 @@
 }
 
 - (CGFloat)height {
-    return _topLabel.$height + _centerLabel.$height + _bottomLabel.$height;
+    return _topLabel.$height + _centerLabel.$height + _bottomLabel.$height + SPACE * 2;
 }
 
 @end
