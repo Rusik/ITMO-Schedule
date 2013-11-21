@@ -36,6 +36,7 @@
 		7FA9F665180BE39E0067A3FF /* OUAuditoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FA9F664180BE39E0067A3FF /* OUAuditoryCell.m */; };
 		7FA9F667180BE3BA0067A3FF /* OUAuditoryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FA9F666180BE3BA0067A3FF /* OUAuditoryCell.xib */; };
 		7FBDB6DD183D8FBB009AC1DC /* UIFont+PreferedFontSize.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FBDB6DC183D8FBB009AC1DC /* UIFont+PreferedFontSize.m */; };
+		7FBDB6E0183D947C009AC1DC /* UIActionSheet+Blocks.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FBDB6DF183D947C009AC1DC /* UIActionSheet+Blocks.m */; };
 		7FC4B92A1814FEE700926281 /* UILabel+Adjust.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FC4B9291814FEE700926281 /* UILabel+Adjust.m */; };
 		7FC509DB180C1BAF00FCE715 /* OULessonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FC509DA180C1BAF00FCE715 /* OULessonCell.m */; };
 		7FC509DE180C265100FCE715 /* NSString+Helpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FC509DD180C265100FCE715 /* NSString+Helpers.m */; };
@@ -105,6 +106,8 @@
 		7FA9F666180BE3BA0067A3FF /* OUAuditoryCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OUAuditoryCell.xib; sourceTree = "<group>"; };
 		7FBDB6DB183D8FBB009AC1DC /* UIFont+PreferedFontSize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIFont+PreferedFontSize.h"; sourceTree = "<group>"; };
 		7FBDB6DC183D8FBB009AC1DC /* UIFont+PreferedFontSize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIFont+PreferedFontSize.m"; sourceTree = "<group>"; };
+		7FBDB6DE183D947C009AC1DC /* UIActionSheet+Blocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIActionSheet+Blocks.h"; sourceTree = "<group>"; };
+		7FBDB6DF183D947C009AC1DC /* UIActionSheet+Blocks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIActionSheet+Blocks.m"; sourceTree = "<group>"; };
 		7FC4B9281814FEE700926281 /* UILabel+Adjust.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+Adjust.h"; sourceTree = "<group>"; };
 		7FC4B9291814FEE700926281 /* UILabel+Adjust.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+Adjust.m"; sourceTree = "<group>"; };
 		7FC509D9180C1BAF00FCE715 /* OULessonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OULessonCell.h; sourceTree = "<group>"; };
@@ -191,6 +194,8 @@
 				7FC4B9291814FEE700926281 /* UILabel+Adjust.m */,
 				7FBDB6DB183D8FBB009AC1DC /* UIFont+PreferedFontSize.h */,
 				7FBDB6DC183D8FBB009AC1DC /* UIFont+PreferedFontSize.m */,
+				7FBDB6DE183D947C009AC1DC /* UIActionSheet+Blocks.h */,
+				7FBDB6DF183D947C009AC1DC /* UIActionSheet+Blocks.m */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -454,6 +459,7 @@
 				7FC4B92A1814FEE700926281 /* UILabel+Adjust.m in Sources */,
 				7FC509DB180C1BAF00FCE715 /* OULessonCell.m in Sources */,
 				841F21CD180573490054C523 /* OUScheduleDownloader.m in Sources */,
+				7FBDB6E0183D947C009AC1DC /* UIActionSheet+Blocks.m in Sources */,
 				7FA9F657180B3A3D0067A3FF /* OUScheduleViewController.m in Sources */,
 				7FA9F603180B23580067A3FF /* OUSearchCell.m in Sources */,
 				7FA9F65B180BDBF40067A3FF /* OUGroupCell.m in Sources */,
@@ -518,7 +524,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 			};
@@ -551,7 +557,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -572,6 +578,7 @@
 					"\"$(SDK_DIR)\"/usr/include/libxml2",
 				);
 				INFOPLIST_FILE = "ITMOSchedule/ITMOSchedule-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
@@ -593,6 +600,7 @@
 					"\"$(SDK_DIR)\"/usr/include/libxml2",
 				);
 				INFOPLIST_FILE = "ITMOSchedule/ITMOSchedule-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;

@@ -11,6 +11,8 @@
 #import "OUGroupCell.h"
 #import "OUTeacherCell.h"
 #import "OUAuditoryCell.h"
+#import "UIActionSheet+Blocks.h"
+#import "OUScheduleDownloader.h"
 
 @interface OUScheduleViewController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -107,17 +109,9 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    id type = [[OUScheduleCoordinator sharedInstance] lessonsType];
 
-    NSArray *lessons;
-    if (tableView == _tableView1) {
-        NSString *weekDay = _weekDays1[indexPath.section];
-        lessons = [[OUScheduleCoordinator sharedInstance] lessonsForDayString:weekDay weekType:OULessonWeekTypeOdd];
-    } else {
-        NSString *weekDay = _weekDays2[indexPath.section];
-        lessons = [[OUScheduleCoordinator sharedInstance] lessonsForDayString:weekDay weekType:OULessonWeekTypeEven];
-    }
-    OULesson *lesson = lessons[indexPath.row];
+    OULesson *lesson = [self lessonForIndexPath:indexPath intableView:tableView];
+    id type = [[OUScheduleCoordinator sharedInstance] lessonsType];
 
     CGFloat height = 44.0;
 
@@ -134,19 +128,11 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 
-    id type = [[OUScheduleCoordinator sharedInstance] lessonsType];
-    NSArray *lessons;
-    if (tableView == _tableView1) {
-        NSString *weekDay = _weekDays1[indexPath.section];
-        lessons = [[OUScheduleCoordinator sharedInstance] lessonsForDayString:weekDay weekType:OULessonWeekTypeOdd];
-    } else {
-        NSString *weekDay = _weekDays2[indexPath.section];
-        lessons = [[OUScheduleCoordinator sharedInstance] lessonsForDayString:weekDay weekType:OULessonWeekTypeEven];
-    }
-
-    OULesson *lesson = lessons[indexPath.row];
+    OULesson *lesson = [self lessonForIndexPath:indexPath intableView:tableView];
     OULessonCell *cell;
-    
+
+    id type = [[OUScheduleCoordinator sharedInstance] lessonsType];
+
     if ([type isKindOfClass:[OUGroup class]]) {
         cell = [tableView dequeueReusableCellWithIdentifier:[OUGroupCell cellIdentifier]];
     }
@@ -159,6 +145,80 @@
 
     cell.lesson = lesson;
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath  {
+    OULesson *lesson = [self lessonForIndexPath:indexPath intableView:tableView];
+
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+
+    UIActionSheet *actionSheet = [UIActionSheet actionSheetWithTitle:@"Посмотреть расписание"];
+
+    id type = [[OUScheduleCoordinator sharedInstance] lessonsType];
+
+    BOOL show = NO;
+
+    if (lesson.teacher && ([type isKindOfClass:[OUGroup class]] || [type isKindOfClass:[OUAuditory class]])) {
+        show = YES;
+        [actionSheet addButtonWithTitle:[NSString stringWithFormat:@"%@", lesson.teacher.teacherName] action:^{
+            [[OUScheduleDownloader sharedInstance] downloadLessonsForTeacher:lesson.teacher complete:^{
+                [self reloadData];
+            }];
+        }];
+    }
+    if (lesson.auditory && ([type isKindOfClass:[OUGroup class]] || [type isKindOfClass:[OUTeacher class]])) {
+        show = YES;
+        [actionSheet addButtonWithTitle:[NSString stringWithFormat:@"Аудитория %@", lesson.auditory.auditoryName] action:^{
+            [[OUScheduleDownloader sharedInstance] downloadLessonsForAuditory:lesson.auditory complete:^{
+                [self reloadData];
+            }];
+        }];
+    }
+    if (lesson.groups.count && ([type isKindOfClass:[OUAuditory class]] || [type isKindOfClass:[OUTeacher class]])) {
+        show = YES;
+        if (lesson.groups.count == 1) {
+            OUGroup *group = lesson.groups.firstObject;
+            [actionSheet addButtonWithTitle:[NSString stringWithFormat:@"Группа %@", group.groupName] action:^{
+                [[OUScheduleDownloader sharedInstance] downloadLessonsForGroup:group complete:^{
+                    [self reloadData];
+                }];
+            }];
+        } else {
+            [actionSheet addButtonWithTitle:@"Группа" action:^{
+
+                UIActionSheet *groupsActionSheet = [UIActionSheet actionSheetWithTitle:@"Выберите группу"];
+                for (OUGroup *g in lesson.groups) {
+                    [groupsActionSheet addButtonWithTitle:g.groupName action:^{
+                        [[OUScheduleDownloader sharedInstance] downloadLessonsForGroup:g complete:^{
+                            [self reloadData];
+                        }];
+                    }];
+                }
+                [groupsActionSheet addCancelButtonWithTitle:@"Отмена" action:nil];
+                [groupsActionSheet setCancelButtonIndex:lesson.groups.count];
+                [groupsActionSheet showInView:self.view.superview];
+            }];
+        }
+    }
+
+    if (show) {
+        [actionSheet addCancelButtonWithTitle:@"Отмена" action:nil];
+        [actionSheet setCancelButtonIndex:actionSheet.numberOfButtons - 1];
+        [actionSheet showInView:self.view.superview];
+    }
+}
+
+- (OULesson *)lessonForIndexPath:(NSIndexPath *)indexPath intableView:(UITableView *)tableView {
+    NSArray *lessons;
+    if (tableView == _tableView1) {
+        NSString *weekDay = _weekDays1[indexPath.section];
+        lessons = [[OUScheduleCoordinator sharedInstance] lessonsForDayString:weekDay weekType:OULessonWeekTypeOdd];
+    } else {
+        NSString *weekDay = _weekDays2[indexPath.section];
+        lessons = [[OUScheduleCoordinator sharedInstance] lessonsForDayString:weekDay weekType:OULessonWeekTypeEven];
+    }
+
+    return lessons[indexPath.row];
 }
 
 @end
