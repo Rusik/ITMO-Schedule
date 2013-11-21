@@ -43,6 +43,30 @@
     _scheduleVC.view.$top = 50;
     _scheduleVC.view.$height -= 50;
     [_scheduleVC didMoveToParentViewController:self];
+
+    [self subscribeToNotifications];
+}
+
+- (void)dealloc {
+    [self unsubscribeFromNotifications];
+}
+
+#pragma mark - Notifications
+
+- (void)subscribeToNotifications {
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(updateFonts)
+                                                 name:UIContentSizeCategoryDidChangeNotification
+                                               object:nil];
+}
+
+- (void)unsubscribeFromNotifications {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+
+}
+
+- (void)updateFonts {
+    [_tableView reloadData];
 }
 
 #pragma mark - Actions

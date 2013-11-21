@@ -11,6 +11,13 @@
 @implementation UILabel (Adjust)
 
 - (void)adjustSizeWithMaximumWidth:(CGFloat)minWidth {
+    [self adjustSizeWithMaximumWidth:minWidth withFont:self.font];
+}
+
+- (void)adjustSizeWithMaximumWidth:(CGFloat)minWidth withFont:(UIFont *)font {
+
+    self.font = font;
+
     CGRect rect = [self.text boundingRectWithSize:CGSizeMake(minWidth, MAXFLOAT)
                                           options:NSLineBreakByWordWrapping | NSStringDrawingUsesLineFragmentOrigin
                                        attributes:@{NSFontAttributeName: self.font}

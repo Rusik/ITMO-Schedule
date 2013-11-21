@@ -11,5 +11,6 @@
 @interface UILabel (Adjust)
 
 - (void)adjustSizeWithMaximumWidth:(CGFloat)minWidth;
+- (void)adjustSizeWithMaximumWidth:(CGFloat)minWidth withFont:(UIFont *)font;
 
 @end

@@ -35,6 +35,7 @@
 		7FA9F662180BE3900067A3FF /* OUTeacherCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FA9F661180BE3900067A3FF /* OUTeacherCell.xib */; };
 		7FA9F665180BE39E0067A3FF /* OUAuditoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FA9F664180BE39E0067A3FF /* OUAuditoryCell.m */; };
 		7FA9F667180BE3BA0067A3FF /* OUAuditoryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FA9F666180BE3BA0067A3FF /* OUAuditoryCell.xib */; };
+		7FBDB6DD183D8FBB009AC1DC /* UIFont+PreferedFontSize.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FBDB6DC183D8FBB009AC1DC /* UIFont+PreferedFontSize.m */; };
 		7FC4B92A1814FEE700926281 /* UILabel+Adjust.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FC4B9291814FEE700926281 /* UILabel+Adjust.m */; };
 		7FC509DB180C1BAF00FCE715 /* OULessonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FC509DA180C1BAF00FCE715 /* OULessonCell.m */; };
 		7FC509DE180C265100FCE715 /* NSString+Helpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FC509DD180C265100FCE715 /* NSString+Helpers.m */; };
@@ -102,6 +103,8 @@
 		7FA9F663180BE39E0067A3FF /* OUAuditoryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OUAuditoryCell.h; sourceTree = "<group>"; };
 		7FA9F664180BE39E0067A3FF /* OUAuditoryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OUAuditoryCell.m; sourceTree = "<group>"; };
 		7FA9F666180BE3BA0067A3FF /* OUAuditoryCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OUAuditoryCell.xib; sourceTree = "<group>"; };
+		7FBDB6DB183D8FBB009AC1DC /* UIFont+PreferedFontSize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIFont+PreferedFontSize.h"; sourceTree = "<group>"; };
+		7FBDB6DC183D8FBB009AC1DC /* UIFont+PreferedFontSize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIFont+PreferedFontSize.m"; sourceTree = "<group>"; };
 		7FC4B9281814FEE700926281 /* UILabel+Adjust.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+Adjust.h"; sourceTree = "<group>"; };
 		7FC4B9291814FEE700926281 /* UILabel+Adjust.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+Adjust.m"; sourceTree = "<group>"; };
 		7FC509D9180C1BAF00FCE715 /* OULessonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OULessonCell.h; sourceTree = "<group>"; };
@@ -186,6 +189,8 @@
 				7FC509DD180C265100FCE715 /* NSString+Helpers.m */,
 				7FC4B9281814FEE700926281 /* UILabel+Adjust.h */,
 				7FC4B9291814FEE700926281 /* UILabel+Adjust.m */,
+				7FBDB6DB183D8FBB009AC1DC /* UIFont+PreferedFontSize.h */,
+				7FBDB6DC183D8FBB009AC1DC /* UIFont+PreferedFontSize.m */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -430,6 +435,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7FBDB6DD183D8FBB009AC1DC /* UIFont+PreferedFontSize.m in Sources */,
 				841F218A180569520054C523 /* AFHTTPRequestOperation.m in Sources */,
 				841F218B180569520054C523 /* AFImageRequestOperation.m in Sources */,
 				7FE3D92C1805F79300D3D3C3 /* OULesson.m in Sources */,

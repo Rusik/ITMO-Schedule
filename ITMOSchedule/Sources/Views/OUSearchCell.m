@@ -25,6 +25,8 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     [self clearLabels];
+
+    _bottomTextLabel.textColor = [UIColor colorWithWhite:0.400 alpha:1.000];
 }
 
 - (void)clearLabels {
@@ -65,11 +67,14 @@
 #define DEFAULT_HEIGHT 44.0
 
 - (void)updateLabelsSize {
-    [_textLabel adjustSizeWithMaximumWidth:_viewForTextWidth.$width];
-    [_bottomTextLabel adjustSizeWithMaximumWidth:_viewForTextWidth.$width];
+//    [_textLabel adjustSizeWithMaximumWidth:_viewForTextWidth.$width];
+//    [_bottomTextLabel adjustSizeWithMaximumWidth:_viewForTextWidth.$width];
+
+    [_textLabel adjustSizeWithMaximumWidth:_viewForTextWidth.$width withFont:[UIFont preferredFontForTextStyle:UIFontTextStyleHeadline]];
+    [_bottomTextLabel adjustSizeWithMaximumWidth:_viewForTextWidth.$width withFont:[UIFont preferredFontForTextStyle:UIFontTextStyleFootnote]];
 
     if (_bottomTextLabel.$height == 0) {
-        _textLabel.$height = DEFAULT_HEIGHT;
+        _textLabel.$height = MAX(DEFAULT_HEIGHT, _textLabel.$height + SPACE * 2);
     }
 }
 
@@ -96,7 +101,7 @@
 
 - (CGFloat)height {
     if (_bottomTextLabel.$height == 0) {
-        return DEFAULT_HEIGHT;
+        return _textLabel.$height;
     } else {
         return _textLabel.$height + _bottomTextLabel.$height + SPACE * 2;
     }

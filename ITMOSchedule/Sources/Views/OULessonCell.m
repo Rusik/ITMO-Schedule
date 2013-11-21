@@ -8,6 +8,7 @@
 
 #import "OULessonCell.h"
 #import "UILabel+Adjust.h"
+#import "UIFont+PreferedFontSize.h"
 
 @implementation OULessonCell
 
@@ -26,10 +27,23 @@
     [self adjustLabelsSize];
 }
 
+- (void)awakeFromNib {
+    [super awakeFromNib];
+
+    self.topLabel.textColor = self.bottomLabel.textColor = [UIColor colorWithWhite:0.400 alpha:1.000];
+}
+
 - (void)adjustLabelsSize {
-    [self.topLabel adjustSizeWithMaximumWidth:self.topLabelView.$width];
-    [self.centerLabel adjustSizeWithMaximumWidth:self.centerLabelView.$width];
-    [self.bottomLabel adjustSizeWithMaximumWidth:self.bottomLabelView.$width];
+//    [self.topLabel adjustSizeWithMaximumWidth:self.topLabelView.$width];
+//    [self.centerLabel adjustSizeWithMaximumWidth:self.centerLabelView.$width];
+//    [self.bottomLabel adjustSizeWithMaximumWidth:self.bottomLabelView.$width];
+
+    NSString *topBottomStyle = UIFontTextStyleCaption1;
+
+    [self.topLabel adjustSizeWithMaximumWidth:self.topLabelView.$width withFont:[UIFont preferredFontForTextStyle:topBottomStyle]];
+    [self.centerLabel adjustSizeWithMaximumWidth:self.centerLabelView.$width withFont:[UIFont preferredFontForTextStyle:UIFontTextStyleHeadline]];
+    [self.bottomLabel adjustSizeWithMaximumWidth:self.bottomLabelView.$width withFont:[UIFont preferredFontForTextStyle:topBottomStyle]];
+    self.timeLabel.font = [UIFont preferredTimeFont];
 }
 
 - (void)updateTimeLabel {
@@ -64,6 +78,8 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
 
+    [self adjustLabelsSize];    
+
     self.topLabel.$y = SPACE;
     self.centerLabel.$y = self.topLabel.$bottom;
     self.bottomLabel.$y = self.centerLabel.$bottom;
@@ -74,8 +90,10 @@
 
 + (CGFloat)cellHeightForLesson:(OULesson *)lesson {
     static OULessonCell *cell = nil;
-    if (!cell) {
+    static Class cacheClass;
+    if (!cell || cacheClass != self) {
         cell = [self loadFromNib];
+        cacheClass = self;
     }
     cell.lesson = lesson;
     return [cell height];

@@ -24,16 +24,19 @@
 }
 
 + (OULessonType)lessonTypeFromString:(NSString *)string {
-    if ([string rangeOfString:@"(лек)" options:NSCaseInsensitiveSearch].location != NSNotFound) {
+
+    if (!string) return OULessonTypeUnknown;
+
+    if ([string rangeOfString:@"лекци" options:NSCaseInsensitiveSearch].location != NSNotFound) {
         return OULessonTypeLecture;
     }
-    if ([string rangeOfString:@"(прак)" options:NSCaseInsensitiveSearch].location != NSNotFound) {
+    if ([string rangeOfString:@"практи" options:NSCaseInsensitiveSearch].location != NSNotFound) {
         return OULessonTypePractice;
     }
-    if ([string rangeOfString:@"(срс)" options:NSCaseInsensitiveSearch].location != NSNotFound) {
+    if ([string rangeOfString:@"срс" options:NSCaseInsensitiveSearch].location != NSNotFound) {
         return OULessonTypeStudent;
     }
-    if ([string rangeOfString:@"(лаб)" options:NSCaseInsensitiveSearch].location != NSNotFound) {
+    if ([string rangeOfString:@"лабора" options:NSCaseInsensitiveSearch].location != NSNotFound) {
         return OULessonTypeLaboratory;
     }
     return OULessonTypeUnknown;

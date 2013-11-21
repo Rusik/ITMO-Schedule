@@ -28,6 +28,36 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self registerTableViewsForCells];
+
+    [self subscribeToNotifications];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    _scrollView.contentSize = CGSizeMake(_scrollView.$width * 2, self.view.$height);
+}
+
+- (void)dealloc {
+    [self unsubscribeFromNotifications];
+}
+
+#pragma mark - Notifications
+
+- (void)subscribeToNotifications {
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(updateFonts)
+                                                 name:UIContentSizeCategoryDidChangeNotification
+                                               object:nil];
+}
+
+- (void)unsubscribeFromNotifications {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+
+}
+
+- (void)updateFonts {
+    [_tableView1 reloadData];
+    [_tableView2 reloadData];
 }
 
 - (void)registerTableViewsForCells {
@@ -37,11 +67,6 @@
     [_tableView2 registerNib:[OUGroupCell nibForCell] forCellReuseIdentifier:[OUGroupCell cellIdentifier]];
     [_tableView2 registerNib:[OUTeacherCell nibForCell] forCellReuseIdentifier:[OUTeacherCell cellIdentifier]];
     [_tableView2 registerNib:[OUAuditoryCell nibForCell] forCellReuseIdentifier:[OUAuditoryCell cellIdentifier]];
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    _scrollView.contentSize = CGSizeMake(_scrollView.$width * 2, self.view.$height);
 }
 
 - (void)reloadData {
@@ -94,16 +119,17 @@
     }
     OULesson *lesson = lessons[indexPath.row];
 
+    CGFloat height = 44.0;
 
     if ([type isKindOfClass:[OUGroup class]]) {
-        return [OUGroupCell cellHeightForLesson:lesson];
+        height = [OUGroupCell cellHeightForLesson:lesson];
     } else if ([type isKindOfClass:[OUTeacher class]]) {
-        return [OUTeacherCell cellHeightForLesson:lesson];
+        height = [OUTeacherCell cellHeightForLesson:lesson];
     } else if ([type isKindOfClass:[OUAuditory class]]) {
-        return [OUAuditoryCell cellHeightForLesson:lesson];
-    } else {
-        return 44.0;
+        height = [OUAuditoryCell cellHeightForLesson:lesson];
     }
+
+    return height;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
