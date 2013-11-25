@@ -53,7 +53,6 @@
 @property (nonatomic, assign) NSUInteger iterations;
 @property (nonatomic, assign) NSTimeInterval updateInterval;
 @property (nonatomic, assign) CGFloat blurRadius;
-@property (nonatomic, strong) UIColor *tintColor;
 @property (nonatomic, weak) UIView *viewToBlur;
 
 @property (nonatomic, strong) NSArray *viewsToHide;

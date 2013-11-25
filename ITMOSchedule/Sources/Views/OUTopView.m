@@ -18,6 +18,8 @@
     IBOutlet UIButton *_cancelButton;
     IBOutlet UILabel *_label;
     IBOutlet UIButton *_button;
+
+    IBOutlet FXBlurView *_blurView;
 }
 
 - (BOOL)resignFirstResponder {
@@ -28,10 +30,15 @@
 - (void)awakeFromNib {
     _textField.text = nil;
     [self setState:OUTopViewStateShow];
+
+    _blurView.blurRadius = 20.0;
+    _blurView.viewToBlur = _containerView;
+    _blurView.viewsToHide = @[self];
 }
 
 - (void)setContainerView:(UIView *)containerView {
     _containerView = containerView;
+    _blurView.viewToBlur = containerView;
 }
 
 - (IBAction)textDidChange {
@@ -59,7 +66,8 @@
 }
 
 - (IBAction)activeButtonDidTap {
-    [_textField becomeFirstResponder];
+    [self setState:OUTopViewStateEdit];
+    [_delegate topViewDidBecomeActive:self];
 }
 
 - (NSString *)text {
@@ -70,6 +78,7 @@
     _state = state;
     switch (state) {
         case OUTopViewStateEdit:
+            [_textField becomeFirstResponder];
             [self setActive:YES];
             break;
         case OUTopViewStateShow:
@@ -83,7 +92,6 @@
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
     [_delegate topViewDidBecomeActive:self];
-    [self setState:OUTopViewStateEdit];
 }
 
 - (void)setActive:(BOOL)active {

@@ -93,18 +93,16 @@
 	                                         8, buffer1.rowBytes, CGImageGetColorSpace(imageRef),
 	                                         CGImageGetBitmapInfo(imageRef));
 
-	//apply tint
-	if (tintColor && CGColorGetAlpha(tintColor.CGColor) > 0.0f) {
-//        tintColor = [UIColor whiteColor];
-//		CGContextSetFillColorWithColor(ctx, [tintColor colorWithAlphaComponent:0.3].CGColor);
-//		CGContextSetBlendMode(ctx, kCGBlendModeDestinationAtop);
+    // деалем приемлимый оттенок блюра
+    tintColor = [UIColor whiteColor];
+    CGContextSetFillColorWithColor(ctx, [tintColor colorWithAlphaComponent:0.25].CGColor);
+    CGContextSetBlendMode(ctx, kCGBlendModeDestinationIn);
+    CGContextFillRect(ctx, CGRectMake(0, 0, buffer1.width, buffer1.height));
 
-//        tintColor = [UIColor blackColor];
-//		CGContextSetFillColorWithColor(ctx, [tintColor colorWithAlphaComponent:0.2].CGColor);
-//		CGContextSetBlendMode(ctx, kCGBlendModeSourceAtop);
-
-        CGContextFillRect(ctx, CGRectMake(0, 0, buffer1.width, buffer1.height));
-	}
+    tintColor = [UIColor blackColor];
+    CGContextSetFillColorWithColor(ctx, [tintColor colorWithAlphaComponent:0.35].CGColor);
+    CGContextSetBlendMode(ctx, kCGBlendModeSourceAtop);
+    CGContextFillRect(ctx, CGRectMake(0, 0, buffer1.width, buffer1.height));
 
 	//create image from context
 	imageRef = CGBitmapContextCreateImage(ctx);
@@ -119,7 +117,7 @@
 //    [[UIColor blackColor] setFill];
 //    CGRect bounds = CGRectMake(0, 0, image.size.width, image.size.height);
 //    UIRectFill(bounds);
-//    [self drawInRect:bounds blendMode:kCGBlendModeDarken alpha:0.5];
+//    [self drawInRect:bounds blendMode:kCGBlendModeColorDodge alpha:0.5];
 //
 //    UIImage *tintedImage = UIGraphicsGetImageFromCurrentImageContext();
 //    UIGraphicsEndImageContext();
@@ -222,6 +220,9 @@
 			    (!view.lastUpdate || [view.lastUpdate timeIntervalSinceNow] < -view.updateInterval) &&
 			    !CGRectIsEmpty(view.bounds) && !CGRectIsEmpty(view.viewToBlur.bounds)) {
 
+
+
+
 				self.updating = YES;
 
                 UIImage *snapshot = [view snapshotOfSuperview:view.viewToBlur];
@@ -287,18 +288,6 @@
 	if (!_blurEnabledSet) _blurEnabled = YES;
 	self.updateInterval = _updateInterval;
 	self.layer.magnificationFilter = @"linear"; //kCAFilterLinear;
-
-	unsigned int numberOfMethods;
-	Method *methods = class_copyMethodList([UIView class], &numberOfMethods);
-	for (unsigned int i = 0; i < numberOfMethods; i++) {
-		Method method = methods[i];
-		SEL selector = method_getName(method);
-		if (selector == @selector(tintColor)) {
-			_tintColor = ((id (*)(id, SEL))method_getImplementation(method))(self, selector);
-			break;
-		}
-	}
-	free(methods);
 }
 
 - (id)initWithFrame:(CGRect)frame {
@@ -357,11 +346,6 @@
 - (void)setUpdateInterval:(NSTimeInterval)updateInterval {
 	_updateInterval = updateInterval;
 	if (_updateInterval <= 0) _updateInterval = 1.0 / 60;
-}
-
-- (void)setTintColor:(UIColor *)tintColor {
-	_tintColor = tintColor;
-	[self setNeedsDisplay];
 }
 
 - (void)didMoveToSuperview {

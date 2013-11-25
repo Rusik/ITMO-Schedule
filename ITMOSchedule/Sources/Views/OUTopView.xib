@@ -10,10 +10,15 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="64"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view clipsSubviews="YES" contentMode="scaleToFill" id="Jck-dd-99K">
+                <view contentMode="scaleToFill" id="WCS-6I-T8t">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="64"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <color key="backgroundColor" red="0.0" green="0.40784313729999999" blue="0.66274509800000003" alpha="1" colorSpace="calibratedRGB"/>
+                </view>
+                <view clipsSubviews="YES" contentMode="scaleToFill" id="Jck-dd-99K" customClass="FXBlurView">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="64"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 </view>
                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="4528" minimumFontSize="10" id="tNJ-ep-mdP" customClass="OUTextField">
@@ -63,6 +68,7 @@
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
+                <outlet property="_blurView" destination="Jck-dd-99K" id="0AO-BP-osx"/>
                 <outlet property="_button" destination="8sj-rK-gHL" id="4S2-LQ-Dan"/>
                 <outlet property="_cancelButton" destination="QlM-xJ-1TM" id="kew-SA-qOA"/>
                 <outlet property="_label" destination="wdK-Hs-DcP" id="qPQ-et-XQ3"/>
