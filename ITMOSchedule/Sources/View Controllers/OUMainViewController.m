@@ -90,6 +90,8 @@
     _tableData = [[OUScheduleCoordinator sharedInstance] mainInfoDataForString:nil];
     [_tableView reloadData];
     _tableView.hidden = NO;
+
+    _scheduleVC.view.hidden = YES;
 }
 
 - (void)topView:(OUTopView *)topView didChangeText:(NSString *)text {
@@ -99,6 +101,7 @@
 
 - (void)topViewDidCancel:(OUTopView *)topView {
     _tableView.hidden = YES;
+    _scheduleVC.view.hidden = NO;
 }
 
 #pragma mark - UITableViewDelegate & UITableViewDataSource
@@ -132,6 +135,7 @@
     }
     
     _tableView.hidden = YES;
+    _scheduleVC.view.hidden = NO;
     [_topView setData:data];
     [_topView setState:OUTopViewStateShow];
 }

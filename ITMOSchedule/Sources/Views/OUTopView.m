@@ -67,6 +67,7 @@
 
 - (IBAction)activeButtonDidTap {
     [self setState:OUTopViewStateEdit];
+    [_textField becomeFirstResponder];
     [_delegate topViewDidBecomeActive:self];
 }
 
@@ -78,7 +79,6 @@
     _state = state;
     switch (state) {
         case OUTopViewStateEdit:
-            [_textField becomeFirstResponder];
             [self setActive:YES];
             break;
         case OUTopViewStateShow:
@@ -89,10 +89,6 @@
 }
 
 #pragma mark - UITextFieldDelegate
-
-- (void)textFieldDidBeginEditing:(UITextField *)textField {
-    [_delegate topViewDidBecomeActive:self];
-}
 
 - (void)setActive:(BOOL)active {
     _label.hidden = active;
