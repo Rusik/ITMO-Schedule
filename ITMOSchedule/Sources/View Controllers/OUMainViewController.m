@@ -89,9 +89,8 @@
 - (void)topViewDidBecomeActive:(OUTopView *)topView {
     _tableData = [[OUScheduleCoordinator sharedInstance] mainInfoDataForString:nil];
     [_tableView reloadData];
-    _tableView.hidden = NO;
 
-    _scheduleVC.view.hidden = YES;
+    [self showSearch];
 }
 
 - (void)topView:(OUTopView *)topView didChangeText:(NSString *)text {
@@ -100,6 +99,17 @@
 }
 
 - (void)topViewDidCancel:(OUTopView *)topView {
+    [self showSchedule];
+}
+
+#pragma mark - Subviews managing
+
+- (void)showSearch {
+    _tableView.hidden = NO;
+    _scheduleVC.view.hidden = YES;
+}
+
+- (void)showSchedule {
     _tableView.hidden = YES;
     _scheduleVC.view.hidden = NO;
 }
@@ -133,9 +143,9 @@
     } else if ([data isKindOfClass:[OUAuditory class]]) {
         [[OUScheduleDownloader sharedInstance] downloadLessonsForAuditory:data complete:block];
     }
-    
-    _tableView.hidden = YES;
-    _scheduleVC.view.hidden = NO;
+
+    [self showSchedule];
+
     [_topView setData:data];
     [_topView setState:OUTopViewStateShow];
 }
