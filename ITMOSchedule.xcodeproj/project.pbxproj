@@ -11,6 +11,7 @@
 		7F2B462D1805CE9000B48239 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F2B462C1805CE9000B48239 /* libz.dylib */; };
 		7F2B462F1805CE9E00B48239 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F2B462E1805CE9E00B48239 /* libxml2.dylib */; };
 		7F2B46331805D33D00B48239 /* NSArray+Helpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F2B46321805D33D00B48239 /* NSArray+Helpers.m */; };
+		7F3E33DB1842AF4E00B977E9 /* FXBlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F3E33DA1842AF4E00B977E9 /* FXBlurView.m */; };
 		7F4EA6CD1805C7FF00C1958D /* OUMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F4EA6CB1805C7FF00C1958D /* OUMainViewController.m */; };
 		7F4EA6CE1805C7FF00C1958D /* OUMainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7F4EA6CC1805C7FF00C1958D /* OUMainViewController.xib */; };
 		7F4EA6D21805C83200C1958D /* OUParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F4EA6D11805C83200C1958D /* OUParser.m */; };
@@ -37,6 +38,9 @@
 		7FA9F667180BE3BA0067A3FF /* OUAuditoryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FA9F666180BE3BA0067A3FF /* OUAuditoryCell.xib */; };
 		7FBDB6DD183D8FBB009AC1DC /* UIFont+PreferedFontSize.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FBDB6DC183D8FBB009AC1DC /* UIFont+PreferedFontSize.m */; };
 		7FBDB6E0183D947C009AC1DC /* UIActionSheet+Blocks.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FBDB6DF183D947C009AC1DC /* UIActionSheet+Blocks.m */; };
+		7FBDB6E3183E68FB009AC1DC /* OUTopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FBDB6E2183E68FB009AC1DC /* OUTopView.m */; };
+		7FBDB6E5183E6906009AC1DC /* OUTopView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FBDB6E4183E6906009AC1DC /* OUTopView.xib */; };
+		7FBDB6E8183E6D8C009AC1DC /* OnePixelView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FBDB6E7183E6D8C009AC1DC /* OnePixelView.m */; };
 		7FC4B92A1814FEE700926281 /* UILabel+Adjust.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FC4B9291814FEE700926281 /* UILabel+Adjust.m */; };
 		7FC509DB180C1BAF00FCE715 /* OULessonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FC509DA180C1BAF00FCE715 /* OULessonCell.m */; };
 		7FC509DE180C265100FCE715 /* NSString+Helpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FC509DD180C265100FCE715 /* NSString+Helpers.m */; };
@@ -65,6 +69,8 @@
 		7F2B462E1805CE9E00B48239 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		7F2B46311805D33D00B48239 /* NSArray+Helpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Helpers.h"; sourceTree = "<group>"; };
 		7F2B46321805D33D00B48239 /* NSArray+Helpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Helpers.m"; sourceTree = "<group>"; };
+		7F3E33D91842AF4E00B977E9 /* FXBlurView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FXBlurView.h; sourceTree = "<group>"; };
+		7F3E33DA1842AF4E00B977E9 /* FXBlurView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FXBlurView.m; sourceTree = "<group>"; };
 		7F4EA6CA1805C7FF00C1958D /* OUMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OUMainViewController.h; sourceTree = "<group>"; };
 		7F4EA6CB1805C7FF00C1958D /* OUMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OUMainViewController.m; sourceTree = "<group>"; };
 		7F4EA6CC1805C7FF00C1958D /* OUMainViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OUMainViewController.xib; sourceTree = "<group>"; };
@@ -108,6 +114,11 @@
 		7FBDB6DC183D8FBB009AC1DC /* UIFont+PreferedFontSize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIFont+PreferedFontSize.m"; sourceTree = "<group>"; };
 		7FBDB6DE183D947C009AC1DC /* UIActionSheet+Blocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIActionSheet+Blocks.h"; sourceTree = "<group>"; };
 		7FBDB6DF183D947C009AC1DC /* UIActionSheet+Blocks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIActionSheet+Blocks.m"; sourceTree = "<group>"; };
+		7FBDB6E1183E68FB009AC1DC /* OUTopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OUTopView.h; sourceTree = "<group>"; };
+		7FBDB6E2183E68FB009AC1DC /* OUTopView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OUTopView.m; sourceTree = "<group>"; };
+		7FBDB6E4183E6906009AC1DC /* OUTopView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OUTopView.xib; sourceTree = "<group>"; };
+		7FBDB6E6183E6D8C009AC1DC /* OnePixelView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OnePixelView.h; sourceTree = "<group>"; };
+		7FBDB6E7183E6D8C009AC1DC /* OnePixelView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OnePixelView.m; sourceTree = "<group>"; };
 		7FC4B9281814FEE700926281 /* UILabel+Adjust.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+Adjust.h"; sourceTree = "<group>"; };
 		7FC4B9291814FEE700926281 /* UILabel+Adjust.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+Adjust.m"; sourceTree = "<group>"; };
 		7FC509D9180C1BAF00FCE715 /* OULessonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OULessonCell.h; sourceTree = "<group>"; };
@@ -196,6 +207,10 @@
 				7FBDB6DC183D8FBB009AC1DC /* UIFont+PreferedFontSize.m */,
 				7FBDB6DE183D947C009AC1DC /* UIActionSheet+Blocks.h */,
 				7FBDB6DF183D947C009AC1DC /* UIActionSheet+Blocks.m */,
+				7FBDB6E6183E6D8C009AC1DC /* OnePixelView.h */,
+				7FBDB6E7183E6D8C009AC1DC /* OnePixelView.m */,
+				7F3E33D91842AF4E00B977E9 /* FXBlurView.h */,
+				7F3E33DA1842AF4E00B977E9 /* FXBlurView.m */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -334,6 +349,9 @@
 				7FA9F663180BE39E0067A3FF /* OUAuditoryCell.h */,
 				7FA9F664180BE39E0067A3FF /* OUAuditoryCell.m */,
 				7FA9F666180BE3BA0067A3FF /* OUAuditoryCell.xib */,
+				7FBDB6E1183E68FB009AC1DC /* OUTopView.h */,
+				7FBDB6E2183E68FB009AC1DC /* OUTopView.m */,
+				7FBDB6E4183E6906009AC1DC /* OUTopView.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -426,6 +444,7 @@
 				7F4EA6CE1805C7FF00C1958D /* OUMainViewController.xib in Resources */,
 				7F9F67DD18055D9700A9E9D1 /* InfoPlist.strings in Resources */,
 				7F9F67E518055D9700A9E9D1 /* Images.xcassets in Resources */,
+				7FBDB6E5183E6906009AC1DC /* OUTopView.xib in Resources */,
 				7FA9F662180BE3900067A3FF /* OUTeacherCell.xib in Resources */,
 				7FA9F65D180BDBFD0067A3FF /* OUGroupCell.xib in Resources */,
 				7FA9F658180B3A3D0067A3FF /* OUScheduleViewController.xib in Resources */,
@@ -444,6 +463,7 @@
 				841F218A180569520054C523 /* AFHTTPRequestOperation.m in Sources */,
 				841F218B180569520054C523 /* AFImageRequestOperation.m in Sources */,
 				7FE3D92C1805F79300D3D3C3 /* OULesson.m in Sources */,
+				7FBDB6E8183E6D8C009AC1DC /* OnePixelView.m in Sources */,
 				7FA9F653180B31DA0067A3FF /* UIView+Helpers.m in Sources */,
 				7FA9F60D180B23CF0067A3FF /* UITableViewCell+Helpers.m in Sources */,
 				7F2B46331805D33D00B48239 /* NSArray+Helpers.m in Sources */,
@@ -459,6 +479,7 @@
 				7FC4B92A1814FEE700926281 /* UILabel+Adjust.m in Sources */,
 				7FC509DB180C1BAF00FCE715 /* OULessonCell.m in Sources */,
 				841F21CD180573490054C523 /* OUScheduleDownloader.m in Sources */,
+				7F3E33DB1842AF4E00B977E9 /* FXBlurView.m in Sources */,
 				7FBDB6E0183D947C009AC1DC /* UIActionSheet+Blocks.m in Sources */,
 				7FA9F657180B3A3D0067A3FF /* OUScheduleViewController.m in Sources */,
 				7FA9F603180B23580067A3FF /* OUSearchCell.m in Sources */,
@@ -470,6 +491,7 @@
 				7F2B462B1805CE7600B48239 /* RXMLElement.m in Sources */,
 				841F2191180569520054C523 /* UIImageView+AFNetworking.m in Sources */,
 				7FC509DE180C265100FCE715 /* NSString+Helpers.m in Sources */,
+				7FBDB6E3183E68FB009AC1DC /* OUTopView.m in Sources */,
 				841F2189180569520054C523 /* AFHTTPClient.m in Sources */,
 				7FA9F665180BE39E0067A3FF /* OUAuditoryCell.m in Sources */,
 				7FA9F60C180B23CF0067A3FF /* NSObject+NIB.m in Sources */,

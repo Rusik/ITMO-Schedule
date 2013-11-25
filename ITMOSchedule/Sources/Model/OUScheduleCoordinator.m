@@ -34,6 +34,26 @@
     NSArray *auditories = _mainInfo[AUDITORIES_INFO_KEY];
 
     NSMutableArray *results = [NSMutableArray array];
+
+    if (!string || [string isEqualToString:@""]) {
+        [results addObjectsFromArray:[groups sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+            OUGroup *g1 = (OUGroup *)obj1;
+            OUGroup *g2 = (OUGroup *)obj2;
+            return [g1.groupName compare:g2.groupName];
+        }]];
+        [results addObjectsFromArray:[teachers sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+            OUTeacher *t1 = (OUTeacher *)obj1;
+            OUTeacher *t2 = (OUTeacher *)obj2;
+            return [t1.teacherName compare:t2.teacherName];
+        }]];
+        [results addObjectsFromArray:[auditories sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+            OUAuditory *a1 = (OUAuditory *)obj1;
+            OUAuditory *a2 = (OUAuditory *)obj2;
+            return [a1.auditoryName compare:a2.auditoryName];
+        }]];
+        return results;
+    }
+
     for (OUGroup *group in groups) {
         if ([group.groupName rangeOfString:string options:NSCaseInsensitiveSearch].location != NSNotFound) {
             [results addObject:group];

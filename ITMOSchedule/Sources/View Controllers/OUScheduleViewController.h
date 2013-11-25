@@ -7,9 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "OUTopView.h"
 
 @interface OUScheduleViewController : UIViewController
 
 - (void)reloadData;
+
+- (void)setContentInset:(UIEdgeInsets)inset;
+
+@property (nonatomic, weak) OUTopView *topView;
 
 @end

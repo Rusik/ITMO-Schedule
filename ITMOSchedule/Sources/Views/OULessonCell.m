@@ -31,6 +31,8 @@
     [super awakeFromNib];
 
     self.topLabel.textColor = self.bottomLabel.textColor = [UIColor colorWithWhite:0.400 alpha:1.000];
+
+    self.selectedBackgroundView.backgroundColor = ICON_COLOR;
 }
 
 - (void)adjustLabelsSize {

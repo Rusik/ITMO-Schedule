@@ -80,6 +80,15 @@
     [_tableView2 reloadData];
 }
 
+#pragma mark - Actions
+
+- (void)setContentInset:(UIEdgeInsets)inset {
+    [_tableView1 setContentInset:inset];
+    [_tableView2 setContentInset:inset];
+    [_tableView1 setScrollIndicatorInsets:inset];
+    [_tableView2 setScrollIndicatorInsets:inset];
+}
+
 #pragma mark - UITableViewDataSource & UITableViewDelegate
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
@@ -150,8 +159,6 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath  {
     OULesson *lesson = [self lessonForIndexPath:indexPath intableView:tableView];
 
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-
     UIActionSheet *actionSheet = [UIActionSheet actionSheetWithTitle:@"Посмотреть расписание"];
 
     id type = [[OUScheduleCoordinator sharedInstance] lessonsType];
@@ -161,6 +168,8 @@
     if (lesson.teacher && ([type isKindOfClass:[OUGroup class]] || [type isKindOfClass:[OUAuditory class]])) {
         show = YES;
         [actionSheet addButtonWithTitle:[NSString stringWithFormat:@"%@", lesson.teacher.teacherName] action:^{
+            [_topView setData:lesson.teacher];
+            [tableView deselectRowAtIndexPath:indexPath animated:YES];
             [[OUScheduleDownloader sharedInstance] downloadLessonsForTeacher:lesson.teacher complete:^{
                 [self reloadData];
             }];
@@ -169,6 +178,8 @@
     if (lesson.auditory && ([type isKindOfClass:[OUGroup class]] || [type isKindOfClass:[OUTeacher class]])) {
         show = YES;
         [actionSheet addButtonWithTitle:[NSString stringWithFormat:@"Аудитория %@", lesson.auditory.auditoryName] action:^{
+            [_topView setData:lesson.auditory];
+            [tableView deselectRowAtIndexPath:indexPath animated:YES];
             [[OUScheduleDownloader sharedInstance] downloadLessonsForAuditory:lesson.auditory complete:^{
                 [self reloadData];
             }];
@@ -179,6 +190,8 @@
         if (lesson.groups.count == 1) {
             OUGroup *group = lesson.groups.firstObject;
             [actionSheet addButtonWithTitle:[NSString stringWithFormat:@"Группа %@", group.groupName] action:^{
+                [_topView setData:group];
+                [tableView deselectRowAtIndexPath:indexPath animated:YES];
                 [[OUScheduleDownloader sharedInstance] downloadLessonsForGroup:group complete:^{
                     [self reloadData];
                 }];
@@ -189,6 +202,8 @@
                 UIActionSheet *groupsActionSheet = [UIActionSheet actionSheetWithTitle:@"Выберите группу"];
                 for (OUGroup *g in lesson.groups) {
                     [groupsActionSheet addButtonWithTitle:g.groupName action:^{
+                        [_topView setData:g];
+                        [tableView deselectRowAtIndexPath:indexPath animated:YES];
                         [[OUScheduleDownloader sharedInstance] downloadLessonsForGroup:g complete:^{
                             [self reloadData];
                         }];
@@ -197,14 +212,29 @@
                 [groupsActionSheet addCancelButtonWithTitle:@"Отмена" action:nil];
                 [groupsActionSheet setCancelButtonIndex:lesson.groups.count];
                 [groupsActionSheet showInView:self.view.superview];
+                [self customizeActionSheet:groupsActionSheet];
             }];
         }
     }
 
     if (show) {
-        [actionSheet addCancelButtonWithTitle:@"Отмена" action:nil];
+        [actionSheet addCancelButtonWithTitle:@"Отмена" action:^{
+            [tableView deselectRowAtIndexPath:indexPath animated:YES];
+        }];
         [actionSheet setCancelButtonIndex:actionSheet.numberOfButtons - 1];
         [actionSheet showInView:self.view.superview];
+        [self customizeActionSheet:actionSheet];        
+    }
+}
+
+- (void)customizeActionSheet:(UIActionSheet *)actionSheet {
+    for (UIView *subview in actionSheet.subviews) {
+        if ([subview isKindOfClass:[UIButton class]]) {
+            UIButton *button = (UIButton *)subview;
+            [button setTitleColor:ICON_COLOR forState:UIControlStateNormal];
+            [button setTitleColor:ICON_COLOR forState:UIControlStateSelected];
+            [button setTitleColor:ICON_COLOR forState:UIControlStateHighlighted];
+        }
     }
 }
 

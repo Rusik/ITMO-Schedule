@@ -13,3 +13,6 @@
 #import "UIView+Helpers.h"
 #import "UITableViewCell+Helpers.h"
 #import "NSArray+Helpers.h"
+
+#define MAIN_COLOR [UIColor colorWithRed:0.400 green:0.400 blue:1.000 alpha:1.000]
+#define ICON_COLOR [UIColor colorWithRed:0.000 green:0.408 blue:0.663 alpha:1.000]

@@ -12,18 +12,21 @@
 #import "UITableViewCell+Helpers.h"
 #import "OUSearchCell.h"
 #import "OUScheduleViewController.h"
+#import "OUTopView.h"
 
-@interface OUMainViewController () <UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate>
+@interface OUMainViewController () <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, OUTopViewDelegate>
 
 @end
 
 @implementation OUMainViewController {
-    IBOutlet UITextField *_textField;
     IBOutlet UITableView *_tableView;
     IBOutlet UILabel *_loadingLabel;
+    IBOutlet UIView *_topViewContainer;
 
     NSArray *_tableData;
     OUScheduleViewController *_scheduleVC;
+
+    OUTopView *_topView;
 }
 
 - (void)viewDidLoad {
@@ -31,20 +34,32 @@
 
     [_tableView registerNib:[OUSearchCell nibForCell] forCellReuseIdentifier:[OUSearchCell cellIdentifier]];
 
+    _scheduleVC = [OUScheduleViewController new];
+    [self addChildViewController:_scheduleVC];
+    [self.view insertSubview:_scheduleVC.view belowSubview:_tableView];
+    _scheduleVC.view.frame = self.view.bounds;
+    [_scheduleVC setContentInset:UIEdgeInsetsMake(64, 0, 0, 0)];
+    [_scheduleVC didMoveToParentViewController:self];
+
+    [self.view addSubview:_topViewContainer];
+
+    _topView = [OUTopView loadFromNib];
+    _topView.delegate = self;
+    _topView.containerView = self.view;
+    [_topViewContainer addSubview:_topView];
+
+    _scheduleVC.topView = _topView;
+
+    [self subscribeToNotifications];
+
     _loadingLabel.text = @"Загрузка...";
     [[OUScheduleDownloader sharedInstance] downloadMainInfo:^{
         _loadingLabel.text = @"Загружено";
         NSLog(@"MAIN DOWNLOAD");
+
+        _tableData = [[OUScheduleCoordinator sharedInstance] mainInfoDataForString:[_topView text]];
+        [_tableView reloadData];
     }];
-
-    _scheduleVC = [OUScheduleViewController new];
-    [self addChildViewController:_scheduleVC];
-    [self.view insertSubview:_scheduleVC.view belowSubview:_tableView];
-    _scheduleVC.view.$top = 50;
-    _scheduleVC.view.$height -= 50;
-    [_scheduleVC didMoveToParentViewController:self];
-
-    [self subscribeToNotifications];
 }
 
 - (void)dealloc {
@@ -69,27 +84,26 @@
     [_tableView reloadData];
 }
 
-#pragma mark - Actions
+#pragma mark - OUTopViewDelegate
 
-- (IBAction)cancelDidPress {
-    [_textField resignFirstResponder];
-    _tableView.hidden = YES;
-}
-
-#pragma mark - UITextFieldDelegate
-
-- (void)textFieldDidBeginEditing:(UITextField *)textField {
+- (void)topViewDidBecomeActive:(OUTopView *)topView {
+    _tableData = [[OUScheduleCoordinator sharedInstance] mainInfoDataForString:nil];
+    [_tableView reloadData];
     _tableView.hidden = NO;
 }
 
-- (IBAction)textDidChange {
-    _tableData = [[OUScheduleCoordinator sharedInstance] mainInfoDataForString:_textField.text];
+- (void)topView:(OUTopView *)topView didChangeText:(NSString *)text {
+    _tableData = [[OUScheduleCoordinator sharedInstance] mainInfoDataForString:text];
     [_tableView reloadData];
+}
+
+- (void)topViewDidCancel:(OUTopView *)topView {
+    _tableView.hidden = YES;
 }
 
 #pragma mark - UITableViewDelegate & UITableViewDataSource
 
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return [OUSearchCell heightForData:_tableData[indexPath.row]];
 }
 
@@ -105,8 +119,6 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
-    NSLog(@"SELECT");
-
     id data = _tableData[indexPath.row];
     CompleteBlock block = ^{
         [_scheduleVC reloadData];
@@ -120,13 +132,14 @@
     }
     
     _tableView.hidden = YES;
-    [_textField resignFirstResponder];
+    [_topView setData:data];
+    [_topView setState:OUTopViewStateShow];
 }
 
 #pragma mark - UIScrollViewDelegate
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
-    [_textField resignFirstResponder];
+    [_topView resignFirstResponder];
 }
 
 @end
