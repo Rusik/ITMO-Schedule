@@ -60,12 +60,7 @@
     }
     if ([_data isKindOfClass:[OUAuditory class]]) {
         OUAuditory *auditory = (OUAuditory *)_data;
-
-        if ([auditory.auditoryName rangeOfCharacterFromSet:[NSCharacterSet decimalDigitCharacterSet]].location == 0) {
-            _textLabel.text = [[NSString stringWithFormat:@"Аудитория %@", auditory.auditoryName] stringWithSpaceAfterCommaAndDot];
-        } else {
-            _textLabel.text = [auditory.auditoryName stringWithSpaceAfterCommaAndDot];
-        }
+        _textLabel.text = [[auditory correctAuditoryName] stringWithSpaceAfterCommaAndDot];
         _bottomTextLabel.text = auditory.auditoryAddress;
     }
 }

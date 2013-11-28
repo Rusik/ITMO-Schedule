@@ -13,6 +13,7 @@
 #import "OUAuditoryCell.h"
 #import "UIActionSheet+Blocks.h"
 #import "OUScheduleDownloader.h"
+#import "NSString+Helpers.h"
 
 @interface OUScheduleViewController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -30,8 +31,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self registerTableViewsForCells];
-
     [self subscribeToNotifications];
+
+    _tableView1.tableFooterView = [UIView new];
+    _tableView2.tableFooterView = [UIView new];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -171,17 +174,17 @@
             [_topView setData:lesson.teacher];
             [tableView deselectRowAtIndexPath:indexPath animated:YES];
             [[OUScheduleDownloader sharedInstance] downloadLessonsForTeacher:lesson.teacher complete:^{
-                [self reloadData];
+                [self updateScheduleTables];
             }];
         }];
     }
     if (lesson.auditory && ([type isKindOfClass:[OUGroup class]] || [type isKindOfClass:[OUTeacher class]])) {
         show = YES;
-        [actionSheet addButtonWithTitle:[NSString stringWithFormat:@"Аудитория %@", lesson.auditory.auditoryName] action:^{
+        [actionSheet addButtonWithTitle:[lesson.auditory.correctAuditoryName stringWithSpaceAfterCommaAndDot] action:^{
             [_topView setData:lesson.auditory];
             [tableView deselectRowAtIndexPath:indexPath animated:YES];
             [[OUScheduleDownloader sharedInstance] downloadLessonsForAuditory:lesson.auditory complete:^{
-                [self reloadData];
+                [self updateScheduleTables];
             }];
         }];
     }
@@ -193,7 +196,7 @@
                 [_topView setData:group];
                 [tableView deselectRowAtIndexPath:indexPath animated:YES];
                 [[OUScheduleDownloader sharedInstance] downloadLessonsForGroup:group complete:^{
-                    [self reloadData];
+                    [self updateScheduleTables];
                 }];
             }];
         } else {
@@ -205,7 +208,7 @@
                         [_topView setData:g];
                         [tableView deselectRowAtIndexPath:indexPath animated:YES];
                         [[OUScheduleDownloader sharedInstance] downloadLessonsForGroup:g complete:^{
-                            [self reloadData];
+                            [self updateScheduleTables];
                         }];
                     }];
                 }
@@ -249,6 +252,12 @@
     }
 
     return lessons[indexPath.row];
+}
+
+- (void)updateScheduleTables {
+    [self reloadData];
+    [_tableView1 setContentOffset:CGPointMake(0, -_tableView1.contentInset.top) animated:NO];
+    [_tableView2 setContentOffset:CGPointMake(0, -_tableView1.contentInset.top) animated:NO];
 }
 
 @end

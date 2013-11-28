@@ -18,4 +18,6 @@
 
 - (NSString *)auditoryDescription;
 
+- (NSString *)correctAuditoryName;
+
 @end

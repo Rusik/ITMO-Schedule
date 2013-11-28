@@ -24,4 +24,12 @@
     return [NSString stringWithFormat:@"%@, %@", _auditoryName, _auditoryAddress];
 }
 
+- (NSString *)correctAuditoryName {
+    if ([self.auditoryName rangeOfCharacterFromSet:[NSCharacterSet decimalDigitCharacterSet]].location == 0) {
+        return [NSString stringWithFormat:@"Аудитория %@", self.auditoryName];
+    } else {
+        return self.auditoryName;
+    }
+}
+
 @end

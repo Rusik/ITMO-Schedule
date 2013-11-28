@@ -33,6 +33,7 @@
     [super viewDidLoad];
 
     [_tableView registerNib:[OUSearchCell nibForCell] forCellReuseIdentifier:[OUSearchCell cellIdentifier]];
+    _tableView.tableFooterView = [UIView new];
 
     _scheduleVC = [OUScheduleViewController new];
     [self addChildViewController:_scheduleVC];
@@ -89,6 +90,7 @@
 - (void)topViewDidBecomeActive:(OUTopView *)topView {
     _tableData = [[OUScheduleCoordinator sharedInstance] mainInfoDataForString:nil];
     [_tableView reloadData];
+    [_tableView setContentOffset:CGPointMake(0, -_tableView.contentInset.top) animated:NO];
 
     [self showSearch];
 }
@@ -96,6 +98,7 @@
 - (void)topView:(OUTopView *)topView didChangeText:(NSString *)text {
     _tableData = [[OUScheduleCoordinator sharedInstance] mainInfoDataForString:text];
     [_tableView reloadData];
+    [_tableView setContentOffset:CGPointMake(0, -_tableView.contentInset.top) animated:NO];
 }
 
 - (void)topViewDidCancel:(OUTopView *)topView {
