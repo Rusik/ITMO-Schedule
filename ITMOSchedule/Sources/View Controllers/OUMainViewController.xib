@@ -7,7 +7,6 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="OUMainViewController">
             <connections>
-                <outlet property="_loadingLabel" destination="HAx-5B-qrJ" id="QFe-4y-4U6"/>
                 <outlet property="_tableView" destination="iGR-Q9-3r7" id="P16-Uk-ACB"/>
                 <outlet property="_topViewContainer" destination="T8H-d3-2Yv" id="5un-YN-zN9"/>
                 <outlet property="view" destination="1" id="3"/>
@@ -35,12 +34,6 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 </view>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="HAx-5B-qrJ">
-                    <rect key="frame" x="20" y="530" width="280" height="21"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <nil key="highlightedColor"/>
-                </label>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>

@@ -13,6 +13,7 @@
 #import "OUSearchCell.h"
 #import "OUScheduleViewController.h"
 #import "OUTopView.h"
+#import "MRProgressOverlayView.h"
 
 @interface OUMainViewController () <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, OUTopViewDelegate>
 
@@ -20,7 +21,6 @@
 
 @implementation OUMainViewController {
     IBOutlet UITableView *_tableView;
-    IBOutlet UILabel *_loadingLabel;
     IBOutlet UIView *_topViewContainer;
 
     NSArray *_tableData;
@@ -53,13 +53,13 @@
 
     [self subscribeToNotifications];
 
-    _loadingLabel.text = @"Загрузка...";
+    [self showLoadingOverlay];
     [[OUScheduleDownloader sharedInstance] downloadMainInfo:^{
-        _loadingLabel.text = @"Загружено";
         NSLog(@"MAIN DOWNLOAD");
 
         _tableData = [[OUScheduleCoordinator sharedInstance] mainInfoDataForString:[_topView text]];
         [_tableView reloadData];
+        [self hideLoadingOverlay];
     }];
 }
 
@@ -137,6 +137,8 @@
 
     id data = _tableData[indexPath.row];
     CompleteBlock block = ^{
+        [_topView setData:data];
+        [self hideLoadingOverlay];
         [_scheduleVC reloadData];
     };
     if ([data isKindOfClass:[OUGroup class]]) {
@@ -148,9 +150,22 @@
     }
 
     [self showSchedule];
+    [self performSelector:@selector(showLoadingOverlay) withObject:nil afterDelay:0.01];
 
-    [_topView setData:data];
     [_topView setState:OUTopViewStateShow];
+}
+
+#pragma mark - Loading
+
+- (void)showLoadingOverlay {
+    [MRProgressOverlayView showOverlayAddedTo:self.view
+                                        title:@"Загрузка"
+                                         mode:MRProgressOverlayViewModeIndeterminate
+                                     animated:YES];
+}
+
+- (void)hideLoadingOverlay {
+    [MRProgressOverlayView dismissAllOverlaysForView:self.view animated:YES];
 }
 
 #pragma mark - UIScrollViewDelegate

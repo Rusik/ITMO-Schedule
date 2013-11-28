@@ -14,6 +14,7 @@
 #import "UIActionSheet+Blocks.h"
 #import "OUScheduleDownloader.h"
 #import "NSString+Helpers.h"
+#import "MRProgressOverlayView.h"
 
 @interface OUScheduleViewController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -75,6 +76,9 @@
 }
 
 - (void)reloadData {
+
+    [_tableView1 setContentOffset:CGPointMake(0, -_tableView1.contentInset.top) animated:NO];
+    [_tableView2 setContentOffset:CGPointMake(0, -_tableView2.contentInset.top) animated:NO];
 
     _weekDays1 = [[OUScheduleCoordinator sharedInstance] weekDaysForWeekType:OULessonWeekTypeOdd];
     _weekDays2 = [[OUScheduleCoordinator sharedInstance] weekDaysForWeekType:OULessonWeekTypeEven];
@@ -168,23 +172,37 @@
 
     BOOL show = NO;
 
+    MRProgressOverlayView __block *loadingView;
+    void (^beforeLoading)(void) = ^{
+         loadingView = [self showOverlay];
+    };
+    void (^afterLoading)(void) = ^{
+        [self updateScheduleTables];
+        [loadingView hide:YES];
+        [tableView deselectRowAtIndexPath:indexPath animated:NO];
+    };
+
     if (lesson.teacher && ([type isKindOfClass:[OUGroup class]] || [type isKindOfClass:[OUAuditory class]])) {
         show = YES;
         [actionSheet addButtonWithTitle:[NSString stringWithFormat:@"%@", lesson.teacher.teacherName] action:^{
-            [_topView setData:lesson.teacher];
-            [tableView deselectRowAtIndexPath:indexPath animated:YES];
+
+            beforeLoading();
+
             [[OUScheduleDownloader sharedInstance] downloadLessonsForTeacher:lesson.teacher complete:^{
-                [self updateScheduleTables];
+                afterLoading();
+                [_topView setData:lesson.teacher];
             }];
         }];
     }
     if (lesson.auditory && ([type isKindOfClass:[OUGroup class]] || [type isKindOfClass:[OUTeacher class]])) {
         show = YES;
         [actionSheet addButtonWithTitle:[lesson.auditory.correctAuditoryName stringWithSpaceAfterCommaAndDot] action:^{
-            [_topView setData:lesson.auditory];
-            [tableView deselectRowAtIndexPath:indexPath animated:YES];
+
+            beforeLoading();
+
             [[OUScheduleDownloader sharedInstance] downloadLessonsForAuditory:lesson.auditory complete:^{
-                [self updateScheduleTables];
+                afterLoading();
+                [_topView setData:lesson.auditory];
             }];
         }];
     }
@@ -193,10 +211,12 @@
         if (lesson.groups.count == 1) {
             OUGroup *group = lesson.groups.firstObject;
             [actionSheet addButtonWithTitle:[NSString stringWithFormat:@"Группа %@", group.groupName] action:^{
-                [_topView setData:group];
-                [tableView deselectRowAtIndexPath:indexPath animated:YES];
+
+                beforeLoading();
+
                 [[OUScheduleDownloader sharedInstance] downloadLessonsForGroup:group complete:^{
-                    [self updateScheduleTables];
+                    afterLoading();
+                    [_topView setData:group];
                 }];
             }];
         } else {
@@ -205,10 +225,12 @@
                 UIActionSheet *groupsActionSheet = [UIActionSheet actionSheetWithTitle:@"Выберите группу"];
                 for (OUGroup *g in lesson.groups) {
                     [groupsActionSheet addButtonWithTitle:g.groupName action:^{
-                        [_topView setData:g];
-                        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+
+                        beforeLoading();
+
                         [[OUScheduleDownloader sharedInstance] downloadLessonsForGroup:g complete:^{
-                            [self updateScheduleTables];
+                            afterLoading();
+                            [_topView setData:g];
                         }];
                     }];
                 }
@@ -227,6 +249,8 @@
         [actionSheet setCancelButtonIndex:actionSheet.numberOfButtons - 1];
         [actionSheet showInView:self.view.superview];
         [self customizeActionSheet:actionSheet];        
+    } else {
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
     }
 }
 
@@ -256,8 +280,20 @@
 
 - (void)updateScheduleTables {
     [self reloadData];
-    [_tableView1 setContentOffset:CGPointMake(0, -_tableView1.contentInset.top) animated:NO];
-    [_tableView2 setContentOffset:CGPointMake(0, -_tableView1.contentInset.top) animated:NO];
+    [self hideOverlay];
+}
+
+#pragma mark - Loading
+
+- (MRProgressOverlayView *)showOverlay {
+    return [MRProgressOverlayView showOverlayAddedTo:self.view.window
+                                        title:@"Загрузка"
+                                         mode:MRProgressOverlayViewModeIndeterminate
+                                     animated:YES];
+}
+
+- (void)hideOverlay {
+    [MRProgressOverlayView dismissAllOverlaysForView:self.view.window animated:YES];
 }
 
 @end

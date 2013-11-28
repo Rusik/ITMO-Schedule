@@ -8,6 +8,7 @@
 
 #import "OUAppDelegate.h"
 #import "OUMainViewController.h"
+#import "OUScheduleDownloader.h"
 
 @implementation OUAppDelegate
 
@@ -16,7 +17,7 @@
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
 
 	self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    self.window.tintColor = [UIColor colorWithRed:0.400 green:0.400 blue:1.000 alpha:1.000];
+    self.window.tintColor = ICON_COLOR;
 	self.window.backgroundColor = [UIColor whiteColor];
     OUMainViewController *mainViewController = [OUMainViewController new];
     self.window.rootViewController = mainViewController;

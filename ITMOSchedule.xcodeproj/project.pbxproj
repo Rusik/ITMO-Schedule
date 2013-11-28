@@ -16,6 +16,15 @@
 		7F4EA6CE1805C7FF00C1958D /* OUMainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7F4EA6CC1805C7FF00C1958D /* OUMainViewController.xib */; };
 		7F4EA6D21805C83200C1958D /* OUParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F4EA6D11805C83200C1958D /* OUParser.m */; };
 		7F4EA6D51805C8EB00C1958D /* OUScheduleCoordinator.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F4EA6D41805C8EB00C1958D /* OUScheduleCoordinator.m */; };
+		7F572EA7184777DF00AA1AD9 /* MRBlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F572E92184777DF00AA1AD9 /* MRBlurView.m */; };
+		7F572EA8184777DF00AA1AD9 /* UIImage+MRImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F572E94184777DF00AA1AD9 /* UIImage+MRImageEffects.m */; };
+		7F572EA9184777DF00AA1AD9 /* MRActivityIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F572E97184777DF00AA1AD9 /* MRActivityIndicatorView.m */; };
+		7F572EAA184777DF00AA1AD9 /* MRCircularProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F572E99184777DF00AA1AD9 /* MRCircularProgressView.m */; };
+		7F572EAB184777DF00AA1AD9 /* MRIconView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F572E9B184777DF00AA1AD9 /* MRIconView.m */; };
+		7F572EAC184777DF00AA1AD9 /* MRNavigationBarProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F572E9D184777DF00AA1AD9 /* MRNavigationBarProgressView.m */; };
+		7F572EAD184777DF00AA1AD9 /* MRProgressOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F572E9F184777DF00AA1AD9 /* MRProgressOverlayView.m */; };
+		7F572EAE184777DF00AA1AD9 /* MRMessageInterceptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F572EA3184777DF00AA1AD9 /* MRMessageInterceptor.m */; };
+		7F572EAF184777DF00AA1AD9 /* MRWeakProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F572EA6184777DF00AA1AD9 /* MRWeakProxy.m */; };
 		7F9F67D318055D9700A9E9D1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F9F67D218055D9700A9E9D1 /* Foundation.framework */; };
 		7F9F67D518055D9700A9E9D1 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F9F67D418055D9700A9E9D1 /* CoreGraphics.framework */; };
 		7F9F67D718055D9700A9E9D1 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F9F67D618055D9700A9E9D1 /* UIKit.framework */; };
@@ -78,6 +87,26 @@
 		7F4EA6D11805C83200C1958D /* OUParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OUParser.m; sourceTree = "<group>"; };
 		7F4EA6D31805C8EB00C1958D /* OUScheduleCoordinator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OUScheduleCoordinator.h; path = ITMOSchedule/Sources/Model/OUScheduleCoordinator.h; sourceTree = SOURCE_ROOT; };
 		7F4EA6D41805C8EB00C1958D /* OUScheduleCoordinator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OUScheduleCoordinator.m; path = ITMOSchedule/Sources/Model/OUScheduleCoordinator.m; sourceTree = SOURCE_ROOT; };
+		7F572E91184777DF00AA1AD9 /* MRBlurView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRBlurView.h; sourceTree = "<group>"; };
+		7F572E92184777DF00AA1AD9 /* MRBlurView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRBlurView.m; sourceTree = "<group>"; };
+		7F572E93184777DF00AA1AD9 /* UIImage+MRImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+MRImageEffects.h"; sourceTree = "<group>"; };
+		7F572E94184777DF00AA1AD9 /* UIImage+MRImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+MRImageEffects.m"; sourceTree = "<group>"; };
+		7F572E96184777DF00AA1AD9 /* MRActivityIndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRActivityIndicatorView.h; sourceTree = "<group>"; };
+		7F572E97184777DF00AA1AD9 /* MRActivityIndicatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRActivityIndicatorView.m; sourceTree = "<group>"; };
+		7F572E98184777DF00AA1AD9 /* MRCircularProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRCircularProgressView.h; sourceTree = "<group>"; };
+		7F572E99184777DF00AA1AD9 /* MRCircularProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRCircularProgressView.m; sourceTree = "<group>"; };
+		7F572E9A184777DF00AA1AD9 /* MRIconView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRIconView.h; sourceTree = "<group>"; };
+		7F572E9B184777DF00AA1AD9 /* MRIconView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRIconView.m; sourceTree = "<group>"; };
+		7F572E9C184777DF00AA1AD9 /* MRNavigationBarProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRNavigationBarProgressView.h; sourceTree = "<group>"; };
+		7F572E9D184777DF00AA1AD9 /* MRNavigationBarProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRNavigationBarProgressView.m; sourceTree = "<group>"; };
+		7F572E9E184777DF00AA1AD9 /* MRProgressOverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRProgressOverlayView.h; sourceTree = "<group>"; };
+		7F572E9F184777DF00AA1AD9 /* MRProgressOverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRProgressOverlayView.m; sourceTree = "<group>"; };
+		7F572EA0184777DF00AA1AD9 /* MRProgress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRProgress.h; sourceTree = "<group>"; };
+		7F572EA2184777DF00AA1AD9 /* MRMessageInterceptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRMessageInterceptor.h; sourceTree = "<group>"; };
+		7F572EA3184777DF00AA1AD9 /* MRMessageInterceptor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRMessageInterceptor.m; sourceTree = "<group>"; };
+		7F572EA4184777DF00AA1AD9 /* MRProgressHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRProgressHelper.h; sourceTree = "<group>"; };
+		7F572EA5184777DF00AA1AD9 /* MRWeakProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRWeakProxy.h; sourceTree = "<group>"; };
+		7F572EA6184777DF00AA1AD9 /* MRWeakProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRWeakProxy.m; sourceTree = "<group>"; };
 		7F9F67CF18055D9700A9E9D1 /* ITMOSchedule.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ITMOSchedule.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F9F67D218055D9700A9E9D1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		7F9F67D418055D9700A9E9D1 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -224,6 +253,58 @@
 			path = Parsers;
 			sourceTree = "<group>";
 		};
+		7F572E8F184777DF00AA1AD9 /* MRProgress */ = {
+			isa = PBXGroup;
+			children = (
+				7F572E90184777DF00AA1AD9 /* Blur */,
+				7F572E95184777DF00AA1AD9 /* Components */,
+				7F572EA0184777DF00AA1AD9 /* MRProgress.h */,
+				7F572EA1184777DF00AA1AD9 /* Utils */,
+			);
+			name = MRProgress;
+			path = ITMOSchedule/Vendor/MRProgress/src;
+			sourceTree = "<group>";
+		};
+		7F572E90184777DF00AA1AD9 /* Blur */ = {
+			isa = PBXGroup;
+			children = (
+				7F572E91184777DF00AA1AD9 /* MRBlurView.h */,
+				7F572E92184777DF00AA1AD9 /* MRBlurView.m */,
+				7F572E93184777DF00AA1AD9 /* UIImage+MRImageEffects.h */,
+				7F572E94184777DF00AA1AD9 /* UIImage+MRImageEffects.m */,
+			);
+			path = Blur;
+			sourceTree = "<group>";
+		};
+		7F572E95184777DF00AA1AD9 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				7F572E96184777DF00AA1AD9 /* MRActivityIndicatorView.h */,
+				7F572E97184777DF00AA1AD9 /* MRActivityIndicatorView.m */,
+				7F572E98184777DF00AA1AD9 /* MRCircularProgressView.h */,
+				7F572E99184777DF00AA1AD9 /* MRCircularProgressView.m */,
+				7F572E9A184777DF00AA1AD9 /* MRIconView.h */,
+				7F572E9B184777DF00AA1AD9 /* MRIconView.m */,
+				7F572E9C184777DF00AA1AD9 /* MRNavigationBarProgressView.h */,
+				7F572E9D184777DF00AA1AD9 /* MRNavigationBarProgressView.m */,
+				7F572E9E184777DF00AA1AD9 /* MRProgressOverlayView.h */,
+				7F572E9F184777DF00AA1AD9 /* MRProgressOverlayView.m */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		7F572EA1184777DF00AA1AD9 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				7F572EA2184777DF00AA1AD9 /* MRMessageInterceptor.h */,
+				7F572EA3184777DF00AA1AD9 /* MRMessageInterceptor.m */,
+				7F572EA4184777DF00AA1AD9 /* MRProgressHelper.h */,
+				7F572EA5184777DF00AA1AD9 /* MRWeakProxy.h */,
+				7F572EA6184777DF00AA1AD9 /* MRWeakProxy.m */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
 		7F9F67C618055D9700A9E9D1 = {
 			isa = PBXGroup;
 			children = (
@@ -244,6 +325,7 @@
 		7F9F67D118055D9700A9E9D1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7F572E8F184777DF00AA1AD9 /* MRProgress */,
 				7FA9F5FF180B105E0067A3FF /* MobileCoreServices.framework */,
 				7FA9F5FD180B10580067A3FF /* SystemConfiguration.framework */,
 				7F2B462E1805CE9E00B48239 /* libxml2.dylib */,
@@ -459,6 +541,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7F572EA9184777DF00AA1AD9 /* MRActivityIndicatorView.m in Sources */,
 				7FBDB6DD183D8FBB009AC1DC /* UIFont+PreferedFontSize.m in Sources */,
 				841F218A180569520054C523 /* AFHTTPRequestOperation.m in Sources */,
 				841F218B180569520054C523 /* AFImageRequestOperation.m in Sources */,
@@ -468,9 +551,13 @@
 				7FA9F60D180B23CF0067A3FF /* UITableViewCell+Helpers.m in Sources */,
 				7F2B46331805D33D00B48239 /* NSArray+Helpers.m in Sources */,
 				841F218E180569520054C523 /* AFPropertyListRequestOperation.m in Sources */,
+				7F572EAB184777DF00AA1AD9 /* MRIconView.m in Sources */,
+				7F572EAD184777DF00AA1AD9 /* MRProgressOverlayView.m in Sources */,
 				841F21D918057A4A0054C523 /* OUGroup.m in Sources */,
 				841F218C180569520054C523 /* AFJSONRequestOperation.m in Sources */,
+				7F572EA8184777DF00AA1AD9 /* UIImage+MRImageEffects.m in Sources */,
 				841F218F180569520054C523 /* AFURLConnectionOperation.m in Sources */,
+				7F572EA7184777DF00AA1AD9 /* MRBlurView.m in Sources */,
 				7F4EA6D51805C8EB00C1958D /* OUScheduleCoordinator.m in Sources */,
 				841F203B180563E00054C523 /* main.m in Sources */,
 				7F4EA6D21805C83200C1958D /* OUParser.m in Sources */,
@@ -483,16 +570,20 @@
 				7FBDB6E0183D947C009AC1DC /* UIActionSheet+Blocks.m in Sources */,
 				7FA9F657180B3A3D0067A3FF /* OUScheduleViewController.m in Sources */,
 				7FA9F603180B23580067A3FF /* OUSearchCell.m in Sources */,
+				7F572EAF184777DF00AA1AD9 /* MRWeakProxy.m in Sources */,
 				7FA9F65B180BDBF40067A3FF /* OUGroupCell.m in Sources */,
 				7F4EA6CD1805C7FF00C1958D /* OUMainViewController.m in Sources */,
 				841F21DC18057A6F0054C523 /* OUTeacher.m in Sources */,
 				841F203C180563E00054C523 /* OUAppDelegate.m in Sources */,
 				841F218D180569520054C523 /* AFNetworkActivityIndicatorManager.m in Sources */,
+				7F572EAC184777DF00AA1AD9 /* MRNavigationBarProgressView.m in Sources */,
 				7F2B462B1805CE7600B48239 /* RXMLElement.m in Sources */,
 				841F2191180569520054C523 /* UIImageView+AFNetworking.m in Sources */,
+				7F572EAE184777DF00AA1AD9 /* MRMessageInterceptor.m in Sources */,
 				7FC509DE180C265100FCE715 /* NSString+Helpers.m in Sources */,
 				7FBDB6E3183E68FB009AC1DC /* OUTopView.m in Sources */,
 				841F2189180569520054C523 /* AFHTTPClient.m in Sources */,
+				7F572EAA184777DF00AA1AD9 /* MRCircularProgressView.m in Sources */,
 				7FA9F665180BE39E0067A3FF /* OUAuditoryCell.m in Sources */,
 				7FA9F60C180B23CF0067A3FF /* NSObject+NIB.m in Sources */,
 				841F21DF18057A8B0054C523 /* OUAuditory.m in Sources */,

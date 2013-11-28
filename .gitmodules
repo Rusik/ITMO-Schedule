@@ -5,3 +5,6 @@
 [submodule "ITMOSchedule/Vendor/RaptureXML"]
 	path = ITMOSchedule/Vendor/RaptureXML
 	url = https://github.com/ZaBlanc/RaptureXML.git
+[submodule "ITMOSchedule/Vendor/MRProgress"]
+	path = ITMOSchedule/Vendor/MRProgress
+	url = https://github.com/mrackwitz/MRProgress.git
