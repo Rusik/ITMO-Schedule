@@ -22,7 +22,56 @@
 }
 
 - (NSString *)stringByDeletingNewLineCharacters {
-    return [self stringByReplacingOccurrencesOfString:@"\n" withString:@", " options:0 range:NSMakeRange(0, self.length)];
+    return [self stringByReplacingOccurrencesOfString:@"\n" withString:@"," options:0 range:NSMakeRange(0, self.length)];
+}
+
+- (NSString *)stringWithSpaceAfterCommaAndDot {
+
+    NSMutableString *newString = [NSMutableString new];
+
+    for (int i = 0; i < self.length; i++) {
+
+        NSString *c = [self substringWithRange:NSMakeRange(i, 1)];
+
+        if ([c isEqualToString:@","]) {
+
+
+            if (i + 1 < self.length) {
+
+                NSString *next = [self substringWithRange:NSMakeRange(i + 1, 1)];
+
+                if ([next rangeOfCharacterFromSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]].location != NSNotFound) {
+                    [newString appendString:c];
+                } else {
+                    [newString appendFormat:@", "];
+                }
+            }
+
+
+        } else if ([c isEqualToString:@"."]) {
+
+
+            if (i + 1 < self.length) {
+
+                NSString *next = [self substringWithRange:NSMakeRange(i + 1, 1)];
+
+                if ([next rangeOfCharacterFromSet:[NSCharacterSet alphanumericCharacterSet]].location != NSNotFound) {
+                    [newString appendFormat:@". "];
+                } else {
+                    [newString appendString:c];
+                }
+            }
+
+
+        } else {
+            [newString appendString:c];
+        }
+        
+    }
+
+    return [newString copy];
+
+//    return [self stringByReplacingOccurrencesOfString:@"," withString:@", " options:0 range:NSMakeRange(0, self.length)];
 }
 
 @end

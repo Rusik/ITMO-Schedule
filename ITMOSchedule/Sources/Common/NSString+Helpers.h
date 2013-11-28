@@ -14,4 +14,6 @@
 - (NSString *)stringFromBrackets;
 - (NSString *)stringByDeletingNewLineCharacters;
 
+- (NSString *)stringWithSpaceAfterCommaAndDot;
+
 @end

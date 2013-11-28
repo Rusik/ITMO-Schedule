@@ -9,6 +9,7 @@
 #import "OUSearchCell.h"
 #import "NSObject+NIB.h"
 #import "UILabel+Adjust.h"
+#import "NSString+Helpers.h"
 
 #define SPACE 5.0
 
@@ -55,11 +56,16 @@
     if ([_data isKindOfClass:[OUTeacher class]]) {
         OUTeacher *teacher = (OUTeacher *)_data;
         _textLabel.text = teacher.teacherName;
-        _bottomTextLabel.text = teacher.teaherPosition;
+        _bottomTextLabel.text = [teacher.teaherPosition stringWithSpaceAfterCommaAndDot];
     }
     if ([_data isKindOfClass:[OUAuditory class]]) {
         OUAuditory *auditory = (OUAuditory *)_data;
-        _textLabel.text = [NSString stringWithFormat:@"Аудитория %@", auditory.auditoryName];
+
+        if ([auditory.auditoryName rangeOfCharacterFromSet:[NSCharacterSet decimalDigitCharacterSet]].location == 0) {
+            _textLabel.text = [[NSString stringWithFormat:@"Аудитория %@", auditory.auditoryName] stringWithSpaceAfterCommaAndDot];
+        } else {
+            _textLabel.text = [auditory.auditoryName stringWithSpaceAfterCommaAndDot];
+        }
         _bottomTextLabel.text = auditory.auditoryAddress;
     }
 }
@@ -67,9 +73,6 @@
 #define DEFAULT_HEIGHT 44.0
 
 - (void)updateLabelsSize {
-//    [_textLabel adjustSizeWithMaximumWidth:_viewForTextWidth.$width];
-//    [_bottomTextLabel adjustSizeWithMaximumWidth:_viewForTextWidth.$width];
-
     [_textLabel adjustSizeWithMaximumWidth:_viewForTextWidth.$width withFont:[UIFont preferredFontForTextStyle:UIFontTextStyleHeadline]];
     [_bottomTextLabel adjustSizeWithMaximumWidth:_viewForTextWidth.$width withFont:[UIFont preferredFontForTextStyle:UIFontTextStyleFootnote]];
 
