@@ -27,48 +27,119 @@
 
 - (NSArray *)mainInfoDataForString:(NSString *)string {
 
-    //TODO: подправить поиск: выдавать в начале если совпадет полностью, или совпалает с начала слова а не в середине
-
     NSArray *groups = _mainInfo[GROUPS_INFO_KEY];
     NSArray *teachers = _mainInfo[TEACHERS_INFO_KEY];
     NSArray *auditories = _mainInfo[AUDITORIES_INFO_KEY];
 
     NSMutableArray *results = [NSMutableArray array];
 
+    NSArray *sortedGroups = [groups sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        OUGroup *g1 = (OUGroup *)obj1;
+        OUGroup *g2 = (OUGroup *)obj2;
+        return [g1.groupName compare:g2.groupName];
+    }];
+
+    NSArray *sortedTeachers = [teachers sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        OUTeacher *t1 = (OUTeacher *)obj1;
+        OUTeacher *t2 = (OUTeacher *)obj2;
+        return [t1.teacherName compare:t2.teacherName];
+    }];
+
+    NSArray *sortedAuditories = [auditories sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        OUAuditory *a1 = (OUAuditory *)obj1;
+        OUAuditory *a2 = (OUAuditory *)obj2;
+        return [a1.auditoryName compare:a2.auditoryName];
+    }];
+
     if (!string || [string isEqualToString:@""]) {
-        [results addObjectsFromArray:[groups sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-            OUGroup *g1 = (OUGroup *)obj1;
-            OUGroup *g2 = (OUGroup *)obj2;
-            return [g1.groupName compare:g2.groupName];
-        }]];
-        [results addObjectsFromArray:[teachers sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-            OUTeacher *t1 = (OUTeacher *)obj1;
-            OUTeacher *t2 = (OUTeacher *)obj2;
-            return [t1.teacherName compare:t2.teacherName];
-        }]];
-        [results addObjectsFromArray:[auditories sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-            OUAuditory *a1 = (OUAuditory *)obj1;
-            OUAuditory *a2 = (OUAuditory *)obj2;
-            return [a1.auditoryName compare:a2.auditoryName];
-        }]];
+        [results addObjectsFromArray:sortedGroups];
+        [results addObjectsFromArray:sortedTeachers];
+        [results addObjectsFromArray:sortedAuditories];
         return results;
     }
 
-    for (OUGroup *group in groups) {
+    NSMutableArray *findGroups = [NSMutableArray new];
+    NSMutableArray *findTeachers = [NSMutableArray new];
+    NSMutableArray *findAuditories = [NSMutableArray new];
+
+    for (OUGroup *group in sortedGroups) {
         if ([group.groupName rangeOfString:string options:NSCaseInsensitiveSearch].location != NSNotFound) {
-            [results addObject:group];
+            [findGroups addObject:group];
         }
     }
-    for (OUTeacher *teacher in teachers) {
+    for (OUTeacher *teacher in sortedTeachers) {
         if ([teacher.teacherName rangeOfString:string options:NSCaseInsensitiveSearch].location != NSNotFound) {
-            [results addObject:teacher];
+            [findTeachers addObject:teacher];
         }
     }
-    for (OUAuditory *auditory in auditories) {
+    for (OUAuditory *auditory in sortedAuditories) {
         if ([auditory.auditoryName rangeOfString:string options:NSCaseInsensitiveSearch].location != NSNotFound) {
-            [results addObject:auditory];
+            [findAuditories addObject:auditory];
         }
     }
+
+
+    NSMutableArray *topGroups = [NSMutableArray new];
+    for (OUGroup *group in findGroups) {
+        if ([group.groupName rangeOfString:string options:NSCaseInsensitiveSearch].location == 0) {
+            [topGroups addObject:group];
+        }
+    }
+    [findGroups removeObjectsInArray:topGroups];
+    NSMutableArray *filterGroups = [NSMutableArray new];
+    [filterGroups addObjectsFromArray:topGroups];
+    [filterGroups addObjectsFromArray:findGroups];
+
+
+    NSMutableArray *topTeachersName = [NSMutableArray new];
+    NSMutableArray *topTeachersSurname = [NSMutableArray new];
+    NSMutableArray *topTeachersSecondName = [NSMutableArray new];
+    for (OUTeacher *teacher in findTeachers) {
+
+        NSArray *components = [teacher.teacherName componentsSeparatedByString:@" "];
+        NSString *surname;
+        NSString *name;
+        NSString *secondName;
+        if (components.count > 0) surname = components[0];
+        if (components.count > 1) name = components[1];
+        if (components.count > 2) secondName = components[2];
+
+        if ([surname rangeOfString:string options:NSCaseInsensitiveSearch].location == 0) {
+            [topTeachersSurname addObject:teacher];
+        }
+        if ([name rangeOfString:string options:NSCaseInsensitiveSearch].location == 0) {
+            [topTeachersName addObject:teacher];
+        }
+        if ([secondName rangeOfString:string options:NSCaseInsensitiveSearch].location == 0) {
+            [topTeachersSecondName addObject:teacher];
+        }
+    }
+    [findTeachers removeObjectsInArray:topTeachersName];
+    [findTeachers removeObjectsInArray:topTeachersSurname];
+    [findTeachers removeObjectsInArray:topTeachersSecondName];
+    NSMutableArray *filterTeachers = [NSMutableArray new];
+    [filterTeachers addObjectsFromArray:topTeachersSurname];
+    [filterTeachers addObjectsFromArray:topTeachersName];
+    [filterTeachers addObjectsFromArray:topTeachersSecondName];
+    [filterTeachers addObjectsFromArray:findTeachers];
+
+
+    NSMutableArray *topAuditories = [NSMutableArray new];
+    for (OUAuditory *auditory in findAuditories) {
+        if ([auditory.auditoryName rangeOfString:string options:NSCaseInsensitiveSearch].location == 0) {
+            [topAuditories addObject:auditory];
+        }
+    }
+    [findAuditories removeObjectsInArray:topAuditories];
+    NSMutableArray *filterAuditories = [NSMutableArray new];
+    [filterAuditories addObjectsFromArray:topAuditories];
+    [filterAuditories addObjectsFromArray:findAuditories];
+
+
+    [results addObjectsFromArray:filterGroups];
+    [results addObjectsFromArray:filterTeachers];
+    [results addObjectsFromArray:filterAuditories];
+
     return results;
 }
 
