@@ -15,5 +15,6 @@
 - (NSString *)stringByDeletingNewLineCharacters;
 
 - (NSString *)stringWithSpaceAfterCommaAndDot;
+- (NSString *)fixCommaSpaces;
 
 @end

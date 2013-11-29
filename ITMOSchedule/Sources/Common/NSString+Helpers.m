@@ -70,8 +70,10 @@
     }
 
     return [newString copy];
+}
 
-//    return [self stringByReplacingOccurrencesOfString:@"," withString:@", " options:0 range:NSMakeRange(0, self.length)];
+- (NSString *)fixCommaSpaces {
+    return [[self stringByReplacingOccurrencesOfString:@" ," withString:@"," options:0 range:NSMakeRange(0, self.length)] stringWithSpaceAfterCommaAndDot];
 }
 
 @end

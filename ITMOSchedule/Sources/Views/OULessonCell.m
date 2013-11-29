@@ -19,11 +19,11 @@
 - (void)setLesson:(OULesson *)lesson {
     _lesson = lesson;
 
+    [self updateFonts];
     [self updateTimeLabel];
     [self updateTopLabel];
     [self updateCenterLabel];
     [self updateBottomLabel];
-
     [self adjustLabelsSize];
 }
 
@@ -35,17 +35,18 @@
     self.selectedBackgroundView.backgroundColor = ICON_COLOR;
 }
 
-- (void)adjustLabelsSize {
-//    [self.topLabel adjustSizeWithMaximumWidth:self.topLabelView.$width];
-//    [self.centerLabel adjustSizeWithMaximumWidth:self.centerLabelView.$width];
-//    [self.bottomLabel adjustSizeWithMaximumWidth:self.bottomLabelView.$width];
-
+- (void)updateFonts {
     NSString *topBottomStyle = UIFontTextStyleCaption1;
-
-    [self.topLabel adjustSizeWithMaximumWidth:self.topLabelView.$width withFont:[UIFont preferredFontForTextStyle:topBottomStyle]];
-    [self.centerLabel adjustSizeWithMaximumWidth:self.centerLabelView.$width withFont:[UIFont preferredFontForTextStyle:UIFontTextStyleHeadline]];
-    [self.bottomLabel adjustSizeWithMaximumWidth:self.bottomLabelView.$width withFont:[UIFont preferredFontForTextStyle:topBottomStyle]];
+    self.topLabel.font = [UIFont preferredFontForTextStyle:topBottomStyle];
+    self.centerLabel.font =[UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
+    self.bottomLabel.font = [UIFont preferredFontForTextStyle:topBottomStyle];
     self.timeLabel.font = [UIFont preferredTimeFont];
+}
+
+- (void)adjustLabelsSize {
+    [self.topLabel adjustSizeWithMaximumWidth:self.topLabelView.$width];
+    [self.centerLabel adjustSizeWithMaximumWidth:self.centerLabelView.$width];
+    [self.bottomLabel adjustSizeWithMaximumWidth:self.bottomLabelView.$width];
 }
 
 - (void)updateTimeLabel {
@@ -58,8 +59,19 @@
     }
 }
 
+#define LESSON_TYPE_TEXT_COLOR [UIColor colorWithWhite:0.500 alpha:1.000]
+
 - (void)updateCenterLabel {
-    _centerLabel.text = _lesson.lessonName;
+
+    UIColor *typeTextColor = LESSON_TYPE_TEXT_COLOR;
+
+    if (_lesson.additionalInfo) {
+        [self applyAttributesToNameWithColor:typeTextColor];
+    } else if (_lesson.lessonType != OULessonTypeUnknown) {
+        [self applyAttributesToNameWithColor:typeTextColor];
+    } else {
+        _centerLabel.text = _lesson.lessonName;
+    }
 }
 
 - (void)updateTopLabel {}
@@ -103,6 +115,73 @@
 
 - (CGFloat)height {
     return _topLabel.$height + _centerLabel.$height + _bottomLabel.$height + SPACE * 2;
+}
+
+#pragma mark - Highlited & attributed
+
+- (void)setHighlighted:(BOOL)highlighted animated:(BOOL)animated {
+    [super setHighlighted:highlighted animated:animated];
+
+    UIColor *textColor;
+    if (highlighted) {
+        textColor = [UIColor whiteColor];
+    } else {
+        textColor = LESSON_TYPE_TEXT_COLOR;
+    }
+    [self applyAttributesToNameWithColor:textColor];
+}
+
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
+    [super setSelected:selected animated:animated];
+    UIColor *textColor;
+    if (selected) {
+        textColor = [UIColor whiteColor];
+    } else {
+        textColor = LESSON_TYPE_TEXT_COLOR;
+    }
+
+    // Чтобы смена цветов была плавная и соответствовала анимации смены цвета фона
+    if (animated) {
+        double delayInSeconds = 0.25;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            [self applyAttributesToNameWithColor:textColor];
+        });
+    } else {
+        [self applyAttributesToNameWithColor:textColor];
+    }
+}
+
+- (void)applyAttributesToNameWithColor:(UIColor *)color {
+    NSString *shortLessontType = [OULesson shortStringForLessonType:_lesson.lessonType];
+    UIColor *typeTextColor = color;
+    NSString *typeTextStyle = UIFontTextStyleBody;
+    NSDictionary *typeAttributes = @{NSForegroundColorAttributeName : typeTextColor,
+                                     NSFontAttributeName : [UIFont preferredFontForTextStyle:typeTextStyle],
+                                     };
+
+    if (_lesson.additionalInfo) {
+        NSString *text = [NSString stringWithFormat:@"%@ (%@)\n%@", _lesson.lessonName, shortLessontType, _lesson.additionalInfo];
+
+        NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:text];
+        [attrString addAttributes:@{NSFontAttributeName : _centerLabel.font}
+                            range:NSMakeRange(0, attrString.length)];
+        [attrString addAttributes:typeAttributes
+                            range:[text rangeOfString:[NSString stringWithFormat:@"(%@)", shortLessontType]]];
+
+        _centerLabel.attributedText = attrString;
+
+    } else if (_lesson.lessonType != OULessonTypeUnknown) {
+        NSString *text = [NSString stringWithFormat:@"%@ (%@)", _lesson.lessonName, shortLessontType];
+
+        NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:text];
+        [attrString addAttributes:@{NSFontAttributeName : _centerLabel.font}
+                            range:NSMakeRange(0, attrString.length)];
+        [attrString addAttributes:typeAttributes
+                            range:[text rangeOfString:[NSString stringWithFormat:@"(%@)", shortLessontType]]];
+
+        _centerLabel.attributedText = attrString;
+    }
 }
 
 @end

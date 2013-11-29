@@ -52,6 +52,8 @@ typedef int OULessonTime;
 @property (nonatomic) OULessonWeekType weekType;
 @property (nonatomic) OULessonWeekDay weekDay;
 
+@property (nonatomic) NSString *additionalInfo;
+
 @property (nonatomic) NSArray *groups; // Либо одна группа, либо список групп (для преподов и аудиторий)
 
 + (OULessonWeekType)weekTypeFromString:(NSString *)string;

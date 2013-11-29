@@ -11,6 +11,7 @@
 #import "OUScheduleCoordinator.h"
 #import "NSArray+Helpers.h"
 #import "NSString+Helpers.h"
+#import "OUScheduleDownloader.h"
 
 @implementation OUParser
 
@@ -141,8 +142,29 @@
     } else {
         lesson.timeInterval = timeInterval;
     }
-    lesson.weekType = [OULesson weekTypeFromString:[[element child:@"WEEK"] text]];
-    lesson.lessonName = [[element child:@"SUBJECT"].text stringByDeletingDataInBrackets];
+    lesson.weekType = [OULesson weekTypeFromString:[element child:@"WEEK"].text];
+
+    NSString *name = [element child:@"SUBJECT"].text;
+
+    NSRange newLineRange = [name rangeOfCharacterFromSet:[NSCharacterSet newlineCharacterSet]];
+    if (newLineRange.location != NSNotFound) {
+        NSArray *comp = [name componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
+        if (comp.count > 2) {
+            NSLog(@"WARNING: 3 components in lesson name:\n%@", name);
+        }
+        if (comp.count == 1) {
+            NSLog(@"WARNING: something starnge with components in lesson name:\n%@", name);
+        }
+        if (comp.count == 2) {
+            NSString *part1 = comp[0];
+            NSString *part2 = comp[1];
+            lesson.lessonName = [part1 fixCommaSpaces];
+            lesson.additionalInfo = [part2 stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        }
+    } else {
+        lesson.lessonName = [name fixCommaSpaces];
+    }
+
     lesson.lessonType = [OULesson lessonTypeFromString:[element child:@"TYPE"].text];
     lesson.lessonTypeString = [element child:@"TYPE"].text;
     lesson.auditory = [[OUScheduleCoordinator sharedInstance] auditoryWithId:[element child:@"PLACE"].text];
