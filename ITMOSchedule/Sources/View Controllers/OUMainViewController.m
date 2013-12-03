@@ -27,6 +27,9 @@
     OUScheduleViewController *_scheduleVC;
 
     OUTopView *_topView;
+
+    UIRefreshControl *_refreshControl;
+    UITableViewController *_tvc;
 }
 
 - (void)viewDidLoad {
@@ -53,18 +56,37 @@
 
     [self subscribeToNotifications];
 
-    [self showLoadingOverlay];
+    [self addRefreshControl];
+    [self updateMainInfoWithLoadingOverlay:YES];
+}
+
+- (void)dealloc {
+    [self unsubscribeFromNotifications];
+}
+
+#pragma mark - Downloading
+
+- (void)updateMainInfoWithLoadingOverlay:(BOOL)showLoadingOverlay {
+
+    if (showLoadingOverlay) {
+        [self showLoadingOverlay];
+    }
     [[OUScheduleDownloader sharedInstance] downloadMainInfo:^{
         NSLog(@"MAIN DOWNLOAD");
 
         _tableData = [[OUScheduleCoordinator sharedInstance] mainInfoDataForString:[_topView text]];
         [_tableView reloadData];
-        [self hideLoadingOverlay];
-    }];
-}
 
-- (void)dealloc {
-    [self unsubscribeFromNotifications];
+        if (showLoadingOverlay) {
+            [self hideLoadingOverlay];
+        } else {
+            [_refreshControl endRefreshing];
+
+            if (_tableView.contentOffset.y < 0 && _tableView.contentOffset.y < -_tableView.contentInset.top) {
+                [_tableView setContentOffset:CGPointMake(0, -_tableView.contentInset.top) animated:YES];
+            }
+        }
+    }];
 }
 
 #pragma mark - Notifications
@@ -115,6 +137,30 @@
 - (void)showSchedule {
     _tableView.hidden = YES;
     _scheduleVC.view.hidden = NO;
+}
+
+#pragma mark - Pull to refresh
+
+- (void)addRefreshControl {
+
+    [self removeRefreshControl];
+
+    _refreshControl = [UIRefreshControl new];
+    [_refreshControl addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
+    [_tableView insertSubview:_refreshControl atIndex:0];
+
+    _tvc = [UITableViewController new];
+    _tvc.tableView = _tableView;
+    _tvc.refreshControl = _refreshControl;
+}
+
+- (void)removeRefreshControl {
+    [_refreshControl removeFromSuperview];
+    _refreshControl = nil;
+}
+
+- (void)refresh {
+    [self updateMainInfoWithLoadingOverlay:NO];
 }
 
 #pragma mark - UITableViewDelegate & UITableViewDataSource

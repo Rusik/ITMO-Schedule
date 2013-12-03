@@ -44,7 +44,7 @@
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </tableViewCellContentView>
-            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <connections>
                 <outlet property="_bottomTextLabel" destination="BAt-Hh-BWX" id="Zxr-Qy-9qu"/>
                 <outlet property="_textLabel" destination="nDe-Ib-2ed" id="3OB-2b-kv4"/>

@@ -53,7 +53,7 @@
                     </label>
                 </subviews>
             </tableViewCellContentView>
-            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <connections>
                 <outlet property="bottomLabel" destination="qHZ-k8-Cay" id="zgb-FD-Pnr"/>
                 <outlet property="bottomLabelView" destination="Ma8-6A-nhZ" id="aBa-17-sT1"/>

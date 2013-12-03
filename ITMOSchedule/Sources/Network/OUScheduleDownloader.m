@@ -76,6 +76,7 @@ typedef void(^ParsingBlock)(NSData *data);
 
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"DOWNLOAD ERROR: %@", error.localizedDescription);
+        if (completeBlock) completeBlock();
     }];
     [operation start];
 }

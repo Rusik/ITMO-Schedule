@@ -21,12 +21,19 @@
 @end
 
 @implementation OUScheduleViewController {
+    IBOutlet UIScrollView *_scrollView;
+
     IBOutlet UITableView *_tableView1;
     IBOutlet UITableView *_tableView2;
-    IBOutlet UIScrollView *_scrollView;
 
     NSArray *_weekDays1;
     NSArray *_weekDays2;
+
+    UIRefreshControl *_refreshControl1;
+    UITableViewController *_tvc1;
+
+    UIRefreshControl *_refreshControl2;
+    UITableViewController *_tvc2;
 }
 
 - (void)viewDidLoad {
@@ -36,6 +43,8 @@
 
     _tableView1.tableFooterView = [UIView new];
     _tableView2.tableFooterView = [UIView new];
+
+    [self addRefreshControl];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -76,15 +85,94 @@
 }
 
 - (void)reloadData {
+    [self reloadDataResetContentOffset:YES];
+}
 
-    [_tableView1 setContentOffset:CGPointMake(0, -_tableView1.contentInset.top) animated:NO];
-    [_tableView2 setContentOffset:CGPointMake(0, -_tableView2.contentInset.top) animated:NO];
+- (void)reloadDataResetContentOffset:(BOOL)resetContentOffset {
+
+    if (resetContentOffset) {
+        [_tableView1 setContentOffset:CGPointMake(0, -_tableView1.contentInset.top) animated:NO];
+        [_tableView2 setContentOffset:CGPointMake(0, -_tableView2.contentInset.top) animated:NO];
+    }
 
     _weekDays1 = [[OUScheduleCoordinator sharedInstance] weekDaysForWeekType:OULessonWeekTypeOdd];
     _weekDays2 = [[OUScheduleCoordinator sharedInstance] weekDaysForWeekType:OULessonWeekTypeEven];
 
     [_tableView1 reloadData];
     [_tableView2 reloadData];
+}
+
+#pragma mark - Pull to refresh
+
+- (void)addRefreshControl {
+
+    [self removeRefreshControl];
+
+    _refreshControl1 = [UIRefreshControl new];
+    [_refreshControl1 addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
+    [_tableView1 insertSubview:_refreshControl1 atIndex:0];
+
+    _tvc1 = [UITableViewController new];
+    _tvc1.tableView = _tableView1;
+    _tvc1.refreshControl = _refreshControl1;
+
+    _refreshControl2= [UIRefreshControl new];
+    [_refreshControl2 addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
+    [_tableView2 insertSubview:_refreshControl2 atIndex:0];
+
+    _tvc2 = [UITableViewController new];
+    _tvc2.tableView = _tableView2;
+    _tvc2.refreshControl = _refreshControl2;
+}
+
+- (void)removeRefreshControl {
+    [_refreshControl1 removeFromSuperview];
+    _refreshControl1 = nil;
+    [_refreshControl2 removeFromSuperview];
+    _refreshControl2 = nil;
+    _tvc1 = nil;
+    _tvc2 = nil;
+}
+
+- (void)refresh:(UIRefreshControl *)refreshControl {
+
+    if (refreshControl == _refreshControl1) {
+        [_refreshControl2 beginRefreshing];
+        [_tableView2 setContentOffset:CGPointMake(0, -_tableView2.contentInset.top) animated:NO];
+    } else {
+        [_refreshControl1 beginRefreshing];
+        [_tableView1 setContentOffset:CGPointMake(0, -_tableView1.contentInset.top) animated:NO];
+    }
+
+    [self updateSchedule];
+}
+
+- (void)updateSchedule {
+
+    id data = [[OUScheduleCoordinator sharedInstance] lessonsType];
+
+    CompleteBlock block = ^{
+        [self reloadDataResetContentOffset:NO];
+
+        [_refreshControl1 endRefreshing];
+        [_refreshControl2 endRefreshing];
+
+        // поднимаем таблицу с анимацией, если после начала обновления человек сдвинул её чуть чуть вверх
+        if (_tableView1.contentOffset.y < 0 && _tableView1.contentOffset.y < -_tableView1.contentInset.top) {
+            [_tableView1 setContentOffset:CGPointMake(0, -_tableView1.contentInset.top) animated:YES];
+        }
+        if (_tableView2.contentOffset.y < 0 && _tableView2.contentOffset.y < -_tableView2.contentInset.top) {
+            [_tableView2 setContentOffset:CGPointMake(0, -_tableView2.contentInset.top) animated:YES];
+        }
+    };
+
+    if ([data isKindOfClass:[OUGroup class]]) {
+        [[OUScheduleDownloader sharedInstance] downloadLessonsForGroup:data complete:block];
+    } else if ([data isKindOfClass:[OUTeacher class]]) {
+        [[OUScheduleDownloader sharedInstance] downloadLessonsForTeacher:data complete:block];
+    } else if ([data isKindOfClass:[OUAuditory class]]) {
+        [[OUScheduleDownloader sharedInstance] downloadLessonsForAuditory:data complete:block];
+    }
 }
 
 #pragma mark - Actions
@@ -172,13 +260,12 @@
 
     BOOL show = NO;
 
-    MRProgressOverlayView __block *loadingView;
     void (^beforeLoading)(void) = ^{
-         loadingView = [self showOverlay];
+        [self showOverlay];
     };
     void (^afterLoading)(void) = ^{
         [self updateScheduleTables];
-        [loadingView hide:YES];
+        [self hideOverlay];
         [tableView deselectRowAtIndexPath:indexPath animated:NO];
     };
 
@@ -234,7 +321,9 @@
                         }];
                     }];
                 }
-                [groupsActionSheet addCancelButtonWithTitle:@"Отмена" action:nil];
+                [groupsActionSheet addCancelButtonWithTitle:@"Отмена" action:^{
+                    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+                }];
                 [groupsActionSheet setCancelButtonIndex:lesson.groups.count];
                 [groupsActionSheet showInView:self.view.superview];
                 [self customizeActionSheet:groupsActionSheet];
@@ -285,15 +374,15 @@
 
 #pragma mark - Loading
 
-- (MRProgressOverlayView *)showOverlay {
-    return [MRProgressOverlayView showOverlayAddedTo:self.view.window
-                                        title:@"Загрузка"
-                                         mode:MRProgressOverlayViewModeIndeterminate
-                                     animated:YES];
+- (void)showOverlay {
+        [MRProgressOverlayView showOverlayAddedTo:self.view.superview
+                                                   title:@"Загрузка"
+                                                    mode:MRProgressOverlayViewModeIndeterminate
+                                                animated:YES];
 }
 
 - (void)hideOverlay {
-    [MRProgressOverlayView dismissAllOverlaysForView:self.view.window animated:YES];
+    [MRProgressOverlayView dismissAllOverlaysForView:self.view.superview animated:YES];
 }
 
 @end

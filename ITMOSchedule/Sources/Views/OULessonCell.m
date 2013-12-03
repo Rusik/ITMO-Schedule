@@ -37,6 +37,7 @@
 
 - (void)updateFonts {
     NSString *topBottomStyle = UIFontTextStyleCaption1;
+
     self.topLabel.font = [UIFont preferredFontForTextStyle:topBottomStyle];
     self.centerLabel.font =[UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
     self.bottomLabel.font = [UIFont preferredFontForTextStyle:topBottomStyle];
@@ -45,7 +46,7 @@
 
 - (void)adjustLabelsSize {
     [self.topLabel adjustSizeWithMaximumWidth:self.topLabelView.$width];
-    [self.centerLabel adjustSizeWithMaximumWidth:self.centerLabelView.$width];
+    [self.centerLabel adjustSizeForAttributedStringWithMaximumWidth:self.centerLabelView.$width];
     [self.bottomLabel adjustSizeWithMaximumWidth:self.bottomLabelView.$width];
 }
 

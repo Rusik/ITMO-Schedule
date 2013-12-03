@@ -34,6 +34,9 @@
     _blurView.blurRadius = 20.0;
     _blurView.viewToBlur = _containerView;
     _blurView.viewsToHide = @[self];
+
+//    turn off for debug
+//    _blurView.dynamic = NO;
 }
 
 - (void)setContainerView:(UIView *)containerView {
