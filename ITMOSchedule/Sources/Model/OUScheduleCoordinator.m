@@ -167,11 +167,16 @@
 }
 
 - (OULessonWeekType)currentWeekType {
-    if (_currentWeekNumber % 2) {
+    if (_currentWeekNumber.intValue % 2) {
         return OULessonWeekTypeOdd;
     } else {
         return OULessonWeekTypeEven;
     }
+}
+
+- (void)setCurrentWeekNumber:(NSNumber *)currentWeekNumber {
+    _currentWeekNumber = currentWeekNumber;
+    [[NSNotificationCenter defaultCenter] postNotificationName:OUscheduleCoordinatorWeekNumberUpdateNotification object:self];
 }
 
 #pragma mark - Lessons data

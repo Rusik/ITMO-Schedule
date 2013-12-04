@@ -124,10 +124,10 @@
     return lessons;
 }
 
-+ (int)parseWeekNumber:(NSData *)XMLData {
++ (NSNumber *)parseWeekNumber:(NSData *)XMLData {
     RXMLElement *rootElement = [RXMLElement elementFromXMLData:XMLData];
 
-    return rootElement.text.intValue;
+    return [NSNumber numberWithInt:rootElement.text.intValue];
 }
 
 #pragma mark - Little parsers

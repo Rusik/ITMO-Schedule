@@ -8,6 +8,7 @@
 
 #import "OUTopView.h"
 #import "FXBlurView.h"
+#import "OUScheduleCoordinator.h"
 
 @interface OUTopView () <UITextFieldDelegate>
 
@@ -36,7 +37,6 @@
 
 - (void)awakeFromNib {
     _textField.text = nil;
-    [self setState:OUTopViewStateShow];
 
     _blurView.blurRadius = 20.0;
     _blurView.viewToBlur = _containerView;
@@ -44,6 +44,16 @@
 
 //    turn off for debug
 //    _blurView.dynamic = NO;
+
+    [self updateInfoLabel];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(weekNumberUpdate) name:OUscheduleCoordinatorWeekNumberUpdateNotification object:nil];
+
+    [self setActive:NO animated:NO];
+}
+
+- (void)weekNumberUpdate {
+    [self updateInfoLabel];
 }
 
 - (void)setContainerView:(UIView *)containerView {
@@ -89,11 +99,11 @@
     _state = state;
     switch (state) {
         case OUTopViewStateEdit:
-            [self setActive:YES];
+            [self setActive:YES animated:YES];
             break;
         case OUTopViewStateShow:
             [self resignFirstResponder];
-            [self setActive:NO];
+            [self setActive:NO animated:YES];
             break;
     }
 }
@@ -108,38 +118,67 @@
     }
 }
 
+- (void)updateInfoLabel {
+    NSString *weekDayString;
+    NSString *dateString;
+    NSString *weekNumberString;
+
+    NSDate *today = [NSDate date];
+
+    NSDateFormatter *dateFormatter = [NSDateFormatter new];
+    [dateFormatter setLocale:[NSLocale localeWithLocaleIdentifier:@"ru_ru"]];
+
+    [dateFormatter setDateFormat:@"eeee"];
+    weekDayString = [dateFormatter stringFromDate:today];
+
+    [dateFormatter setDateFormat:@"d MMMM"];
+    dateString = [dateFormatter stringFromDate:today];
+
+    if ([OUScheduleCoordinator sharedInstance].currentWeekNumber) {
+        weekNumberString = [NSString stringWithFormat:@"%@ неделя", [OUScheduleCoordinator sharedInstance].currentWeekNumber];
+        _infoLabel.text = [NSString stringWithFormat:@"%@ | %@ | %@", weekDayString, dateString, weekNumberString];
+    } else {
+        _infoLabel.text = [NSString stringWithFormat:@"%@ | %@", weekDayString, dateString];
+    }
+}
+
 #pragma mark - UITextFieldDelegate
 
-- (void)setActive:(BOOL)active {
+- (void)setActive:(BOOL)active animated:(BOOL)animated {
 
-    CGFloat animationDuration = 0.2;
+    void(^animationBlock)(void) = ^(){
+        _label.alpha = !active;
+        _textField.alpha = active;
+        _button.alpha = !active;
+        _cancelButton.alpha = active;
+        _tutorialLabel.alpha = active;
+        _weekLabel.alpha = !active;
+        _infoLabel.alpha = !active;
 
-    [UIView animateWithDuration:animationDuration
-                          delay:0
-                        options:UIViewAnimationOptionCurveLinear
-                     animations:^{
+        if (active) {
+            _notWeekLabel.alpha = 0;
+        } else {
+            if (_currentWeekType == OULessonWeekTypeEven) {
+                _notWeekLabel.alpha = 0;
+            } else if (_currentWeekType == OULessonWeekTypeOdd) {
+                _notWeekLabel.alpha = 1;
+            }
+        }
+    };
 
-                         _label.alpha = !active;
-                         _textField.alpha = active;
-                         _button.alpha = !active;
-                         _cancelButton.alpha = active;
-                         _tutorialLabel.alpha = active;
-                         _weekLabel.alpha = !active;
-                         _infoLabel.alpha = !active;
+    if (!animated) {
+        animationBlock();
+    } else {
 
-                         if (active) {
-                             _notWeekLabel.alpha = 0;
-                         } else {
-                             if (_currentWeekType == OULessonWeekTypeEven) {
-                                 _notWeekLabel.alpha = 0;
-                             } else if (_currentWeekType == OULessonWeekTypeOdd) {
-                                 _notWeekLabel.alpha = 1;
-                             }
-                         }
+        CGFloat animationDuration = 0.2;
 
-                     } completion:^(BOOL finished) {
-                         ;
-                     }];
+        [UIView animateWithDuration:animationDuration
+                              delay:0
+                            options:UIViewAnimationOptionCurveLinear
+                         animations:animationBlock
+                         completion:nil];
+    }
+
     if (active) {
         _textField.text = nil;
     }

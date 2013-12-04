@@ -14,6 +14,6 @@
 + (NSArray *)parseLessons:(NSData *)XMLData forGroup:(OUGroup *)group;
 + (NSArray *)parseLessons:(NSData *)XMLData forAuditory:(OUAuditory *)auditory;
 + (NSArray *)parseLessons:(NSData *)XMLData forTeacher:(OUTeacher *)teacher;
-+ (int)parseWeekNumber:(NSData *)XMLData;
++ (NSNumber *)parseWeekNumber:(NSData *)XMLData;
 
 @end

@@ -12,6 +12,8 @@
 #define TEACHERS_INFO_KEY   @"teachers"
 #define AUDITORIES_INFO_KEY @"auditories"
 
+#define OUscheduleCoordinatorWeekNumberUpdateNotification @"OUscheduleCoordinatorWeekNumberUpdateNotification"
+
 @interface OUScheduleCoordinator : NSObject
 
 + (OUScheduleCoordinator *)sharedInstance;
@@ -31,7 +33,7 @@
 - (NSArray *)lessonsForDay:(OULessonWeekDay)weekDay weekType:(OULessonWeekType)weekType;
 - (NSArray *)lessonsForDayString:(NSString *)weekDayString weekType:(OULessonWeekType)weekType;
 
-@property (nonatomic) int currentWeekNumber;
+@property (nonatomic) NSNumber *currentWeekNumber;
 
 - (OULessonWeekType)currentWeekType;
 
