@@ -20,6 +20,13 @@
     IBOutlet UIButton *_button;
 
     IBOutlet FXBlurView *_blurView;
+
+    IBOutlet UILabel *_notWeekLabel;
+    IBOutlet UILabel *_infoLabel;
+    IBOutlet UILabel *_weekLabel;
+    IBOutlet UILabel *_tutorialLabel;
+
+    OULessonWeekType _currentWeekType;
 }
 
 - (BOOL)resignFirstResponder {
@@ -91,14 +98,48 @@
     }
 }
 
+- (void)setWeekProgress:(float)weekProgress {
+    CGFloat alpha = 1 - weekProgress;
+    _notWeekLabel.alpha = alpha;
+    if (alpha == 1) {
+        _currentWeekType = OULessonWeekTypeOdd;
+    } else if (alpha == 0) {
+        _currentWeekType = OULessonWeekTypeEven;
+    }
+}
+
 #pragma mark - UITextFieldDelegate
 
 - (void)setActive:(BOOL)active {
-    _label.hidden = active;
-    _textField.hidden = !active;
-    _button.hidden = active;
-    _cancelButton.hidden = !active;
 
+    CGFloat animationDuration = 0.2;
+
+    [UIView animateWithDuration:animationDuration
+                          delay:0
+                        options:UIViewAnimationOptionCurveLinear
+                     animations:^{
+
+                         _label.alpha = !active;
+                         _textField.alpha = active;
+                         _button.alpha = !active;
+                         _cancelButton.alpha = active;
+                         _tutorialLabel.alpha = active;
+                         _weekLabel.alpha = !active;
+                         _infoLabel.alpha = !active;
+
+                         if (active) {
+                             _notWeekLabel.alpha = 0;
+                         } else {
+                             if (_currentWeekType == OULessonWeekTypeEven) {
+                                 _notWeekLabel.alpha = 0;
+                             } else if (_currentWeekType == OULessonWeekTypeOdd) {
+                                 _notWeekLabel.alpha = 1;
+                             }
+                         }
+
+                     } completion:^(BOOL finished) {
+                         ;
+                     }];
     if (active) {
         _textField.text = nil;
     }

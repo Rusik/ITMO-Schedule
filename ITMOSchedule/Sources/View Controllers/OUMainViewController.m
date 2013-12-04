@@ -37,12 +37,14 @@
 
     [_tableView registerNib:[OUSearchCell nibForCell] forCellReuseIdentifier:[OUSearchCell cellIdentifier]];
     _tableView.tableFooterView = [UIView new];
+    _tableView.contentInset = UIEdgeInsetsMake(_topViewContainer.$height, 0, 0, 0);
+    _tableView.scrollIndicatorInsets = _tableView.contentInset;
 
     _scheduleVC = [OUScheduleViewController new];
     [self addChildViewController:_scheduleVC];
     [self.view insertSubview:_scheduleVC.view belowSubview:_tableView];
     _scheduleVC.view.frame = self.view.bounds;
-    [_scheduleVC setContentInset:UIEdgeInsetsMake(64, 0, 0, 0)];
+    [_scheduleVC setContentInset:UIEdgeInsetsMake(_topViewContainer.$height, 0, 0, 0)];
     [_scheduleVC didMoveToParentViewController:self];
 
     [self.view addSubview:_topViewContainer];
@@ -57,7 +59,7 @@
     [self subscribeToNotifications];
 
     [self addRefreshControl];
-    [self updateMainInfoWithLoadingOverlay:YES];
+    [self updateMainInfoWithLoadingOverlay:NO];
 }
 
 - (void)dealloc {

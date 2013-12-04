@@ -372,6 +372,20 @@
     [self hideOverlay];
 }
 
+#pragma mark - UIScrollViewDelegate
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    if (scrollView == _scrollView) {
+        if (scrollView.contentOffset.x < 0) {
+            [_topView setWeekProgress:0];
+        } else if (scrollView.contentOffset.x < scrollView.$width) {
+            [_topView setWeekProgress:scrollView.contentOffset.x / scrollView.$width];
+        } else {
+            [_topView setWeekProgress:1];
+        }
+    }
+}
+
 #pragma mark - Loading
 
 - (void)showOverlay {

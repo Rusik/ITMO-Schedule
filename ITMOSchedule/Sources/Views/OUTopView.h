@@ -31,6 +31,8 @@ typedef NS_ENUM(NSInteger, OUTopViewState) {
 @property (nonatomic, weak) UIView *containerView;
 @property (nonatomic) OUTopViewState state;
 
+- (void)setWeekProgress:(float)weekProgress;
+
 - (NSString *)text;
 
 @end
