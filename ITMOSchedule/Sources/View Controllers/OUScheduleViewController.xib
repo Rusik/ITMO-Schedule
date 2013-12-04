@@ -7,6 +7,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="OUScheduleViewController">
             <connections>
+                <outlet property="_noDataLabel1" destination="LO9-Dg-RvB" id="qYr-OZ-kzx"/>
+                <outlet property="_noDataLabel2" destination="3lQ-Ew-qk9" id="v3t-3B-eTw"/>
                 <outlet property="_scrollView" destination="rkK-8N-kyR" id="YEa-Ch-9Ws"/>
                 <outlet property="_tableView1" destination="SSa-wy-obv" id="wEH-rS-zoM"/>
                 <outlet property="_tableView2" destination="TT2-O1-WXc" id="gFH-80-ZRM"/>
@@ -43,6 +45,20 @@
                                 <outlet property="delegate" destination="-1" id="Ypx-BE-N6b"/>
                             </connections>
                         </tableView>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="расписание отсутствует" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="LO9-Dg-RvB">
+                            <rect key="frame" x="5" y="0.0" width="320" height="568"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
+                            <color key="textColor" white="0.0" alpha="0.59999999999999998" colorSpace="calibratedWhite"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="расписание отсутствует" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="3lQ-Ew-qk9">
+                            <rect key="frame" x="335" y="0.0" width="320" height="568"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.59999999999999998" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <connections>

@@ -34,6 +34,9 @@
 
     UIRefreshControl *_refreshControl2;
     UITableViewController *_tvc2;
+
+    IBOutlet UILabel *_noDataLabel1;
+    IBOutlet UILabel *_noDataLabel2;
 }
 
 - (void)viewDidLoad {
@@ -45,6 +48,8 @@
     _tableView2.tableFooterView = [UIView new];
 
     [self addRefreshControl];
+
+    [self reloadData];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -97,6 +102,13 @@
 
     _weekDays1 = [[OUScheduleCoordinator sharedInstance] weekDaysForWeekType:OULessonWeekTypeOdd];
     _weekDays2 = [[OUScheduleCoordinator sharedInstance] weekDaysForWeekType:OULessonWeekTypeEven];
+
+    _tableView1.hidden = _weekDays1.count == 0;
+    _tableView2.hidden = _weekDays2.count == 0;
+    _noDataLabel1.hidden = !_tableView1.hidden;
+    _noDataLabel2.hidden = !_tableView2.hidden;
+    _tableView1.userInteractionEnabled = !_tableView1.hidden;
+    _tableView2.userInteractionEnabled = !_tableView2.hidden;
 
     [_tableView1 reloadData];
     [_tableView2 reloadData];
@@ -182,6 +194,9 @@
     [_tableView2 setContentInset:inset];
     [_tableView1 setScrollIndicatorInsets:inset];
     [_tableView2 setScrollIndicatorInsets:inset];
+
+    _noDataLabel1.$top = inset.top;
+    _noDataLabel2.$top = inset.top;
 }
 
 #pragma mark - UITableViewDataSource & UITableViewDelegate
@@ -214,7 +229,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 
-    OULesson *lesson = [self lessonForIndexPath:indexPath intableView:tableView];
+    OULesson *lesson = [self lessonForIndexPath:indexPath inTableView:tableView];
     id type = [[OUScheduleCoordinator sharedInstance] lessonsType];
 
     CGFloat height = 44.0;
@@ -232,7 +247,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 
-    OULesson *lesson = [self lessonForIndexPath:indexPath intableView:tableView];
+    OULesson *lesson = [self lessonForIndexPath:indexPath inTableView:tableView];
     OULessonCell *cell;
 
     id type = [[OUScheduleCoordinator sharedInstance] lessonsType];
@@ -252,7 +267,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath  {
-    OULesson *lesson = [self lessonForIndexPath:indexPath intableView:tableView];
+    OULesson *lesson = [self lessonForIndexPath:indexPath inTableView:tableView];
 
     UIActionSheet *actionSheet = [UIActionSheet actionSheetWithTitle:@"Посмотреть расписание"];
 
@@ -354,7 +369,7 @@
     }
 }
 
-- (OULesson *)lessonForIndexPath:(NSIndexPath *)indexPath intableView:(UITableView *)tableView {
+- (OULesson *)lessonForIndexPath:(NSIndexPath *)indexPath inTableView:(UITableView *)tableView {
     NSArray *lessons;
     if (tableView == _tableView1) {
         NSString *weekDay = _weekDays1[indexPath.section];
