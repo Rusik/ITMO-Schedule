@@ -17,6 +17,8 @@
     NSArray *_lessons;
 
     NSDictionary *_cacheMainInfo;
+
+    NSArray *_allInfoForEmptyString;
 }
 
 + (OUScheduleCoordinator *)sharedInstance {
@@ -44,48 +46,38 @@
     NSArray *teachers = _cacheMainInfo[TEACHERS_INFO_KEY];
     NSArray *auditories = _cacheMainInfo[AUDITORIES_INFO_KEY];
 
-    NSMutableArray *results = [NSMutableArray array];
+    if (!groups || !teachers || !auditories) {
+        return nil;
+    }
 
-    NSArray *sortedGroups = [groups sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-        OUGroup *g1 = (OUGroup *)obj1;
-        OUGroup *g2 = (OUGroup *)obj2;
-        return [g1.groupName compare:g2.groupName];
-    }];
-
-    NSArray *sortedTeachers = [teachers sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-        OUTeacher *t1 = (OUTeacher *)obj1;
-        OUTeacher *t2 = (OUTeacher *)obj2;
-        return [t1.teacherName compare:t2.teacherName];
-    }];
-
-    NSArray *sortedAuditories = [auditories sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-        OUAuditory *a1 = (OUAuditory *)obj1;
-        OUAuditory *a2 = (OUAuditory *)obj2;
-        return [a1.auditoryName compare:a2.auditoryName];
-    }];
+    NSMutableArray *results = [[NSMutableArray alloc] init];
 
     if (!string || [string isEqualToString:@""]) {
-        [results addObjectsFromArray:sortedGroups];
-        [results addObjectsFromArray:sortedTeachers];
-        [results addObjectsFromArray:sortedAuditories];
-        return results;
+        NSMutableArray *all = [[NSMutableArray alloc] initWithCapacity:groups.count + teachers.count + auditories.count];
+        if (!_allInfoForEmptyString) {
+            [all addObjectsFromArray:groups];
+            [all addObjectsFromArray:teachers];
+            [all addObjectsFromArray:auditories];
+            _allInfoForEmptyString = [all copy];
+        }
+        return _allInfoForEmptyString;
     }
 
     NSMutableArray *findGroups = [NSMutableArray new];
     NSMutableArray *findTeachers = [NSMutableArray new];
     NSMutableArray *findAuditories = [NSMutableArray new];
 
-    for (OUGroup *group in sortedGroups) {
+    for (OUGroup *group in groups) {
         if ([group.groupName rangeOfString:string options:NSCaseInsensitiveSearch].location != NSNotFound) {
             [findGroups addObject:group];
         }
     }
-    for (OUTeacher *teacher in sortedTeachers) {
+    for (OUTeacher *teacher in teachers) {
         if ([teacher.teacherName rangeOfString:string options:NSCaseInsensitiveSearch].location != NSNotFound) {
             [findTeachers addObject:teacher];
         }
     }
-    for (OUAuditory *auditory in sortedAuditories) {
+    for (OUAuditory *auditory in auditories) {
         if ([auditory.auditoryName rangeOfString:string options:NSCaseInsensitiveSearch].location != NSNotFound) {
             [findAuditories addObject:auditory];
         }

@@ -45,7 +45,28 @@
         [auditories addObject:auditory];
     }];
 
-    NSDictionary *info = @{GROUPS_INFO_KEY: groups, TEACHERS_INFO_KEY: teachers, AUDITORIES_INFO_KEY: auditories};
+
+    //sort
+    NSArray *sortedGroups = [groups sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        OUGroup *g1 = (OUGroup *)obj1;
+        OUGroup *g2 = (OUGroup *)obj2;
+        return [g1.groupName compare:g2.groupName];
+    }];
+
+    NSArray *sortedTeachers = [teachers sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        OUTeacher *t1 = (OUTeacher *)obj1;
+        OUTeacher *t2 = (OUTeacher *)obj2;
+        return [t1.teacherName compare:t2.teacherName];
+    }];
+
+    NSArray *sortedAuditories = [auditories sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        OUAuditory *a1 = (OUAuditory *)obj1;
+        OUAuditory *a2 = (OUAuditory *)obj2;
+        return [a1.auditoryName compare:a2.auditoryName];
+    }];
+
+
+    NSDictionary *info = @{GROUPS_INFO_KEY: sortedGroups, TEACHERS_INFO_KEY: sortedTeachers, AUDITORIES_INFO_KEY: sortedAuditories};
 
     [[OUScheduleCoordinator sharedInstance] setMainInfo:info];
 

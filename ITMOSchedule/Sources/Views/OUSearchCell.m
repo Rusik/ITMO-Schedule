@@ -87,14 +87,45 @@
     }
 }
 
-+ (CGFloat)heightForData:(id)data {
-    static OUSearchCell *cell = nil;
-    if (!cell) {
-        cell = [OUSearchCell loadFromNib];
-    }
-    cell.data = data;
+static NSMutableDictionary *hashDict = nil;
 
-    return [cell height];
++ (void)resetHeightCache {
+    [hashDict removeAllObjects];
+}
+
++ (CGFloat)heightForData:(id)data {
+
+    static OUSearchCell *cell = nil;
+
+    if (!hashDict) {
+        hashDict = [NSMutableDictionary new];
+    }
+    NSString *key;
+    if ([data isKindOfClass:[OUGroup class]]) {
+        OUGroup *group = (OUGroup *)data;
+        key = group.groupName;
+    }
+    if ([data isKindOfClass:[OUTeacher class]]) {
+        OUTeacher *teacher = (OUTeacher *)data;
+        key = [teacher.teacherName stringByAppendingString:teacher.teaherPosition];
+    }
+    if ([data isKindOfClass:[OUAuditory class]]) {
+        OUAuditory *auditory = (OUAuditory *)data;
+        key = [auditory.auditoryName stringByAppendingString:auditory.auditoryAddress];
+    }
+    if (hashDict[key]) {
+        return [hashDict[key] floatValue];
+    } else {
+        if (!cell) {
+            cell = [OUSearchCell loadFromNib];
+        }
+        cell.data = data;
+        CGFloat height = [cell height];
+
+        hashDict[key] = @(height);
+
+        return height;
+    }
 }
 
 - (CGFloat)height {

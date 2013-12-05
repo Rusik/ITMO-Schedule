@@ -14,6 +14,7 @@
 @property (nonatomic, retain) id data;
 
 + (CGFloat)heightForData:(id)data;
++ (void)resetHeightCache;
 
 - (CGFloat)height;
 

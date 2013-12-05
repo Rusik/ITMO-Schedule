@@ -45,6 +45,11 @@
             [self showSchedule];
             [_scheduleVC reloadData];
             [_topView setData:[[OUScheduleCoordinator sharedInstance] lessonsType]];
+
+            //высчитываем высоту ячеек заранее, чтобы таблица открывалась без задержки
+            _tableData = [[OUScheduleCoordinator sharedInstance] mainInfoDataForString:nil];
+            [_tableView reloadData];
+
         } else {
             [self showSearch];
             [_topView setState:OUTopViewStateEdit];
@@ -128,6 +133,7 @@
 }
 
 - (void)updateFonts {
+    [OUSearchCell resetHeightCache];
     [_tableView reloadData];
 }
 
