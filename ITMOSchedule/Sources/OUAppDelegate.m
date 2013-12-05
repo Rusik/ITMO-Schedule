@@ -24,4 +24,13 @@
 	return YES;
 }
 
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    [super touchesBegan:touches withEvent:event];
+    CGPoint location = [[[event allTouches] anyObject] locationInView:self.window];
+    CGFloat statusBarHeight = 20;
+    if (location.y > 0 && location.y < statusBarHeight) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:OUApplicationStatusBarDidTap object:nil];
+    }
+}
+
 @end

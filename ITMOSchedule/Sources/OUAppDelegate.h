@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+#define OUApplicationStatusBarDidTap @"OUApplicationStatusBarDidTap"
+
 @interface OUAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;

@@ -14,6 +14,7 @@
 #import "OUScheduleViewController.h"
 #import "OUTopView.h"
 #import "MRProgressOverlayView.h"
+#import "OUAppDelegate.h"
 
 @interface OUMainViewController () <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, OUTopViewDelegate>
 
@@ -125,16 +126,23 @@
                                              selector:@selector(updateFonts)
                                                  name:UIContentSizeCategoryDidChangeNotification
                                                object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(statusBarDidTap)
+                                                 name:OUApplicationStatusBarDidTap
+                                               object:nil];
 }
 
 - (void)unsubscribeFromNotifications {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-
 }
 
 - (void)updateFonts {
     [OUSearchCell resetHeightCache];
     [_tableView reloadData];
+}
+
+- (void)statusBarDidTap {
+    [_tableView setContentOffset:CGPointMake(0, -_tableView.contentInset.top) animated:YES];
 }
 
 #pragma mark - OUTopViewDelegate

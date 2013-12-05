@@ -15,6 +15,7 @@
 #import "OUScheduleDownloader.h"
 #import "NSString+Helpers.h"
 #import "MRProgressOverlayView.h"
+#import "OUAppDelegate.h"
 
 @interface OUScheduleViewController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -68,12 +69,26 @@
                                              selector:@selector(updateFonts)
                                                  name:UIContentSizeCategoryDidChangeNotification
                                                object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(statusBarDidTap)
+                                                 name:OUApplicationStatusBarDidTap
+                                               object:nil];
 }
 
 - (void)unsubscribeFromNotifications {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 
 }
+
+- (void)statusBarDidTap {
+    if (_scrollView.contentOffset.x == 0) {
+        [_tableView1 setContentOffset:CGPointMake(0, -_tableView1.contentInset.top) animated:YES];
+    } else if (_scrollView.contentOffset.x == _scrollView.$width) {
+        [_tableView2 setContentOffset:CGPointMake(0, -_tableView2.contentInset.top) animated:YES];
+    }
+}
+
+#pragma mark -
 
 - (void)updateFonts {
     [_tableView1 reloadData];
