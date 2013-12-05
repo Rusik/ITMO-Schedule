@@ -9,6 +9,9 @@
 #import "OUTopView.h"
 #import "FXBlurView.h"
 #import "OUScheduleCoordinator.h"
+#import "OUStorage.h"
+#import "OUScheduleDownloader.h"
+#import "UIView+Helpers.h"
 
 @interface OUTopView () <UITextFieldDelegate>
 
@@ -21,6 +24,7 @@
     IBOutlet UIButton *_button;
 
     IBOutlet FXBlurView *_blurView;
+    IBOutlet UIView *_blurViewBackground;
 
     IBOutlet UILabel *_notWeekLabel;
     IBOutlet UILabel *_infoLabel;
@@ -47,8 +51,7 @@
 
     [self updateInfoLabel];
 
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(weekNumberUpdate) name:OUscheduleCoordinatorWeekNumberUpdateNotification object:nil];
-
+    _currentWeekType = OULessonWeekTypeOdd;
     [self setActive:NO animated:NO];
 }
 
@@ -81,7 +84,7 @@
         _label.text = teacher.teacherName;
     } else if ([data isKindOfClass:[OUAuditory class]]) {
         OUAuditory *auditory = (OUAuditory *)data;
-        _label.text = [NSString stringWithFormat:@"Аудитория %@", auditory.auditoryName];
+        _label.text = [auditory correctAuditoryName];
     }
 }
 
@@ -96,16 +99,47 @@
 }
 
 - (void)setState:(OUTopViewState)state {
-    _state = state;
+    [self setState:state animated:YES];
+}
+
+- (void)setState:(OUTopViewState)state animated:(BOOL)animated {
     switch (state) {
         case OUTopViewStateEdit:
-            [self setActive:YES animated:YES];
+
+            [self recursiveEnumerateSubviewsUsingBlock:^(UIView *view, BOOL *stop) {
+                view.hidden = NO;
+            }];
+
+            if (_state == OUTopViewStateClear) {
+                _label.alpha = 0;
+                _infoLabel.alpha = 0;
+                _weekLabel.alpha = 0;
+                _notWeekLabel.alpha = 0;
+            }
+
+            [self setActive:YES animated:animated];
+            [_textField becomeFirstResponder];
             break;
+
         case OUTopViewStateShow:
+
+            [self recursiveEnumerateSubviewsUsingBlock:^(UIView *view, BOOL *stop) {
+                view.hidden = NO;
+            }];
             [self resignFirstResponder];
-            [self setActive:NO animated:YES];
+            [self setActive:NO animated:animated];
+            break;
+
+        case OUTopViewStateClear:
+
+            [self recursiveEnumerateSubviewsUsingBlock:^(UIView *view, BOOL *stop) {
+                if (view != _blurView && view != _blurViewBackground) {
+                    view.hidden = YES;
+                }
+            }];
             break;
     }
+    _state = state;
 }
 
 - (void)setWeekProgress:(float)weekProgress {
@@ -137,9 +171,31 @@
     if ([OUScheduleCoordinator sharedInstance].currentWeekNumber) {
         weekNumberString = [NSString stringWithFormat:@"%@ неделя", [OUScheduleCoordinator sharedInstance].currentWeekNumber];
         _infoLabel.text = [NSString stringWithFormat:@"%@ | %@ | %@", weekDayString, dateString, weekNumberString];
+    } else if ([[OUStorage sharedInstance] weekNumber]) {
+        int todayWeek;
+        int lastSaveWeek;
+        [dateFormatter setDateFormat:@"w"];
+        todayWeek = [dateFormatter stringFromDate:today].intValue;
+        lastSaveWeek = [dateFormatter stringFromDate:[[OUStorage sharedInstance] lastWeekNumberUpdate]].intValue;
+
+        int currentWeek = [[OUStorage sharedInstance] weekNumber].intValue + (todayWeek - lastSaveWeek);
+        _infoLabel.text = [NSString stringWithFormat:@"%@ | %@ | %d неделя", weekDayString, dateString, currentWeek];
+
+        [self updateWeekNumber];
     } else {
         _infoLabel.text = [NSString stringWithFormat:@"%@ | %@", weekDayString, dateString];
+        [self updateWeekNumber];
     }
+}
+
+#pragma mark - Week number
+
+- (void)updateWeekNumber {
+    [[OUScheduleDownloader sharedInstance] downloadWeekNumber:^(NSError *error){
+        if (!error) {
+            [self updateInfoLabel];
+        }
+    }];
 }
 
 #pragma mark - UITextFieldDelegate

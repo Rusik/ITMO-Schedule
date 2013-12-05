@@ -102,4 +102,40 @@
     return @[@"Понедельник", @"Вторник", @"Среда", @"Четверг", @"Пятница", @"Суббота", @"Воскресенье"];
 }
 
+#pragma mark - Decoding
+
+- (id)initWithCoder:(NSCoder *)decoder {
+    self = [super init];
+    if (self) {
+        self.lessonName = [decoder decodeObjectForKey:@"lessonName"];
+        self.lessonType = [[decoder decodeObjectForKey:@"lessonType"] intValue];
+        self.lessonTypeString = [decoder decodeObjectForKey:@"lessonTypeString"];
+        self.auditory = [decoder decodeObjectForKey:@"auditory"];
+        self.teacher = [decoder decodeObjectForKey:@"teacher"];
+        self.timeInterval = [decoder decodeObjectForKey:@"timeInterval"];
+        self.startTime = [[decoder decodeObjectForKey:@"startTime"] intValue];
+        self.finishTime = [[decoder decodeObjectForKey:@"finishTime"] intValue];
+        self.weekType = [[decoder decodeObjectForKey:@"weekType"] intValue];
+        self.weekDay = [[decoder decodeObjectForKey:@"weekDay"] intValue];
+        self.additionalInfo = [decoder decodeObjectForKey:@"additionalInfo"];
+        self.groups = [decoder decodeObjectForKey:@"groups"];
+    }
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)encoder {
+    [encoder encodeObject:self.lessonName forKey:@"lessonName"];
+    [encoder encodeObject:@(self.lessonType) forKey:@"lessonType"];
+    [encoder encodeObject:self.lessonTypeString forKey:@"lessonTypeString"];
+    [encoder encodeObject:self.auditory forKey:@"auditory"];
+    [encoder encodeObject:self.teacher forKey:@"teacher"];
+    [encoder encodeObject:self.timeInterval forKey:@"timeInterval"];
+    [encoder encodeObject:@(self.startTime) forKey:@"startTime"];
+    [encoder encodeObject:@(self.finishTime) forKey:@"finishTime"];
+    [encoder encodeObject:@(self.weekType) forKey:@"weekType"];
+    [encoder encodeObject:@(self.weekDay) forKey:@"weekDay"];
+    [encoder encodeObject:self.additionalInfo forKey:@"additionalInfo"];
+    [encoder encodeObject:self.groups forKey:@"groups"];
+}
+
 @end

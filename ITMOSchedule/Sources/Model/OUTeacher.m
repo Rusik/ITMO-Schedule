@@ -29,4 +29,22 @@
     return [NSString stringWithFormat:@"%@ {id : %@, name : %@}", NSStringFromClass([self class]), _teacherId, _teacherName];
 }
 
+#pragma mark - Decoding
+
+- (id)initWithCoder:(NSCoder *)decoder {
+    self = [super init];
+    if (self) {
+        self.teacherName = [decoder decodeObjectForKey:@"teacherName"];
+        self.teaherPosition = [decoder decodeObjectForKey:@"teaherPosition"];
+        self.teacherId = [decoder decodeObjectForKey:@"teacherId"];
+    }
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)encoder {
+    [encoder encodeObject:self.teacherName forKey:@"teacherName"];
+    [encoder encodeObject:self.teaherPosition forKey:@"teaherPosition"];
+    [encoder encodeObject:self.teacherId forKey:@"teacherId"];
+}
+
 @end

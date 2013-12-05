@@ -20,4 +20,18 @@
     return [NSString stringWithFormat:@"%@ {groupName : %@}", NSStringFromClass([self class]), _groupName];
 }
 
+#pragma mark - Decoding
+
+- (id)initWithCoder:(NSCoder *)decoder {
+    self = [super init];
+    if (self) {
+        self.groupName = [decoder decodeObjectForKey:@"groupName"];
+    }
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)encoder {
+    [encoder encodeObject:self.groupName forKey:@"groupName"];
+}
+
 @end

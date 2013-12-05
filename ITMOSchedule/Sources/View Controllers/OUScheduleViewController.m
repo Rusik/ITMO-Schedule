@@ -163,8 +163,7 @@
 
     id data = [[OUScheduleCoordinator sharedInstance] lessonsType];
 
-    CompleteBlock block = ^{
-        [self reloadDataResetContentOffset:NO];
+    CompleteBlock block = ^(NSError *error){
 
         [_refreshControl1 endRefreshing];
         [_refreshControl2 endRefreshing];
@@ -175,6 +174,10 @@
         }
         if (_tableView2.contentOffset.y < 0 && _tableView2.contentOffset.y < -_tableView2.contentInset.top) {
             [_tableView2 setContentOffset:CGPointMake(0, -_tableView2.contentInset.top) animated:YES];
+        }
+
+        if (!error) {
+            [self reloadDataResetContentOffset:NO];
         }
     };
 
@@ -290,9 +293,11 @@
 
             beforeLoading();
 
-            [[OUScheduleDownloader sharedInstance] downloadLessonsForTeacher:lesson.teacher complete:^{
+            [[OUScheduleDownloader sharedInstance] downloadLessonsForTeacher:lesson.teacher complete:^(NSError *error){
                 afterLoading();
-                [_topView setData:lesson.teacher];
+                if (!error) {
+                    [_topView setData:lesson.teacher];
+                }
             }];
         }];
     }
@@ -302,9 +307,11 @@
 
             beforeLoading();
 
-            [[OUScheduleDownloader sharedInstance] downloadLessonsForAuditory:lesson.auditory complete:^{
+            [[OUScheduleDownloader sharedInstance] downloadLessonsForAuditory:lesson.auditory complete:^(NSError *error){
                 afterLoading();
-                [_topView setData:lesson.auditory];
+                if (!error) {
+                    [_topView setData:lesson.auditory];
+                }
             }];
         }];
     }
@@ -316,9 +323,11 @@
 
                 beforeLoading();
 
-                [[OUScheduleDownloader sharedInstance] downloadLessonsForGroup:group complete:^{
+                [[OUScheduleDownloader sharedInstance] downloadLessonsForGroup:group complete:^(NSError *error){
                     afterLoading();
-                    [_topView setData:group];
+                    if (!error) {
+                        [_topView setData:group];
+                    }
                 }];
             }];
         } else {
@@ -330,9 +339,11 @@
 
                         beforeLoading();
 
-                        [[OUScheduleDownloader sharedInstance] downloadLessonsForGroup:g complete:^{
+                        [[OUScheduleDownloader sharedInstance] downloadLessonsForGroup:g complete:^(NSError *error){
                             afterLoading();
-                            [_topView setData:g];
+                            if (!error) {
+                                [_topView setData:g];
+                            }
                         }];
                     }];
                 }

@@ -32,4 +32,22 @@
     }
 }
 
+#pragma mark - Decoding
+
+- (id)initWithCoder:(NSCoder *)decoder {
+    self = [super init];
+    if (self) {
+        self.auditoryName = [decoder decodeObjectForKey:@"auditoryName"];
+        self.auditoryAddress = [decoder decodeObjectForKey:@"auditoryAddress"];
+        self.auditoryId = [decoder decodeObjectForKey:@"auditoryId"];
+    }
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)encoder {
+    [encoder encodeObject:self.auditoryName forKey:@"auditoryName"];
+    [encoder encodeObject:self.auditoryAddress forKey:@"auditoryAddress"];
+    [encoder encodeObject:self.auditoryId forKey:@"auditoryId"];
+}
+
 @end

@@ -12,7 +12,8 @@
 
 typedef NS_ENUM(NSInteger, OUTopViewState) {
     OUTopViewStateEdit,
-    OUTopViewStateShow
+    OUTopViewStateShow,
+    OUTopViewStateClear
 };
 
 @protocol OUTopViewDelegate <NSObject>

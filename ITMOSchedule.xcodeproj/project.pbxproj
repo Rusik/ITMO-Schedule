@@ -53,6 +53,7 @@
 		7FC4B92A1814FEE700926281 /* UILabel+Adjust.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FC4B9291814FEE700926281 /* UILabel+Adjust.m */; };
 		7FC509DB180C1BAF00FCE715 /* OULessonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FC509DA180C1BAF00FCE715 /* OULessonCell.m */; };
 		7FC509DE180C265100FCE715 /* NSString+Helpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FC509DD180C265100FCE715 /* NSString+Helpers.m */; };
+		7FC9DA34184F67FB00C8C6C2 /* OUStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FC9DA33184F67FB00C8C6C2 /* OUStorage.m */; };
 		7FE3D92C1805F79300D3D3C3 /* OULesson.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FE3D92B1805F79300D3D3C3 /* OULesson.m */; };
 		841F203B180563E00054C523 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 841F2037180563E00054C523 /* main.m */; };
 		841F203C180563E00054C523 /* OUAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 841F203A180563E00054C523 /* OUAppDelegate.m */; };
@@ -154,6 +155,8 @@
 		7FC509DA180C1BAF00FCE715 /* OULessonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OULessonCell.m; sourceTree = "<group>"; };
 		7FC509DC180C265100FCE715 /* NSString+Helpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Helpers.h"; sourceTree = "<group>"; };
 		7FC509DD180C265100FCE715 /* NSString+Helpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Helpers.m"; sourceTree = "<group>"; };
+		7FC9DA32184F67FB00C8C6C2 /* OUStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OUStorage.h; sourceTree = "<group>"; };
+		7FC9DA33184F67FB00C8C6C2 /* OUStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OUStorage.m; sourceTree = "<group>"; };
 		7FE3D92A1805F79300D3D3C3 /* OULesson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OULesson.h; sourceTree = "<group>"; };
 		7FE3D92B1805F79300D3D3C3 /* OULesson.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OULesson.m; sourceTree = "<group>"; };
 		841F2037180563E00054C523 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Sources/main.m; sourceTree = "<group>"; };
@@ -379,6 +382,8 @@
 			children = (
 				7F4EA6D31805C8EB00C1958D /* OUScheduleCoordinator.h */,
 				7F4EA6D41805C8EB00C1958D /* OUScheduleCoordinator.m */,
+				7FC9DA32184F67FB00C8C6C2 /* OUStorage.h */,
+				7FC9DA33184F67FB00C8C6C2 /* OUStorage.m */,
 				841F21D718057A4A0054C523 /* OUGroup.h */,
 				841F21D818057A4A0054C523 /* OUGroup.m */,
 				841F21DA18057A6F0054C523 /* OUTeacher.h */,
@@ -580,6 +585,7 @@
 				7F2B462B1805CE7600B48239 /* RXMLElement.m in Sources */,
 				841F2191180569520054C523 /* UIImageView+AFNetworking.m in Sources */,
 				7F572EAE184777DF00AA1AD9 /* MRMessageInterceptor.m in Sources */,
+				7FC9DA34184F67FB00C8C6C2 /* OUStorage.m in Sources */,
 				7FC509DE180C265100FCE715 /* NSString+Helpers.m in Sources */,
 				7FBDB6E3183E68FB009AC1DC /* OUTopView.m in Sources */,
 				841F2189180569520054C523 /* AFHTTPClient.m in Sources */,

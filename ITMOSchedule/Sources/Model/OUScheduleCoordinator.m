@@ -10,10 +10,13 @@
 #import "OUGroup.h"
 #import "OUTeacher.h"
 #import "OUAuditory.h"
+#import "OUStorage.h"
 
 @implementation OUScheduleCoordinator {
     id _lessonsType;
     NSArray *_lessons;
+
+    NSDictionary *_cacheMainInfo;
 }
 
 + (OUScheduleCoordinator *)sharedInstance {
@@ -25,11 +28,21 @@
     return instance;
 }
 
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        _cacheMainInfo = [[OUStorage sharedInstance] mainInfo];
+        _lessons = [[OUStorage sharedInstance] lessons];
+        _lessonsType = [[OUStorage sharedInstance] lessonType];
+    }
+    return self;
+}
+
 - (NSArray *)mainInfoDataForString:(NSString *)string {
 
-    NSArray *groups = _mainInfo[GROUPS_INFO_KEY];
-    NSArray *teachers = _mainInfo[TEACHERS_INFO_KEY];
-    NSArray *auditories = _mainInfo[AUDITORIES_INFO_KEY];
+    NSArray *groups = _cacheMainInfo[GROUPS_INFO_KEY];
+    NSArray *teachers = _cacheMainInfo[TEACHERS_INFO_KEY];
+    NSArray *auditories = _cacheMainInfo[AUDITORIES_INFO_KEY];
 
     NSMutableArray *results = [NSMutableArray array];
 
@@ -143,27 +156,14 @@
     return results;
 }
 
-- (void)setLessons:(NSArray *)lessons forGroup:(OUGroup *)group {
-    _lessons = lessons;
-    _lessonsType = group;
-}
+#pragma mark - Current week
 
-- (void)setLessons:(NSArray *)lessons forTeacher:(OUTeacher *)teacher {
-    _lessons = lessons;
-    _lessonsType = teacher;
-}
+- (void)setCurrentWeekNumber:(NSNumber *)currentWeekNumber {
+    _currentWeekNumber = currentWeekNumber;
+    [[NSNotificationCenter defaultCenter] postNotificationName:OUscheduleCoordinatorWeekNumberUpdateNotification object:self];
 
-- (void)setLessons:(NSArray *)lessons forAuditory:(OUAuditory *)auditory {
-    _lessons = lessons;
-    _lessonsType = auditory;
-}
-
-- (id)lessonsType {
-    return _lessonsType;
-}
-
-- (NSArray *)lessons {
-    return _lessons;
+    [[OUStorage sharedInstance] setWeekNumber:currentWeekNumber];
+    [[OUStorage sharedInstance] setLastWeekNumberUpdate:[NSDate date]];
 }
 
 - (OULessonWeekType)currentWeekType {
@@ -172,11 +172,6 @@
     } else {
         return OULessonWeekTypeEven;
     }
-}
-
-- (void)setCurrentWeekNumber:(NSNumber *)currentWeekNumber {
-    _currentWeekNumber = currentWeekNumber;
-    [[NSNotificationCenter defaultCenter] postNotificationName:OUscheduleCoordinatorWeekNumberUpdateNotification object:self];
 }
 
 #pragma mark - Lessons data
@@ -223,16 +218,58 @@
     return lessons;
 }
 
+#pragma mark - Storage
+
+- (void)setMainInfo:(NSDictionary *)mainInfo {
+    [[OUStorage sharedInstance] setMainInfo:mainInfo];
+    _cacheMainInfo = mainInfo;
+}
+
+- (NSDictionary *)mainInfo {
+    return _cacheMainInfo;
+}
+
+- (void)setLessons:(NSArray *)lessons forGroup:(OUGroup *)group {
+    _lessons = lessons;
+    _lessonsType = group;
+    [self saveLessons];
+}
+
+- (void)setLessons:(NSArray *)lessons forTeacher:(OUTeacher *)teacher {
+    _lessons = lessons;
+    _lessonsType = teacher;
+    [self saveLessons];
+}
+
+- (void)setLessons:(NSArray *)lessons forAuditory:(OUAuditory *)auditory {
+    _lessons = lessons;
+    _lessonsType = auditory;
+    [self saveLessons];
+}
+
+- (id)lessonsType {
+    return _lessonsType;
+}
+
+- (NSArray *)lessons {
+    return _lessons;
+}
+
+- (void)saveLessons {
+    [[OUStorage sharedInstance] setLessons:_lessons];
+    [[OUStorage sharedInstance] setLessonType:_lessonsType];
+}
+
 #pragma mark - Get main info
 
 - (OUAuditory *)auditoryWithId:(NSString *)auditoryId {
-    NSArray *auditories = [_mainInfo objectForKey:AUDITORIES_INFO_KEY];
+    NSArray *auditories = [_cacheMainInfo objectForKey:AUDITORIES_INFO_KEY];
     NSArray *filter = [auditories filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"auditoryId == %@", auditoryId]];
     return [filter firstObject];
 }
 
 - (OUTeacher *)teacherWithId:(NSString *)teacherId {
-    NSArray *teachers = [_mainInfo objectForKey:TEACHERS_INFO_KEY];
+    NSArray *teachers = [_cacheMainInfo objectForKey:TEACHERS_INFO_KEY];
     NSArray *filter = [teachers filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"teacherId == %@", teacherId]];
     return [filter firstObject];
 }

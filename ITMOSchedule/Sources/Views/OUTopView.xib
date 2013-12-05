@@ -48,7 +48,7 @@
                         <action selector="cancel" destination="1" eventType="touchUpInside" id="UE3-QP-nr6"/>
                     </connections>
                 </button>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.10000000000000001" adjustsLetterSpacingToFitWidth="YES" id="wdK-Hs-DcP">
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.10000000000000001" adjustsLetterSpacingToFitWidth="YES" id="wdK-Hs-DcP">
                     <rect key="frame" x="10" y="20" width="300" height="44"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -100,6 +100,7 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="_blurView" destination="Jck-dd-99K" id="0AO-BP-osx"/>
+                <outlet property="_blurViewBackground" destination="WCS-6I-T8t" id="0Dk-T5-SQi"/>
                 <outlet property="_button" destination="8sj-rK-gHL" id="4S2-LQ-Dan"/>
                 <outlet property="_cancelButton" destination="QlM-xJ-1TM" id="kew-SA-qOA"/>
                 <outlet property="_infoLabel" destination="177-y8-7F0" id="Jx4-7e-lz2"/>

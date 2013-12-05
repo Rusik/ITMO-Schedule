@@ -35,6 +35,34 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    [self updateViews];
+    [self subscribeToNotifications];
+
+    [self addRefreshControl];
+
+    if ([[OUScheduleCoordinator sharedInstance] mainInfo]) {
+        if ([[OUScheduleCoordinator sharedInstance] lessons] && [[OUScheduleCoordinator sharedInstance] lessonsType]) {
+            [self showSchedule];
+            [_scheduleVC reloadData];
+            [_topView setData:[[OUScheduleCoordinator sharedInstance] lessonsType]];
+        } else {
+            [self showSearch];
+            [_topView setState:OUTopViewStateEdit];
+        }
+    } else {
+        [self showSearch];
+        [_topView setState:OUTopViewStateClear];
+        [self updateMainInfoWithLoadingOverlay:YES block:^{
+            [_topView setState:OUTopViewStateEdit];
+        }];
+    }
+}
+
+- (void)dealloc {
+    [self unsubscribeFromNotifications];
+}
+
+- (void)updateViews {
     [_tableView registerNib:[OUSearchCell nibForCell] forCellReuseIdentifier:[OUSearchCell cellIdentifier]];
     _tableView.tableFooterView = [UIView new];
     _tableView.contentInset = UIEdgeInsetsMake(_topViewContainer.$height, 0, 0, 0);
@@ -55,30 +83,21 @@
     [_topViewContainer addSubview:_topView];
 
     _scheduleVC.topView = _topView;
-
-    [self subscribeToNotifications];
-
-    [self addRefreshControl];
-    [self updateMainInfoWithLoadingOverlay:NO];
-}
-
-- (void)dealloc {
-    [self unsubscribeFromNotifications];
 }
 
 #pragma mark - Downloading
 
-- (void)updateMainInfoWithLoadingOverlay:(BOOL)showLoadingOverlay {
+- (void)updateMainInfoWithLoadingOverlay:(BOOL)showLoadingOverlay block:(void(^)(void))block {
 
     if (showLoadingOverlay) {
         [self showLoadingOverlay];
     }
-    [[OUScheduleDownloader sharedInstance] downloadMainInfo:^{
-        NSLog(@"MAIN DOWNLOAD");
+    [[OUScheduleDownloader sharedInstance] downloadMainInfo:^(NSError *error){
 
-        _tableData = [[OUScheduleCoordinator sharedInstance] mainInfoDataForString:[_topView text]];
-        [_tableView reloadData];
-
+        if (!error) {
+            _tableData = [[OUScheduleCoordinator sharedInstance] mainInfoDataForString:[_topView text]];
+            [_tableView reloadData];
+        }
         if (showLoadingOverlay) {
             [self hideLoadingOverlay];
         } else {
@@ -87,6 +106,9 @@
             if (_tableView.contentOffset.y < 0 && _tableView.contentOffset.y < -_tableView.contentInset.top) {
                 [_tableView setContentOffset:CGPointMake(0, -_tableView.contentInset.top) animated:YES];
             }
+        }
+        if (block) {
+            block();
         }
     }];
 }
@@ -112,10 +134,6 @@
 #pragma mark - OUTopViewDelegate
 
 - (void)topViewDidBecomeActive:(OUTopView *)topView {
-    _tableData = [[OUScheduleCoordinator sharedInstance] mainInfoDataForString:nil];
-    [_tableView reloadData];
-    [_tableView setContentOffset:CGPointMake(0, -_tableView.contentInset.top) animated:NO];
-
     [self showSearch];
 }
 
@@ -134,6 +152,10 @@
 - (void)showSearch {
     _tableView.hidden = NO;
     _scheduleVC.view.hidden = YES;
+
+    _tableData = [[OUScheduleCoordinator sharedInstance] mainInfoDataForString:nil];
+    [_tableView reloadData];
+    [_tableView setContentOffset:CGPointMake(0, -_tableView.contentInset.top) animated:NO];
 }
 
 - (void)showSchedule {
@@ -162,7 +184,7 @@
 }
 
 - (void)refresh {
-    [self updateMainInfoWithLoadingOverlay:NO];
+    [self updateMainInfoWithLoadingOverlay:NO block:nil];
 }
 
 #pragma mark - UITableViewDelegate & UITableViewDataSource
@@ -184,10 +206,12 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
     id data = _tableData[indexPath.row];
-    CompleteBlock block = ^{
-        [_topView setData:data];
+    CompleteBlock block = ^(NSError *error){
         [self hideLoadingOverlay];
-        [_scheduleVC reloadData];
+        if (!error) {
+            [_topView setData:data];
+            [_scheduleVC reloadData];
+        }
     };
     if ([data isKindOfClass:[OUGroup class]]) {
         [[OUScheduleDownloader sharedInstance] downloadLessonsForGroup:data complete:block];
@@ -198,7 +222,7 @@
     }
 
     [self showSchedule];
-    [self performSelector:@selector(showLoadingOverlay) withObject:nil afterDelay:0.01];
+    [self showLoadingOverlay];
 
     [_topView setState:OUTopViewStateShow];
 }

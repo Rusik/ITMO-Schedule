@@ -8,7 +8,6 @@
 
 #import "OUAppDelegate.h"
 #import "OUMainViewController.h"
-#import "OUScheduleDownloader.h"
 
 @implementation OUAppDelegate
 
@@ -22,14 +21,7 @@
     OUMainViewController *mainViewController = [OUMainViewController new];
     self.window.rootViewController = mainViewController;
 	[self.window makeKeyAndVisible];
-
-    [self updateWeekNumber];
-
 	return YES;
-}
-
-- (void)updateWeekNumber {
-    [[OUScheduleDownloader sharedInstance] downloadWeekNumber:nil];
 }
 
 @end

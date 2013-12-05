@@ -21,7 +21,7 @@
 #import "OUTeacher.h"
 #import "OUAuditory.h"
 
-typedef void(^CompleteBlock)(void);
+typedef void(^CompleteBlock)(NSError *error);
 
 @interface OUScheduleDownloader : NSObject
 

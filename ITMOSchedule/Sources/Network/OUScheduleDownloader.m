@@ -72,11 +72,18 @@ typedef void(^ParsingBlock)(NSData *data);
     [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
 
         if (parsingBlock) parsingBlock(responseObject);
-        if (completeBlock) completeBlock();
+        if (completeBlock) completeBlock(nil);
 
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"DOWNLOAD ERROR: %@", error.localizedDescription);
-        if (completeBlock) completeBlock();
+        if (completeBlock) completeBlock(error);
+
+        UIAlertView *alert = [UIAlertView new];
+        alert.title = @"Ошибка";
+        alert.message = @"Отсутствует интернет";
+        [alert addButtonWithTitle:@"OK"];
+        [alert show];
+
     }];
     [operation start];
 }
