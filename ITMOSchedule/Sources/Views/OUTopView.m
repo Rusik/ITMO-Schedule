@@ -30,6 +30,8 @@
     IBOutlet FXBlurView *_blurView;
     IBOutlet UIView *_blurViewBackground;
 
+    IBOutlet UIButton *_weekButton;
+
     IBOutlet UILabel *_notWeekLabel;
     IBOutlet UILabel *_infoLabel;
     IBOutlet UILabel *_weekLabel;
@@ -68,15 +70,6 @@
     _blurView.viewToBlur = containerView;
 }
 
-- (IBAction)textDidChange {
-    [_delegate topView:self didChangeText:_textField.text];
-}
-
-- (IBAction)cancel {
-    [_delegate topViewDidCancel:self];
-    [self setState:OUTopViewStateShow];
-}
-
 - (void)setData:(id)data {
     _data = data;
 
@@ -90,12 +83,6 @@
         OUAuditory *auditory = (OUAuditory *)data;
         _label.text = [auditory correctAuditoryName];
     }
-}
-
-- (IBAction)activeButtonDidTap {
-    [self setState:OUTopViewStateEdit];
-    [_textField becomeFirstResponder];
-    [_delegate topViewDidBecomeActive:self];
 }
 
 - (NSString *)text {
@@ -192,6 +179,27 @@
     }
 }
 
+#pragma mark - Actions
+
+- (IBAction)textDidChange {
+    [_delegate topView:self didChangeText:_textField.text];
+}
+
+- (IBAction)cancel {
+    [_delegate topViewDidCancel:self];
+    [self setState:OUTopViewStateShow];
+}
+
+- (IBAction)activeButtonDidTap {
+    [self setState:OUTopViewStateEdit];
+    [_textField becomeFirstResponder];
+    [_delegate topViewDidBecomeActive:self];
+}
+
+- (IBAction)weekDidTap {
+    [_delegate weekDidTap:self];
+}
+
 #pragma mark - Week number
 
 - (void)updateWeekNumber {
@@ -214,6 +222,7 @@
         _tutorialLabel.alpha = active;
         _weekLabel.alpha = !active;
         _infoLabel.alpha = !active;
+        _weekButton.alpha = !active;
 
         if (active) {
             _notWeekLabel.alpha = 0;

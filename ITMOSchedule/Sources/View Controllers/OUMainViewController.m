@@ -153,6 +153,10 @@
     [self showSchedule];
 }
 
+- (void)weekDidTap:(OUTopView *)topView {
+    [_scheduleVC scrollToAnotherWeek];
+}
+
 #pragma mark - Subviews managing
 
 - (void)showSearch {

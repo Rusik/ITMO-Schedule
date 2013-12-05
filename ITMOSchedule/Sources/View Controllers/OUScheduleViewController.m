@@ -202,6 +202,14 @@
     _noDataLabel2.$top = inset.top;
 }
 
+- (void)scrollToAnotherWeek {
+    if (_scrollView.contentOffset.x == 0) {
+        [_scrollView setContentOffset:CGPointMake(_scrollView.$width, 0) animated:YES];
+    } else if (_scrollView.contentOffset.x == _scrollView.$width) {
+        [_scrollView setContentOffset:CGPointMake(0, 0) animated:YES];
+    }
+}
+
 #pragma mark - UITableViewDataSource & UITableViewDelegate
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {

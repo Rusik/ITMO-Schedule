@@ -57,7 +57,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="8sj-rK-gHL">
-                    <rect key="frame" x="0.0" y="0.0" width="320" height="90"/>
+                    <rect key="frame" x="0.0" y="0.0" width="300" height="60"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                     <state key="normal">
@@ -95,6 +95,17 @@
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="eVg-yV-MdB" userLabel="week button">
+                    <rect key="frame" x="244" y="47" width="80" height="44"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <state key="normal">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="weekDidTap" destination="1" eventType="touchUpInside" id="P0C-Yh-GnR"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
@@ -107,6 +118,7 @@
                 <outlet property="_label" destination="wdK-Hs-DcP" id="qPQ-et-XQ3"/>
                 <outlet property="_textField" destination="tNJ-ep-mdP" id="GQz-gX-TEA"/>
                 <outlet property="_tutorialLabel" destination="2kG-7s-CuY" id="7NJ-qq-KWf"/>
+                <outlet property="_weekButton" destination="eVg-yV-MdB" id="pho-n6-DiN"/>
                 <outlet property="_weekLabel" destination="D1c-2o-cFZ" id="cbg-cg-0Ys"/>
                 <outlet property="notWeekLabel" destination="dBM-cB-owb" id="mgL-0V-Kr0"/>
             </connections>

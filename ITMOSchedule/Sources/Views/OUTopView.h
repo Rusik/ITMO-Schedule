@@ -23,6 +23,8 @@ typedef NS_ENUM(NSInteger, OUTopViewState) {
 - (void)topView:(OUTopView *)topView didChangeText:(NSString *)text;
 - (void)topViewDidCancel:(OUTopView *)topView;
 
+- (void)weekDidTap:(OUTopView *)topView;
+
 @end
 
 @interface OUTopView : UIView

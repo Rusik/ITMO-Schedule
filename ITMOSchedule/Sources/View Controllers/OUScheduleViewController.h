@@ -15,6 +15,8 @@
 
 - (void)setContentInset:(UIEdgeInsets)inset;
 
+- (void)scrollToAnotherWeek;
+
 @property (nonatomic, weak) OUTopView *topView;
 
 @end
