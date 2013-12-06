@@ -7,6 +7,7 @@
 //
 
 #import "OUAuditory.h"
+#import "NSString+Helpers.h"
 
 @implementation OUAuditory
 
@@ -26,9 +27,9 @@
 
 - (NSString *)correctAuditoryName {
     if ([self.auditoryName rangeOfCharacterFromSet:[NSCharacterSet decimalDigitCharacterSet]].location == 0) {
-        return [NSString stringWithFormat:@"Аудитория %@", self.auditoryName];
+        return [[NSString stringWithFormat:@"Аудитория %@", self.auditoryName] stringWithSpaceAfterCommaAndDot];
     } else {
-        return self.auditoryName;
+        return [self.auditoryName stringWithSpaceAfterCommaAndDot];
     }
 }
 
