@@ -30,6 +30,7 @@
 		7F9F67D718055D9700A9E9D1 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F9F67D618055D9700A9E9D1 /* UIKit.framework */; };
 		7F9F67DD18055D9700A9E9D1 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7F9F67DB18055D9700A9E9D1 /* InfoPlist.strings */; };
 		7F9F67E518055D9700A9E9D1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7F9F67E418055D9700A9E9D1 /* Images.xcassets */; };
+		7FA19DDF1851EB3E0099AE9C /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FA19DDB1851EB3E0099AE9C /* libTestFlight.a */; };
 		7FA9F5FE180B10580067A3FF /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FA9F5FD180B10580067A3FF /* SystemConfiguration.framework */; };
 		7FA9F600180B105E0067A3FF /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FA9F5FF180B105E0067A3FF /* MobileCoreServices.framework */; };
 		7FA9F603180B23580067A3FF /* OUSearchCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FA9F602180B23580067A3FF /* OUSearchCell.m */; };
@@ -116,6 +117,10 @@
 		7F9F67DC18055D9700A9E9D1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		7F9F67E018055D9700A9E9D1 /* ITMOSchedule-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ITMOSchedule-Prefix.pch"; sourceTree = "<group>"; };
 		7F9F67E418055D9700A9E9D1 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		7FA19DDB1851EB3E0099AE9C /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTestFlight.a; sourceTree = "<group>"; };
+		7FA19DDC1851EB3E0099AE9C /* TestFlight+AsyncLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestFlight+AsyncLogging.h"; sourceTree = "<group>"; };
+		7FA19DDD1851EB3E0099AE9C /* TestFlight+ManualSessions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestFlight+ManualSessions.h"; sourceTree = "<group>"; };
+		7FA19DDE1851EB3E0099AE9C /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
 		7FA9F5FD180B10580067A3FF /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		7FA9F5FF180B105E0067A3FF /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		7FA9F601180B23580067A3FF /* OUSearchCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OUSearchCell.h; sourceTree = "<group>"; };
@@ -196,10 +201,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7F2B462D1805CE9000B48239 /* libz.dylib in Frameworks */,
 				7FA9F600180B105E0067A3FF /* MobileCoreServices.framework in Frameworks */,
 				7FA9F5FE180B10580067A3FF /* SystemConfiguration.framework in Frameworks */,
 				7F2B462F1805CE9E00B48239 /* libxml2.dylib in Frameworks */,
-				7F2B462D1805CE9000B48239 /* libz.dylib in Frameworks */,
+				7FA19DDF1851EB3E0099AE9C /* libTestFlight.a in Frameworks */,
 				7F9F67D518055D9700A9E9D1 /* CoreGraphics.framework in Frameworks */,
 				7F9F67D718055D9700A9E9D1 /* UIKit.framework in Frameworks */,
 				7F9F67D318055D9700A9E9D1 /* Foundation.framework in Frameworks */,
@@ -328,6 +334,7 @@
 		7F9F67D118055D9700A9E9D1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7FA19DDA1851EB3E0099AE9C /* TestFlight */,
 				7F572E8F184777DF00AA1AD9 /* MRProgress */,
 				7FA9F5FF180B105E0067A3FF /* MobileCoreServices.framework */,
 				7FA9F5FD180B10580067A3FF /* SystemConfiguration.framework */,
@@ -361,6 +368,18 @@
 				7F9F67E018055D9700A9E9D1 /* ITMOSchedule-Prefix.pch */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		7FA19DDA1851EB3E0099AE9C /* TestFlight */ = {
+			isa = PBXGroup;
+			children = (
+				7FA19DDB1851EB3E0099AE9C /* libTestFlight.a */,
+				7FA19DDC1851EB3E0099AE9C /* TestFlight+AsyncLogging.h */,
+				7FA19DDD1851EB3E0099AE9C /* TestFlight+ManualSessions.h */,
+				7FA19DDE1851EB3E0099AE9C /* TestFlight.h */,
+			);
+			name = TestFlight;
+			path = ITMOSchedule/Vendor/TestFlight;
 			sourceTree = "<group>";
 		};
 		841F2036180563E00054C523 /* Sources */ = {
@@ -685,10 +704,11 @@
 		7F9F67FC18055D9700A9E9D1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Ruslan Kavetskuy (QF89A2AWJR)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Ruslan Kavetskuy (QF89A2AWJR)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ITMOSchedule/ITMOSchedule-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
@@ -698,8 +718,12 @@
 				);
 				INFOPLIST_FILE = "ITMOSchedule/ITMOSchedule-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/Rusik/Projects/ITMO-Schedule/ITMOSchedule/Vendor/TestFlight",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "D388B17E-7D4A-41FE-A3C4-192D70ECAFA9";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -707,10 +731,11 @@
 		7F9F67FD18055D9700A9E9D1 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Oumobile LLC (AJWHJQ83UF)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Oumobile LLC (AJWHJQ83UF)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ITMOSchedule/ITMOSchedule-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
@@ -720,8 +745,12 @@
 				);
 				INFOPLIST_FILE = "ITMOSchedule/ITMOSchedule-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/Rusik/Projects/ITMO-Schedule/ITMOSchedule/Vendor/TestFlight",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "A2A31F20-3A1C-41BF-99BA-2B98A0D88DF4";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

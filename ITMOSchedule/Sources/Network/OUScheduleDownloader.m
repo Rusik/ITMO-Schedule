@@ -10,6 +10,7 @@
 #import "OUScheduleCoordinator.h"
 #import "AFNetworking.h"
 #import "OUParser.h"
+#import "TestFlight.h"
 
 #define LOG 1
 
@@ -35,6 +36,9 @@ typedef void(^ParsingBlock)(NSData *data);
 }
 
 - (void)downloadLessonsForGroup:(OUGroup *)group complete:(CompleteBlock)block {
+
+    [TestFlight passCheckpoint:group.groupName];
+
     NSString *pageUrlString = [NSString stringWithFormat:@"http://isu.ifmo.ru/pls/apex/PK_ADM_GETXML.GET_SCHEDULE_XML?group_number=%@", group.groupName];
     [self performRequestWithStringUrl:pageUrlString parsingBlock:^(NSData *data) {
         [[OUScheduleCoordinator sharedInstance] setLessons:[OUParser parseLessons:data forGroup:group] forGroup:group];
@@ -42,6 +46,9 @@ typedef void(^ParsingBlock)(NSData *data);
 }
 
 - (void)downloadLessonsForAuditory:(OUAuditory *)auditory complete:(CompleteBlock)block {
+
+    [TestFlight passCheckpoint:auditory.auditoryName];
+
     NSString *pageUrlString = [NSString stringWithFormat:@"http://isu.ifmo.ru/pls/apex/PK_ADM_GETXML.GET_SCHEDULE_XML?p_auditory_id=%@", auditory.auditoryId];
     [self performRequestWithStringUrl:pageUrlString parsingBlock:^(NSData *data) {
         [[OUScheduleCoordinator sharedInstance] setLessons:[OUParser parseLessons:data forAuditory:auditory] forAuditory:auditory];
@@ -49,6 +56,9 @@ typedef void(^ParsingBlock)(NSData *data);
 }
 
 - (void)downloadLessonsForTeacher:(OUTeacher *)teacher complete:(CompleteBlock)block {
+
+    [TestFlight passCheckpoint:teacher.teacherName];
+
     NSString *pageUrlString = [NSString stringWithFormat:@"http://isu.ifmo.ru/pls/apex/PK_ADM_GETXML.GET_SCHEDULE_XML?p_id=%@", teacher.teacherId];
     [self performRequestWithStringUrl:pageUrlString parsingBlock:^(NSData *data) {
         [[OUScheduleCoordinator sharedInstance] setLessons:[OUParser parseLessons:data forTeacher:teacher] forTeacher:teacher];

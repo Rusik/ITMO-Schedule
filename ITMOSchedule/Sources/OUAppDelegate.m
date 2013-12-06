@@ -8,10 +8,15 @@
 
 #import "OUAppDelegate.h"
 #import "OUMainViewController.h"
+#import "TestFlight.h"
+
+#define TEST_FLIGHT_TOKEN @"ac74be6d-7142-4a49-9e74-dd1305c41c2b"
 
 @implementation OUAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+
+    [TestFlight takeOff:TEST_FLIGHT_TOKEN];
 
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
 
