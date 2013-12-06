@@ -12,7 +12,7 @@
 #define TEACHERS_INFO_KEY   @"teachers"
 #define AUDITORIES_INFO_KEY @"auditories"
 
-#define OUscheduleCoordinatorWeekNumberUpdateNotification @"OUscheduleCoordinatorWeekNumberUpdateNotification"
+#define OUScheduleCoordinatorWeekNumberUpdateNotification @"OUScheduleCoordinatorWeekNumberUpdateNotification"
 
 @interface OUScheduleCoordinator : NSObject
 

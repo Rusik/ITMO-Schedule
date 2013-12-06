@@ -152,10 +152,11 @@
 
 - (void)setCurrentWeekNumber:(NSNumber *)currentWeekNumber {
     _currentWeekNumber = currentWeekNumber;
-    [[NSNotificationCenter defaultCenter] postNotificationName:OUscheduleCoordinatorWeekNumberUpdateNotification object:self];
 
     [[OUStorage sharedInstance] setWeekNumber:currentWeekNumber];
     [[OUStorage sharedInstance] setLastWeekNumberUpdate:[NSDate date]];
+
+    [[NSNotificationCenter defaultCenter] postNotificationName:OUScheduleCoordinatorWeekNumberUpdateNotification object:self];
 }
 
 - (OULessonWeekType)currentWeekType {

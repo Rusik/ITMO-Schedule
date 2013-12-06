@@ -69,6 +69,10 @@
                                              selector:@selector(updateInfoLabel)
                                                  name:UIApplicationSignificantTimeChangeNotification
                                                object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(updateInfoLabel)
+                                                 name:OUScheduleCoordinatorWeekNumberUpdateNotification
+                                               object:nil];
 }
 
 - (void)unsubscribeFromNotifications {

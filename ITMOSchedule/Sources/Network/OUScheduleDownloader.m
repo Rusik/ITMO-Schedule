@@ -31,38 +31,41 @@ typedef void(^ParsingBlock)(NSData *data);
     NSString *pageUrlString = [NSString stringWithFormat:@"http://isu.ifmo.ru/pls/apex/PK_ADM_GETXML.GET_SCHEDULE_INFO"];
     [self performRequestWithStringUrl:pageUrlString parsingBlock:^(NSData *data) {
         [[OUScheduleCoordinator sharedInstance] setMainInfo:[OUParser parseMainInfo:data]];
-    } complete:block];
+    } complete:block showErrorAlert:YES];
 }
 
 - (void)downloadLessonsForGroup:(OUGroup *)group complete:(CompleteBlock)block {
     NSString *pageUrlString = [NSString stringWithFormat:@"http://isu.ifmo.ru/pls/apex/PK_ADM_GETXML.GET_SCHEDULE_XML?group_number=%@", group.groupName];
     [self performRequestWithStringUrl:pageUrlString parsingBlock:^(NSData *data) {
         [[OUScheduleCoordinator sharedInstance] setLessons:[OUParser parseLessons:data forGroup:group] forGroup:group];
-    } complete:block];
+    } complete:block showErrorAlert:YES];
 }
 
 - (void)downloadLessonsForAuditory:(OUAuditory *)auditory complete:(CompleteBlock)block {
     NSString *pageUrlString = [NSString stringWithFormat:@"http://isu.ifmo.ru/pls/apex/PK_ADM_GETXML.GET_SCHEDULE_XML?p_auditory_id=%@", auditory.auditoryId];
     [self performRequestWithStringUrl:pageUrlString parsingBlock:^(NSData *data) {
         [[OUScheduleCoordinator sharedInstance] setLessons:[OUParser parseLessons:data forAuditory:auditory] forAuditory:auditory];
-    } complete:block];
+    } complete:block showErrorAlert:YES];
 }
 
 - (void)downloadLessonsForTeacher:(OUTeacher *)teacher complete:(CompleteBlock)block {
     NSString *pageUrlString = [NSString stringWithFormat:@"http://isu.ifmo.ru/pls/apex/PK_ADM_GETXML.GET_SCHEDULE_XML?p_id=%@", teacher.teacherId];
     [self performRequestWithStringUrl:pageUrlString parsingBlock:^(NSData *data) {
         [[OUScheduleCoordinator sharedInstance] setLessons:[OUParser parseLessons:data forTeacher:teacher] forTeacher:teacher];
-    } complete:block];
+    } complete:block showErrorAlert:YES];
 }
 
 - (void)downloadWeekNumber:(CompleteBlock)block {
     NSString *pageUrlString = [NSString stringWithFormat:@"http://isu.ifmo.ru/pls/apex/PK_ADM_GETXML.GET_WEEK_NUMBER"];
     [self performRequestWithStringUrl:pageUrlString parsingBlock:^(NSData *data) {
         [[OUScheduleCoordinator sharedInstance] setCurrentWeekNumber:[OUParser parseWeekNumber:data]];
-    } complete:block];
+    } complete:block showErrorAlert:NO];
 }
 
-- (void)performRequestWithStringUrl:(NSString *)stringUrl parsingBlock:(ParsingBlock)parsingBlock complete:(CompleteBlock)completeBlock {
+- (void)performRequestWithStringUrl:(NSString *)stringUrl
+                       parsingBlock:(ParsingBlock)parsingBlock
+                           complete:(CompleteBlock)completeBlock
+                     showErrorAlert:(BOOL)showErrorAlert {
     NSURL *pageUrl = [NSURL URLWithString:[stringUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     NSURLRequest *request = [NSURLRequest requestWithURL:pageUrl];
 
@@ -78,11 +81,13 @@ typedef void(^ParsingBlock)(NSData *data);
         NSLog(@"DOWNLOAD ERROR: %@", error.localizedDescription);
         if (completeBlock) completeBlock(error);
 
-        UIAlertView *alert = [UIAlertView new];
-        alert.title = @"Ошибка";
-        alert.message = @"Отсутствует интернет";
-        [alert addButtonWithTitle:@"OK"];
-        [alert show];
+        if (showErrorAlert) {
+            UIAlertView *alert = [UIAlertView new];
+            alert.title = @"Ошибка";
+            alert.message = @"Отсутствует интернет";
+            [alert addButtonWithTitle:@"OK"];
+            [alert show];
+        }
 
     }];
     [operation start];

@@ -17,6 +17,8 @@
 
 - (void)scrollToAnotherWeek;
 
+- (void)stopScroll;
+
 @property (nonatomic, weak) OUTopView *topView;
 
 @end

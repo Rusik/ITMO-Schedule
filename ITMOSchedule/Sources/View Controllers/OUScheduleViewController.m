@@ -225,6 +225,11 @@
     }
 }
 
+- (void)stopScroll {
+    [_tableView1 setContentOffset:_tableView1.contentOffset animated:NO];
+    [_tableView2 setContentOffset:_tableView2.contentOffset animated:NO];
+}
+
 #pragma mark - UITableViewDataSource & UITableViewDelegate
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {

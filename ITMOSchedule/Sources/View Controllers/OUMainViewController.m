@@ -171,6 +171,8 @@
     _tableView.hidden = NO;
     _scheduleVC.view.hidden = YES;
 
+    [_scheduleVC stopScroll];
+
     _tableData = [[OUScheduleCoordinator sharedInstance] mainInfoDataForString:nil];
     [_tableView reloadData];
     [_tableView setContentOffset:CGPointMake(0, -_tableView.contentInset.top) animated:NO];
