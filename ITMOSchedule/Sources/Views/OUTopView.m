@@ -52,13 +52,27 @@
     _blurView.viewToBlur = _containerView;
     _blurView.viewsToHide = @[self];
 
-//    turn off for debug
     _blurView.dynamic = [self supportBlur];
 
     [self updateInfoLabel];
 
     _currentWeekType = OULessonWeekTypeOdd;
     [self setActive:NO animated:NO];
+
+    [self subscribeToNotifications];
+}
+
+#pragma mark - Notifications
+
+- (void)subscribeToNotifications {
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(updateInfoLabel)
+                                                 name:UIApplicationSignificantTimeChangeNotification
+                                               object:nil];
+}
+
+- (void)unsubscribeFromNotifications {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)weekNumberUpdate {
@@ -146,7 +160,6 @@
 - (void)updateInfoLabel {
     NSString *weekDayString;
     NSString *dateString;
-    NSString *weekNumberString;
 
     NSDate *today = [NSDate date];
 
@@ -159,10 +172,7 @@
     [dateFormatter setDateFormat:@"d MMMM"];
     dateString = [dateFormatter stringFromDate:today];
 
-    if ([OUScheduleCoordinator sharedInstance].currentWeekNumber) {
-        weekNumberString = [NSString stringWithFormat:@"%@ неделя", [OUScheduleCoordinator sharedInstance].currentWeekNumber];
-        _infoLabel.text = [NSString stringWithFormat:@"%@ | %@ | %@", weekDayString, dateString, weekNumberString];
-    } else if ([[OUStorage sharedInstance] weekNumber]) {
+    if ([[OUStorage sharedInstance] weekNumber]) {
         int todayWeek;
         int lastSaveWeek;
         [dateFormatter setDateFormat:@"w"];
@@ -172,7 +182,9 @@
         int currentWeek = [[OUStorage sharedInstance] weekNumber].intValue + (todayWeek - lastSaveWeek);
         _infoLabel.text = [NSString stringWithFormat:@"%@ | %@ | %d неделя", weekDayString, dateString, currentWeek];
 
-        [self updateWeekNumber];
+        if (![[OUScheduleCoordinator sharedInstance] currentWeekNumber]) {
+            [self updateWeekNumber];
+        }
     } else {
         _infoLabel.text = [NSString stringWithFormat:@"%@ | %@", weekDayString, dateString];
         [self updateWeekNumber];
