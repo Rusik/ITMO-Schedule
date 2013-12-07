@@ -15,10 +15,7 @@
 
 - (void)updateTopLabel {
     [super updateTopLabel];
-
-    if (self.lesson.teacher) {
-        self.topLabel.text = self.lesson.teacher.teacherName;
-    }
+    self.topLabel.text = self.lesson.teacher.teacherName;
 }
 
 - (void)updateBottomLabel {

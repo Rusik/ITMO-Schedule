@@ -89,6 +89,7 @@
 }
 
 #define SPACE 5.0
+#define MIN_CELL_HEIGHT 44.0
 
 - (void)layoutSubviews {
     [super layoutSubviews];
@@ -99,6 +100,12 @@
     self.centerLabel.$y = self.topLabel.$bottom;
     self.bottomLabel.$y = self.centerLabel.$bottom;
     self.timeLabel.$height = self.topLabel.$height + self.centerLabel.$height + self.bottomLabel.$height + SPACE * 2;
+
+    if ((self.timeLabel.$height < MIN_CELL_HEIGHT) && (self.topLabel.$height == 0) && (self.bottomLabel.$height == 0)) {
+        self.centerLabel.$y = 0;
+        self.centerLabel.$height = MIN_CELL_HEIGHT;
+        self.timeLabel.$height = MIN_CELL_HEIGHT;
+    }
 }
 
 #pragma mark - Height
@@ -115,7 +122,7 @@
 }
 
 - (CGFloat)height {
-    return _topLabel.$height + _centerLabel.$height + _bottomLabel.$height + SPACE * 2;
+    return MAX(_topLabel.$height + _centerLabel.$height + _bottomLabel.$height + SPACE * 2, MIN_CELL_HEIGHT);
 }
 
 #pragma mark - Highlited & attributed
