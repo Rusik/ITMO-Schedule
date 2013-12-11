@@ -19,6 +19,8 @@
 
 - (void)stopScroll;
 
+- (void)setWeekType:(OULessonWeekType)weekType animated:(BOOL)animated;
+
 @property (nonatomic, weak) OUTopView *topView;
 
 @end

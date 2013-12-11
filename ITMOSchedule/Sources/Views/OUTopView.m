@@ -190,14 +190,7 @@
     dateString = [dateFormatter stringFromDate:today];
 
     if ([[OUStorage sharedInstance] weekNumber]) {
-        int todayWeek;
-        int lastSaveWeek;
-        [dateFormatter setDateFormat:@"w"];
-        todayWeek = [dateFormatter stringFromDate:today].intValue;
-        lastSaveWeek = [dateFormatter stringFromDate:[[OUStorage sharedInstance] lastWeekNumberUpdate]].intValue;
-
-        int currentWeek = [[OUStorage sharedInstance] weekNumber].intValue + (todayWeek - lastSaveWeek);
-        _infoLabel.text = [NSString stringWithFormat:@"%@ | %@ | %d неделя", weekDayString, dateString, currentWeek];
+        _infoLabel.text = [NSString stringWithFormat:@"%@ | %@ | %@ неделя", weekDayString, dateString, [[OUScheduleCoordinator sharedInstance] expectedWeekNumber]];
 
         if (![[OUScheduleCoordinator sharedInstance] currentWeekNumber]) {
             [self updateWeekNumber];

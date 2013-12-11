@@ -55,6 +55,8 @@
             _tableData = [[OUScheduleCoordinator sharedInstance] mainInfoDataForString:nil];
             [_tableView reloadData];
 
+            [self updateWeekType];
+
         } else {
             [self showSearch];
             [_topView setState:OUTopViewStateInit];
@@ -152,6 +154,22 @@
                      } completion:^(BOOL finished) {
                          [_tutorialView removeFromSuperview];
                      }];
+}
+
+#pragma mark - Other
+
+- (void)updateWeekType {
+    if ([[OUScheduleCoordinator sharedInstance] expectedWeekNumber]) {
+        int week = [[OUScheduleCoordinator sharedInstance] expectedWeekNumber].intValue;
+        OULessonWeekType weekType;
+        if (week % 2 == 0) {
+            weekType = OULessonWeekTypeEven;
+        } else {
+            weekType = OULessonWeekTypeOdd;
+        }
+
+        [_scheduleVC setWeekType:weekType animated:NO];
+    }
 }
 
 #pragma mark - Downloading

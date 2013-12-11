@@ -230,6 +230,14 @@
     [_tableView2 setContentOffset:_tableView2.contentOffset animated:NO];
 }
 
+- (void)setWeekType:(OULessonWeekType)weekType animated:(BOOL)animated {
+    if (weekType == OULessonWeekTypeOdd) {
+        [_scrollView setContentOffset:CGPointMake(0, 0) animated:animated];
+    } else {
+        [_scrollView setContentOffset:CGPointMake(_scrollView.$width, 0) animated:animated];
+    }
+}
+
 #pragma mark - UITableViewDataSource & UITableViewDelegate
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {

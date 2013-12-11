@@ -34,6 +34,7 @@
 - (NSArray *)lessonsForDayString:(NSString *)weekDayString weekType:(OULessonWeekType)weekType;
 
 @property (nonatomic) NSNumber *currentWeekNumber;
+- (NSNumber *)expectedWeekNumber; // ожидаемая неделя, высчитываемая из прошлой сохранённой
 
 - (OULessonWeekType)currentWeekType;
 

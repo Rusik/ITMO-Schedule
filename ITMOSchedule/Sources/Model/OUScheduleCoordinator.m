@@ -167,6 +167,27 @@
     }
 }
 
+- (NSNumber *)expectedWeekNumber {
+
+    if (![[OUStorage sharedInstance] weekNumber] || ![[OUStorage sharedInstance] lastWeekNumberUpdate]) {
+        return nil;
+    }
+
+    NSDate *today = [NSDate date];
+    NSDateFormatter *dateFormatter = [NSDateFormatter new];
+    [dateFormatter setLocale:[NSLocale localeWithLocaleIdentifier:@"ru_ru"]];
+
+    int todayWeek;
+    int lastSaveWeek;
+
+    [dateFormatter setDateFormat:@"w"];
+    todayWeek = [dateFormatter stringFromDate:today].intValue;
+    lastSaveWeek = [dateFormatter stringFromDate:[[OUStorage sharedInstance] lastWeekNumberUpdate]].intValue;
+
+    int currentWeek = [[OUStorage sharedInstance] weekNumber].intValue + (todayWeek - lastSaveWeek);
+    return @(currentWeek);
+}
+
 #pragma mark - Lessons data
 
 - (NSArray *)weekDaysForWeekType:(OULessonWeekType)weekType {
