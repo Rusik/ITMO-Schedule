@@ -118,7 +118,7 @@
     _tutorialDataLabel.font = _topView.dataLabel.font;
     [_tutorialView addSubview:_tutorialDataLabel];
 
-    CGFloat animationDelay = 0.3;
+    CGFloat animationDelay = 0.5;
 
     [UIView animateWithDuration:TUTORIAL_ANIMATION_DURATION
                           delay:animationDelay
