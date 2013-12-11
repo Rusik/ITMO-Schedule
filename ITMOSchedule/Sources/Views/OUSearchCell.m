@@ -61,7 +61,7 @@
     if ([_data isKindOfClass:[OUAuditory class]]) {
         OUAuditory *auditory = (OUAuditory *)_data;
         _textLabel.text = [auditory correctAuditoryName];
-        _bottomTextLabel.text = auditory.auditoryAddress;
+        _bottomTextLabel.text = [auditory.auditoryAddress fixCommaSpaces];
     }
 }
 

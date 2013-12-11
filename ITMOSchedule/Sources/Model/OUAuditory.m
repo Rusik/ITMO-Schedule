@@ -22,7 +22,7 @@
 }
 
 - (NSString *)auditoryDescription {
-    return [NSString stringWithFormat:@"%@, %@", _auditoryName, _auditoryAddress];
+    return [[NSString stringWithFormat:@"%@, %@", _auditoryName, _auditoryAddress] fixCommaSpaces];
 }
 
 - (NSString *)correctAuditoryName {
