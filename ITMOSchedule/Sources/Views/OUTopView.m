@@ -40,6 +40,10 @@
     OULessonWeekType _currentWeekType;
 }
 
+- (void)setBlurEnabled:(BOOL)blurEnabled {
+    _blurView.blurEnabled = blurEnabled;
+}
+
 - (BOOL)resignFirstResponder {
     [_textField resignFirstResponder];
     return [super resignFirstResponder];
@@ -233,6 +237,10 @@
             [self updateInfoLabel];
         }
     }];
+}
+
+- (UILabel *)dataLabel {
+    return _label;
 }
 
 #pragma mark - UITextFieldDelegate

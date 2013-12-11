@@ -100,13 +100,13 @@
 
 #pragma mark - is first load
 
-- (void)setFirstLoad:(BOOL)firstLoad {
+- (void)setIsAlreadyShowTutorial:(BOOL)isAlreadyShowTutorial {
     NSUserDefaults *defaults = [self userDefaults];
-	[defaults setBool:firstLoad forKey:STORAGE_KEY_FISRT_LOAD];
+	[defaults setBool:isAlreadyShowTutorial forKey:STORAGE_KEY_FISRT_LOAD];
 	[defaults synchronize];
 }
 
-- (BOOL)firstLoad {
+- (BOOL)isAlreadyShowTutorial {
 	return [[NSUserDefaults standardUserDefaults] boolForKey:STORAGE_KEY_FISRT_LOAD];
 }
 

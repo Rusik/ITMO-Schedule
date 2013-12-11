@@ -19,6 +19,6 @@
 @property (nonatomic) NSNumber *weekNumber;
 @property (nonatomic) NSDate *lastWeekNumberUpdate;
 
-@property (nonatomic) BOOL firstLoad;
+@property (nonatomic) BOOL isAlreadyShowTutorial;
 
 @end

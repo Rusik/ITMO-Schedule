@@ -35,6 +35,10 @@ typedef NS_ENUM(NSInteger, OUTopViewState) {
 @property (nonatomic, weak) UIView *containerView;
 @property (nonatomic) OUTopViewState state;
 
+@property (nonatomic, readonly) UILabel *dataLabel;
+
+- (void)setBlurEnabled:(BOOL)blurEnabled;
+
 - (void)setWeekProgress:(float)weekProgress;
 
 - (NSString *)text;

@@ -15,6 +15,7 @@
 #import "OUTopView.h"
 #import "MRProgressOverlayView.h"
 #import "OUAppDelegate.h"
+#import "OUStorage.h"
 
 @interface OUMainViewController () <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, OUTopViewDelegate>
 
@@ -31,6 +32,9 @@
 
     UIRefreshControl *_refreshControl;
     UITableViewController *_tvc;
+
+    IBOutlet UIView *_tutorialView;
+    IBOutlet UILabel *_tutorialDataLabel;
 }
 
 - (void)viewDidLoad {
@@ -53,7 +57,7 @@
 
         } else {
             [self showSearch];
-            [_topView setState:OUTopViewStateEdit];
+            [_topView setState:OUTopViewStateInit];
         }
     } else {
         [self showSearch];
@@ -91,6 +95,65 @@
     _scheduleVC.topView = _topView;
 }
 
+#pragma mark - Tutorial
+
+#define TUTORIAL_ANIMATION_DURATION 0.3
+
+- (void)showTutorial {
+    [[OUStorage sharedInstance] setIsAlreadyShowTutorial:YES];
+
+    [_topView setBlurEnabled:NO];
+
+    _tutorialView.alpha = 0;
+    [self.view addSubview:_tutorialView];
+    _tutorialView.frame = self.view.bounds;
+
+    [_tutorialDataLabel removeFromSuperview];
+    _tutorialDataLabel = [UILabel new];
+    _tutorialDataLabel.frame = [_topView convertRect:_topView.dataLabel.frame toView:_tutorialView];
+    _tutorialDataLabel.text = _topView.dataLabel.text;
+    _tutorialDataLabel.textColor = [UIColor colorWithRed:0.000 green:0.561 blue:0.910 alpha:1.000];
+    _tutorialDataLabel.font = _topView.dataLabel.font;
+    [_tutorialView addSubview:_tutorialDataLabel];
+
+    CGFloat animationDelay = 0.3;
+
+    [UIView animateWithDuration:TUTORIAL_ANIMATION_DURATION
+                          delay:animationDelay
+                        options:0
+                     animations:^{
+
+                         _tutorialView.alpha = 1;
+
+                     } completion:nil];
+
+    double delayInSeconds = animationDelay - 0.1;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
+    });
+}
+
+- (IBAction)hideTutorial {
+
+    [_topView setBlurEnabled:YES];
+
+    [[OUStorage sharedInstance] setIsAlreadyShowTutorial:YES];
+
+    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
+
+    [UIView animateWithDuration:TUTORIAL_ANIMATION_DURATION
+                          delay:0.1
+                        options:0
+                     animations:^{
+
+                         _tutorialView.alpha = 0;
+
+                     } completion:^(BOOL finished) {
+                         [_tutorialView removeFromSuperview];
+                     }];
+}
+
 #pragma mark - Downloading
 
 - (void)updateMainInfoWithLoadingOverlay:(BOOL)showLoadingOverlay block:(void(^)(void))block {
@@ -103,7 +166,6 @@
         if (!error) {
             _tableData = [[OUScheduleCoordinator sharedInstance] mainInfoDataForString:[_topView text]];
             [_tableView reloadData];
-        } else {
             if (block) block();
         }
         if (showLoadingOverlay) {
@@ -230,6 +292,10 @@
         if (!error) {
             [_topView setData:data];
             [_scheduleVC reloadData];
+
+            if (![[OUStorage sharedInstance] isAlreadyShowTutorial]) {
+                [self showTutorial];
+            }
         }
     };
     if ([data isKindOfClass:[OUGroup class]]) {
