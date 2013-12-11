@@ -11,9 +11,10 @@
 @class OUTopView;
 
 typedef NS_ENUM(NSInteger, OUTopViewState) {
-    OUTopViewStateEdit,
-    OUTopViewStateShow,
-    OUTopViewStateClear
+    OUTopViewStateEdit, // когда активен текстфилд
+    OUTopViewStateShow, // когда отображается выбранный контент
+    OUTopViewStateClear,// только фон
+    OUTopViewStateInit  // кнопка "отмена" спрятана, чтобы нельзя было уйти, ничего не выбрав
 };
 
 @protocol OUTopViewDelegate <NSObject>

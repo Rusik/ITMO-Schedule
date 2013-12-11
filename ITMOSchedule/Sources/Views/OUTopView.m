@@ -113,6 +113,7 @@
 
 - (void)setState:(OUTopViewState)state animated:(BOOL)animated {
     switch (state) {
+
         case OUTopViewStateEdit:
 
             [self recursiveEnumerateSubviewsUsingBlock:^(UIView *view, BOOL *stop) {
@@ -140,13 +141,21 @@
             break;
 
         case OUTopViewStateClear:
-
+        {
             [self recursiveEnumerateSubviewsUsingBlock:^(UIView *view, BOOL *stop) {
                 if (view != _blurView && view != _blurViewBackground) {
                     view.hidden = YES;
                 }
             }];
             break;
+        }
+
+        case OUTopViewStateInit:
+        {
+            [self setState:OUTopViewStateEdit animated:animated];
+            _cancelButton.alpha = 0;
+            break;
+        }
     }
     _state = state;
 }

@@ -59,7 +59,7 @@
         [self showSearch];
         [_topView setState:OUTopViewStateClear];
         [self updateMainInfoWithLoadingOverlay:YES block:^{
-            [_topView setState:OUTopViewStateEdit];
+            [_topView setState:OUTopViewStateInit];
         }];
     }
 }
@@ -103,6 +103,8 @@
         if (!error) {
             _tableData = [[OUScheduleCoordinator sharedInstance] mainInfoDataForString:[_topView text]];
             [_tableView reloadData];
+        } else {
+            if (block) block();
         }
         if (showLoadingOverlay) {
             [self hideLoadingOverlay];
@@ -112,9 +114,6 @@
             if (_tableView.contentOffset.y < 0 && _tableView.contentOffset.y < -_tableView.contentInset.top) {
                 [_tableView setContentOffset:CGPointMake(0, -_tableView.contentInset.top) animated:YES];
             }
-        }
-        if (block) {
-            block();
         }
     }];
 }
