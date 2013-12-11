@@ -47,7 +47,7 @@ typedef void(^ParsingBlock)(NSData *data);
 
 - (void)downloadLessonsForAuditory:(OUAuditory *)auditory complete:(CompleteBlock)block {
 
-    [TestFlight passCheckpoint:auditory.auditoryName];
+    [TestFlight passCheckpoint:[auditory auditoryDescription]];
 
     NSString *pageUrlString = [NSString stringWithFormat:@"http://isu.ifmo.ru/pls/apex/PK_ADM_GETXML.GET_SCHEDULE_XML?p_auditory_id=%@", auditory.auditoryId];
     [self performRequestWithStringUrl:pageUrlString parsingBlock:^(NSData *data) {

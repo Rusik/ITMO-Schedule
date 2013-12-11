@@ -750,7 +750,7 @@
 					"/Users/Rusik/Projects/ITMO-Schedule/ITMOSchedule/Vendor/TestFlight",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "A2A31F20-3A1C-41BF-99BA-2B98A0D88DF4";
+				PROVISIONING_PROFILE = "005A8DF2-99E6-4FDA-8F4C-06CFE5AADCE3";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
