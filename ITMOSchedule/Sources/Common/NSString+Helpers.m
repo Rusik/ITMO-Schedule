@@ -76,4 +76,12 @@
     return [[self stringByReplacingOccurrencesOfString:@" ," withString:@"," options:0 range:NSMakeRange(0, self.length)] stringWithSpaceAfterCommaAndDot];
 }
 
+- (NSString *)firstLetterCapitalizedString {
+    if (self.length > 0) {
+        return [self stringByReplacingCharactersInRange:NSMakeRange(0, 1) withString:[[self substringWithRange:NSMakeRange(0, 1)] uppercaseString]];
+    } else {
+        return nil;
+    }
+}
+
 @end

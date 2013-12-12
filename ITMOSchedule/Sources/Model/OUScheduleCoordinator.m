@@ -78,7 +78,7 @@
         }
     }
     for (OUAuditory *auditory in auditories) {
-        if ([auditory.auditoryName rangeOfString:string options:NSCaseInsensitiveSearch].location != NSNotFound) {
+        if ([[auditory correctAuditoryName] rangeOfString:string options:NSCaseInsensitiveSearch].location != NSNotFound) {
             [findAuditories addObject:auditory];
         }
     }

@@ -61,7 +61,11 @@
     if ([_data isKindOfClass:[OUAuditory class]]) {
         OUAuditory *auditory = (OUAuditory *)_data;
         _textLabel.text = [auditory correctAuditoryName];
-        _bottomTextLabel.text = [auditory.auditoryAddress fixCommaSpaces];
+        if (auditory.auditoryName && ![auditory.auditoryName isEqualToString:@""]) {
+            _bottomTextLabel.text = [auditory.auditoryAddress fixCommaSpaces];
+        } else {
+            _bottomTextLabel.text = nil;
+        }
     }
 }
 

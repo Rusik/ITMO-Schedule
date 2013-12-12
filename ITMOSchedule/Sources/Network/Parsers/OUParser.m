@@ -62,9 +62,8 @@
     NSArray *sortedAuditories = [auditories sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
         OUAuditory *a1 = (OUAuditory *)obj1;
         OUAuditory *a2 = (OUAuditory *)obj2;
-        return [a1.auditoryName compare:a2.auditoryName];
+        return [[a1 correctAuditoryName] compare:[a2 correctAuditoryName]];
     }];
-
 
     NSDictionary *info = @{GROUPS_INFO_KEY: sortedGroups, TEACHERS_INFO_KEY: sortedTeachers, AUDITORIES_INFO_KEY: sortedAuditories};
 

@@ -116,6 +116,8 @@
     _tutorialDataLabel.text = _topView.dataLabel.text;
     _tutorialDataLabel.textColor = [UIColor colorWithRed:0.000 green:0.561 blue:0.910 alpha:1.000];
     _tutorialDataLabel.font = _topView.dataLabel.font;
+    _tutorialDataLabel.minimumScaleFactor = _topView.dataLabel.minimumScaleFactor;
+    _tutorialDataLabel.adjustsFontSizeToFitWidth = YES;
     [_tutorialView addSubview:_tutorialDataLabel];
 
     CGFloat animationDelay = 0.5;

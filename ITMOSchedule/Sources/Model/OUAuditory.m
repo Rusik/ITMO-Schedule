@@ -30,11 +30,19 @@
 }
 
 - (NSString *)correctAuditoryName {
-    if ([self.auditoryName rangeOfCharacterFromSet:[NSCharacterSet decimalDigitCharacterSet]].location == 0) {
-        return [[NSString stringWithFormat:@"Аудитория %@", self.auditoryName] stringWithSpaceAfterCommaAndDot];
+
+    NSString *name;
+
+    if (self.auditoryName && ![self.auditoryName isEqualToString:@""]) {
+        if ([self.auditoryName rangeOfCharacterFromSet:[NSCharacterSet decimalDigitCharacterSet]].location == 0) {
+            name = [NSString stringWithFormat:@"Аудитория %@", self.auditoryName];
+        } else {
+            name = self.auditoryName;
+        }
     } else {
-        return [self.auditoryName stringWithSpaceAfterCommaAndDot];
+        name = self.auditoryAddress;
     }
+    return [[name fixCommaSpaces] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 }
 
 #pragma mark - Decoding

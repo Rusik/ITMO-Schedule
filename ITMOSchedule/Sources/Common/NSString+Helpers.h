@@ -17,4 +17,6 @@
 - (NSString *)stringWithSpaceAfterCommaAndDot;
 - (NSString *)fixCommaSpaces;
 
+- (NSString *)firstLetterCapitalizedString;
+
 @end
