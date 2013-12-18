@@ -10,7 +10,7 @@
 #import "OUMainViewController.h"
 #import "TestFlight.h"
 
-#define TEST_FLIGHT_TOKEN @"ac74be6d-7142-4a49-9e74-dd1305c41c2b"
+#define TEST_FLIGHT_TOKEN @"cc89d045-c78f-44df-b47b-81820f4d743e"
 
 @implementation OUAppDelegate
 
