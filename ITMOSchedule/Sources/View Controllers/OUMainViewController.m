@@ -17,6 +17,8 @@
 #import "OUAppDelegate.h"
 #import "OUStorage.h"
 
+#define IS_IPHONE_5 (fabs((double)[[UIScreen mainScreen] bounds].size.height - (double)568) < DBL_EPSILON)
+
 @interface OUMainViewController () <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, OUTopViewDelegate>
 
 @end
@@ -33,8 +35,11 @@
     UIRefreshControl *_refreshControl;
     UITableViewController *_tvc;
 
-    IBOutlet UIView *_tutorialView;
-    IBOutlet UILabel *_tutorialDataLabel;
+    IBOutlet UIView *_standartTutorialView;
+    IBOutlet UIView *_iPhone5TutorialView;
+    UILabel *_tutorialDataLabel;
+
+    UIView *_tutorialView;
 }
 
 - (void)viewDidLoad {
@@ -105,6 +110,12 @@
     [[OUStorage sharedInstance] setIsAlreadyShowTutorial:YES];
 
     [_topView setBlurEnabled:NO];
+
+    if (IS_IPHONE_5) {
+        _tutorialView = _iPhone5TutorialView;
+    } else {
+        _tutorialView = _standartTutorialView;
+    }
 
     _tutorialView.alpha = 0;
     [self.view addSubview:_tutorialView];
