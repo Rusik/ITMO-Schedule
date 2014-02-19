@@ -72,7 +72,7 @@
 	//copy image data
 	CFDataRef dataSource = CGDataProviderCopyData(CGImageGetDataProvider(imageRef));
 	memcpy(buffer1.data, CFDataGetBytePtr(dataSource), bytes);
-	CFRelease(dataSource);
+    if (dataSource) CFRelease(dataSource);
 
 	for (NSUInteger i = 0; i < iterations; i++) {
 		//perform blur
@@ -111,18 +111,6 @@
 	CGContextRelease(ctx);
 	free(buffer1.data);
     return image;
-
-
-//    UIGraphicsBeginImageContextWithOptions(image.size, NO, 0.0f);
-//    [[UIColor blackColor] setFill];
-//    CGRect bounds = CGRectMake(0, 0, image.size.width, image.size.height);
-//    UIRectFill(bounds);
-//    [self drawInRect:bounds blendMode:kCGBlendModeColorDodge alpha:0.5];
-//
-//    UIImage *tintedImage = UIGraphicsGetImageFromCurrentImageContext();
-//    UIGraphicsEndImageContext();
-//
-//    return tintedImage;
 }
 
 @end
