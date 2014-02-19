@@ -9,12 +9,17 @@
 #import "OUAppDelegate.h"
 #import "OUMainViewController.h"
 #import "TestFlight.h"
+#import "Flurry.h"
 
 #define TEST_FLIGHT_TOKEN @"cc89d045-c78f-44df-b47b-81820f4d743e"
+#define FLURRY_TOKEN @"F84KH8SH2KX28W8PPC4F"
 
 @implementation OUAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+
+    [Flurry setCrashReportingEnabled:YES];
+    [Flurry startSession:FLURRY_TOKEN];
 
     [TestFlight takeOff:TEST_FLIGHT_TOKEN];
 

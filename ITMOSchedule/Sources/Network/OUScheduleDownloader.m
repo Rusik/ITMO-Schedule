@@ -11,6 +11,7 @@
 #import "AFNetworking.h"
 #import "OUParser.h"
 #import "TestFlight.h"
+#import "Flurry.h"
 
 #define LOG 1
 
@@ -38,6 +39,7 @@ typedef void(^ParsingBlock)(NSData *data);
 - (void)downloadLessonsForGroup:(OUGroup *)group complete:(CompleteBlock)block {
 
     [TestFlight passCheckpoint:group.groupName];
+    [Flurry logEvent:group.groupName];
 
     NSString *pageUrlString = [NSString stringWithFormat:@"http://isu.ifmo.ru/pls/apex/PK_ADM_GETXML.GET_SCHEDULE_XML?group_number=%@", group.groupName];
     [self performRequestWithStringUrl:pageUrlString parsingBlock:^(NSData *data) {
@@ -47,7 +49,8 @@ typedef void(^ParsingBlock)(NSData *data);
 
 - (void)downloadLessonsForAuditory:(OUAuditory *)auditory complete:(CompleteBlock)block {
 
-    [TestFlight passCheckpoint:[auditory auditoryDescription]];
+    [TestFlight passCheckpoint:auditory.auditoryDescription];
+    [Flurry logEvent:auditory.auditoryDescription];
 
     NSString *pageUrlString = [NSString stringWithFormat:@"http://isu.ifmo.ru/pls/apex/PK_ADM_GETXML.GET_SCHEDULE_XML?p_auditory_id=%@", auditory.auditoryId];
     [self performRequestWithStringUrl:pageUrlString parsingBlock:^(NSData *data) {
@@ -58,6 +61,7 @@ typedef void(^ParsingBlock)(NSData *data);
 - (void)downloadLessonsForTeacher:(OUTeacher *)teacher complete:(CompleteBlock)block {
 
     [TestFlight passCheckpoint:teacher.teacherName];
+    [Flurry logEvent:teacher.teacherName];
 
     NSString *pageUrlString = [NSString stringWithFormat:@"http://isu.ifmo.ru/pls/apex/PK_ADM_GETXML.GET_SCHEDULE_XML?p_id=%@", teacher.teacherId];
     [self performRequestWithStringUrl:pageUrlString parsingBlock:^(NSData *data) {
