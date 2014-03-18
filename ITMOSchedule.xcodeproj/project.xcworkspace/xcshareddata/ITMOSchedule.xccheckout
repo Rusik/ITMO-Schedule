@@ -10,6 +10,8 @@
 	<string>ITMOSchedule</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
+		<key>76B2E434-A2DA-40B5-8082-A2CFF4AF0CF1</key>
+		<string>https://github.com/mrackwitz/MRProgress.git</string>
 		<key>FA00EAB1-5C75-433D-BC5A-CFB88F4FB903</key>
 		<string>ssh://github.com/Rusik/ITMO-Schedule.git</string>
 	</dict>
@@ -17,6 +19,8 @@
 	<string>ITMOSchedule.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
+		<key>76B2E434-A2DA-40B5-8082-A2CFF4AF0CF1</key>
+		<string>../../ITMOSchedule/Vendor/MRProgress</string>
 		<key>FA00EAB1-5C75-433D-BC5A-CFB88F4FB903</key>
 		<string>../..</string>
 	</dict>
@@ -35,6 +39,14 @@
 			<string>FA00EAB1-5C75-433D-BC5A-CFB88F4FB903</string>
 			<key>IDESourceControlWCCName</key>
 			<string>ITMO-Schedule</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>76B2E434-A2DA-40B5-8082-A2CFF4AF0CF1</string>
+			<key>IDESourceControlWCCName</key>
+			<string>MRProgress</string>
 		</dict>
 	</array>
 </dict>

@@ -743,7 +743,7 @@
 					"/Users/Rusik/Projects/ITMO-Schedule/ITMOSchedule/Vendor/Flurry",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "D388B17E-7D4A-41FE-A3C4-192D70ECAFA9";
+				PROVISIONING_PROFILE = "434E1722-4D5A-4CCF-9EEE-29DEE7864825";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
