@@ -302,7 +302,7 @@
 #pragma mark - UITableViewDelegate & UITableViewDataSource
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return [OUSearchCell heightForData:_tableData[indexPath.row]];
+    return [OUSearchCell heightForData:_tableData[indexPath.row] width:CGRectGetWidth(tableView.frame)];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {

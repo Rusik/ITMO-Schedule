@@ -11,7 +11,7 @@
 @interface OULessonCell : UITableViewCell <UITableViewCellHeight>
 
 + (CGFloat)cellHeight;
-+ (CGFloat)cellHeightForLesson:(OULesson *)lesson;
++ (CGFloat)cellHeightForLesson:(OULesson *)lesson width:(CGFloat)width;
 
 @property (nonatomic, strong) OULesson *lesson;
 

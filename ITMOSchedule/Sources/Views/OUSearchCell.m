@@ -97,7 +97,7 @@ static NSMutableDictionary *hashDict = nil;
     [hashDict removeAllObjects];
 }
 
-+ (CGFloat)heightForData:(id)data {
++ (CGFloat)heightForData:(id)data width:(CGFloat)width {
 
     static OUSearchCell *cell = nil;
 
@@ -122,11 +122,13 @@ static NSMutableDictionary *hashDict = nil;
     } else {
         if (!cell) {
             cell = [OUSearchCell loadFromNib];
+			cell.frame = CGRectMake(CGRectGetMinX(cell.frame), CGRectGetMinY(cell.frame), width, CGRectGetHeight(cell.frame));
         }
         cell.data = data;
         CGFloat height = [cell height];
-
-        hashDict[key] = @(height);
+		if (key) {
+			hashDict[key] = @(height);
+		}
 
         return height;
     }

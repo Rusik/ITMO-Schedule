@@ -23,7 +23,7 @@ typedef enum {
     OULessonTypeUnknown     = 4
 } OULessonType;
 
-typedef enum {
+typedef NS_ENUM(NSInteger, OULessonWeekDay) {
     OULessonWeekDayMonday       = 0,
     OULessonWeekDayTuesdya      = 1,
     OULessonWeekDayWednesday    = 2,
@@ -31,7 +31,7 @@ typedef enum {
     OULessonWeekDayFriday       = 4,
     OULessonWeekDaySunday       = 5,
     OULessonWeekDaySaturday     = 6,
-} OULessonWeekDay;
+};
 
 
 typedef int OULessonTime;
