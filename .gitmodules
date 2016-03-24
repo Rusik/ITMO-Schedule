@@ -1,6 +1,3 @@
-[submodule "ITMOSchedule/Vendor/AFNetworking"]
-	path = ITMOSchedule/Vendor/AFNetworking
-	url = https://github.com/AFNetworking/AFNetworking
 
 [submodule "ITMOSchedule/Vendor/RaptureXML"]
 	path = ITMOSchedule/Vendor/RaptureXML

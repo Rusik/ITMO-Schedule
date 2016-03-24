@@ -55,6 +55,8 @@
 		case UIInterfaceOrientationLandscapeRight:
 			transform = CGAffineTransformMakeRotation(M_PI_2);
 			break;
+		case UIInterfaceOrientationUnknown:
+			break;
 	}
 	if (animated) {
 		[UIView beginAnimations:nil context:nil];

@@ -274,11 +274,11 @@
     CGFloat height = 44.0;
 
     if ([type isKindOfClass:[OUGroup class]]) {
-        height = [OUGroupCell cellHeightForLesson:lesson];
+        height = [OUGroupCell cellHeightForLesson:lesson width:CGRectGetWidth(tableView.frame)];
     } else if ([type isKindOfClass:[OUTeacher class]]) {
-        height = [OUTeacherCell cellHeightForLesson:lesson];
+        height = [OUTeacherCell cellHeightForLesson:lesson width:CGRectGetWidth(tableView.frame)];
     } else if ([type isKindOfClass:[OUAuditory class]]) {
-        height = [OUAuditoryCell cellHeightForLesson:lesson];
+        height = [OUAuditoryCell cellHeightForLesson:lesson width:CGRectGetWidth(tableView.frame)];
     }
 
     return height;
@@ -300,7 +300,6 @@
     if ([type isKindOfClass:[OUAuditory class]]) {
         cell = [tableView dequeueReusableCellWithIdentifier:[OUAuditoryCell cellIdentifier]];
     }
-
     cell.lesson = lesson;
     return cell;
 }

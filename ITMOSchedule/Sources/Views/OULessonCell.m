@@ -39,9 +39,13 @@
     NSString *topBottomStyle = UIFontTextStyleCaption1;
 
     self.topLabel.font = [UIFont preferredFontForTextStyle:topBottomStyle];
-    self.centerLabel.font =[UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
+	self.centerLabel.font = [self.class centerLabelFont];
     self.bottomLabel.font = [UIFont preferredFontForTextStyle:topBottomStyle];
     self.timeLabel.font = [UIFont preferredTimeFont];
+}
+
++ (UIFont*)centerLabelFont {
+	return [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
 }
 
 - (void)adjustLabelsSize {
@@ -67,9 +71,9 @@
     UIColor *typeTextColor = LESSON_TYPE_TEXT_COLOR;
 
     if (_lesson.additionalInfo) {
-        [self applyAttributesToNameWithColor:typeTextColor];
+        _centerLabel.attributedText = [self.class attributesToNameWithColor:typeTextColor lesson:self.lesson];
     } else if (_lesson.lessonType != OULessonTypeUnknown) {
-        [self applyAttributesToNameWithColor:typeTextColor];
+        _centerLabel.attributedText = [self.class attributesToNameWithColor:typeTextColor lesson:self.lesson];
     } else {
         _centerLabel.text = _lesson.lessonName;
     }
@@ -110,15 +114,11 @@
 
 #pragma mark - Height
 
-+ (CGFloat)cellHeightForLesson:(OULesson *)lesson {
-    static OULessonCell *cell = nil;
-    static Class cacheClass;
-    if (!cell || cacheClass != self) {
-        cell = [self loadFromNib];
-        cacheClass = self;
-    }
-    cell.lesson = lesson;
-    return [cell height];
++ (CGFloat)cellHeightForLesson:(OULesson *)lesson width:(CGFloat)width {
+	NSString *topBottomStyle = UIFontTextStyleCaption1;
+	CGFloat lessonH = [[self attributesToNameWithColor:[UIColor clearColor] lesson:lesson] boundingRectWithSize:(CGSize){width - 60.0, MAXFLOAT} options:NSStringDrawingUsesLineFragmentOrigin context:NULL].size.height;
+	CGFloat topBottomH = [@" " sizeWithAttributes:@{NSFontAttributeName : [UIFont preferredFontForTextStyle:topBottomStyle]}].height;
+    return ceil(lessonH + (2 * topBottomH) + (3 * SPACE));
 }
 
 - (CGFloat)height {
@@ -136,7 +136,7 @@
     } else {
         textColor = LESSON_TYPE_TEXT_COLOR;
     }
-    [self applyAttributesToNameWithColor:textColor];
+    _centerLabel.attributedText = [self.class attributesToNameWithColor:textColor lesson:self.lesson];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -153,43 +153,44 @@
         double delayInSeconds = 0.25;
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-            [self applyAttributesToNameWithColor:textColor];
+			_centerLabel.attributedText = [self.class attributesToNameWithColor:textColor lesson:self.lesson];
         });
     } else {
-        [self applyAttributesToNameWithColor:textColor];
+        _centerLabel.attributedText = [self.class attributesToNameWithColor:textColor lesson:self.lesson];
     }
 }
 
-- (void)applyAttributesToNameWithColor:(UIColor *)color {
-    NSString *shortLessontType = [OULesson shortStringForLessonType:_lesson.lessonType];
-    UIColor *typeTextColor = color;
-    NSString *typeTextStyle = UIFontTextStyleBody;
-    NSDictionary *typeAttributes = @{NSForegroundColorAttributeName : typeTextColor,
-                                     NSFontAttributeName : [UIFont preferredFontForTextStyle:typeTextStyle],
-                                     };
-
-    if (_lesson.additionalInfo) {
-        NSString *text = [NSString stringWithFormat:@"%@ (%@)\n%@", _lesson.lessonName, shortLessontType, _lesson.additionalInfo];
-
-        NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:text];
-        [attrString addAttributes:@{NSFontAttributeName : _centerLabel.font}
-                            range:NSMakeRange(0, attrString.length)];
-        [attrString addAttributes:typeAttributes
-                            range:[text rangeOfString:[NSString stringWithFormat:@"(%@)", shortLessontType]]];
-
-        _centerLabel.attributedText = attrString;
-
-    } else if (_lesson.lessonType != OULessonTypeUnknown) {
-        NSString *text = [NSString stringWithFormat:@"%@ (%@)", _lesson.lessonName, shortLessontType];
-
-        NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:text];
-        [attrString addAttributes:@{NSFontAttributeName : _centerLabel.font}
-                            range:NSMakeRange(0, attrString.length)];
-        [attrString addAttributes:typeAttributes
-                            range:[text rangeOfString:[NSString stringWithFormat:@"(%@)", shortLessontType]]];
-
-        _centerLabel.attributedText = attrString;
-    }
++ (NSAttributedString*)attributesToNameWithColor:(UIColor *)color lesson:(OULesson*) lesson{
+	NSString *shortLessontType = [OULesson shortStringForLessonType:lesson.lessonType];
+	UIColor *typeTextColor = color;
+	NSString *typeTextStyle = UIFontTextStyleBody;
+	NSDictionary *typeAttributes = @{NSForegroundColorAttributeName : typeTextColor,
+									 NSFontAttributeName : [UIFont preferredFontForTextStyle:typeTextStyle],
+									 };
+	
+	if (lesson.additionalInfo) {
+		NSString *text = [NSString stringWithFormat:@"%@ (%@)\n%@", lesson.lessonName, shortLessontType, lesson.additionalInfo];
+		
+		NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:text];
+		[attrString addAttributes:@{NSFontAttributeName : [self centerLabelFont]}
+							range:NSMakeRange(0, attrString.length)];
+		[attrString addAttributes:typeAttributes
+							range:[text rangeOfString:[NSString stringWithFormat:@"(%@)", shortLessontType]]];
+		
+		return attrString;
+		
+	} else if (lesson.lessonType != OULessonTypeUnknown) {
+		NSString *text = [NSString stringWithFormat:@"%@ (%@)", lesson.lessonName, shortLessontType];
+		
+		NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:text];
+		[attrString addAttributes:@{NSFontAttributeName : [self centerLabelFont]}
+							range:NSMakeRange(0, attrString.length)];
+		[attrString addAttributes:typeAttributes
+							range:[text rangeOfString:[NSString stringWithFormat:@"(%@)", shortLessontType]]];
+		
+		return attrString;
+	}
+	return nil;
 }
 
 @end
